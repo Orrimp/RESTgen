@@ -61,8 +61,8 @@ public final class Naming {
 	public static final ClassPackageInfo CLASS_USER_AUTH_DATA		= new ClassPackageInfo("UserAuthorizationData", PackageManager.getAuthPackage());
 	public static final ClassPackageInfo CLASS_USER_AUTH_FILTER		= new ClassPackageInfo("UserAuthorizationFilter", PackageManager.getAuthPackage());
 	public static final ClassPackageInfo CLASS_LINK					= new ClassPackageInfo("SimpleLink", PackageManager.getObjectPackage());
-	public static final ClassPackageInfo FILE_POM					= new ClassPackageInfo("pom.xml.backup", PackageManager.getWebPackage());
-	public static final ClassPackageInfo FILE_WEB					= new ClassPackageInfo("web.xml.backup", PackageManager.getWebPackage());
+	public static final LocationInfo     FILE_POM					= () -> "../pom.xml";
+	public static final LocationInfo     FILE_WEB					= () -> "../WebContent/WEB-INF/web.xml";
 	public static final ClassPackageInfo JAXB_RESOLVER				= new ClassPackageInfo("JAXBContextProvider", PackageManager.getFrameworkPackage(), CLASSTYPE.CLASS, JAXBAnnoImports);
 
 	public static final ClassPackageInfo GENSON_RESOLVER 			= new ClassPackageInfo("GensonContextProvider", PackageManager.getFrameworkPackage());

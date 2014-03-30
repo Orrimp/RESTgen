@@ -62,7 +62,7 @@ var FrameworkManager frameWorkManager;
 	 * Generates additinal Fieles for the project. NONE JAVA files. 
 	 */
 	def generateOtherFiles(IFileSystemAccess fsa) {
-		val WebFileGenerator webGen = new WebFileGenerator(fsa);
+		val WebFileGenerator webGen = new WebFileGenerator(fsa, config);
 		webGen.generatePomXML();
 		webGen.generateWebXML();
 	}

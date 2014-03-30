@@ -3,13 +3,16 @@ package com.xtext.rest.rdsl.generator
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.PackageManager
+import com.xtext.rest.rdsl.restDsl.RESTConfiguration
 
 class WebFileGenerator {
 	
-	private val IFileSystemAccess fsa
+	private val IFileSystemAccess fsa;
+	private val RESTConfiguration config;
 	
-	new(IFileSystemAccess fsa) {
+	new(IFileSystemAccess fsa, RESTConfiguration config) {
 		this.fsa = fsa;
+		this.config = config;
 	}
 	
 	def generatePomXML() {
@@ -17,8 +20,8 @@ class WebFileGenerator {
 		'''
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>v1</groupId>
-  <artifactId>v1</artifactId>
+  <groupId>«config.package»</groupId>
+  <artifactId>«config.package»-v«config.apiVersion»</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <build>
@@ -102,7 +105,7 @@ class WebFileGenerator {
 		'''
 <?xml version="1.0" encoding="UTF-8"?>
   <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>v1</display-name>
+  <display-name>v«config.apiVersion»</display-name>
   <servlet>
 		<servlet-name>Jersey-Servlet</servlet-name>
 		<servlet-class>

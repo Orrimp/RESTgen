@@ -3,7 +3,7 @@ package com.xtext.rest.rdsl.management;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassPackageInfo {
+public class ClassPackageInfo implements LocationInfo {
 
 	public enum CLASSTYPE{
 		INTERFACE,
@@ -83,7 +83,8 @@ public class ClassPackageInfo {
 		return packageName + "." + className;
 	}
 	
-	public String getGenerationLocation(){
+	@Override
+    public String getGenerationLocation(){
 		String tmp = packageName.replaceAll("\\.", "/");
 		return  tmp + "/" + className;
 	}
