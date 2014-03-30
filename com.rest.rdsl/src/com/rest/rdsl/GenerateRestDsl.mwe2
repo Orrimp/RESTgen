@@ -22,14 +22,17 @@ Workflow {
     
     component = DirectoryCleaner {
     	directory = "${runtimeProject}/src-gen"
+    	exclude = ".gitkeep"
     }
     
     component = DirectoryCleaner {
     	directory = "${runtimeProject}.ui/src-gen"
+    	exclude = ".gitkeep"
     }
     
     component = DirectoryCleaner {
     	directory = "${runtimeProject}.tests/src-gen"
+    	exclude = ".gitkeep"
     }
     
     component = Generator {
