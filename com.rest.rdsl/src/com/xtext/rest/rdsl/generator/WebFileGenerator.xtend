@@ -78,6 +78,11 @@ class WebFileGenerator {
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.7.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.owlike</groupId>
+			<artifactId>genson</artifactId>
+			<version>0.98</version>
+		</dependency>
 	</dependencies>
 		<repositories>
 		<repository>
