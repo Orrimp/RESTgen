@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="com.rest.rdsl.sdk"
+	label="RestDsl SDK Feature "
+	version="1.0.0.qualifier">
+	<plugin
+			id="com.rest.rdsl"
+			download-size="0"
+			install-size="0"
+			version="0.0.0"
+			unpack="false"/>
+	<plugin
+			id="com.rest.rdsl.ui"
+			download-size="0"
+			install-size="0"
+			version="0.0.0"
+			unpack="false"/>
+</feature>

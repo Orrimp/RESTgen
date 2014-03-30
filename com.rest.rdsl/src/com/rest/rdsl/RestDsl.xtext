@@ -1,0 +1,126 @@
+grammar com.xtext.rest.rdsl.RestDsl with org.eclipse.xtext.common.Terminals
+
+generate restDsl "http://www.xtext.com/rest/rdsl/RestDsl"
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
+
+RESTModel: con = RESTConfiguration | res = RESTResources;
+
+RESTResources:
+	userRes = RESTUserResource
+	resources += RESTResource+
+;
+
+RESTConfiguration:
+	'Config'
+	'{'
+		'Base URI' basePath = URL
+		'Base Package' package = FQN
+		'MIME' (mimeType += MIME)+  
+		('Framework' framework = FRAMEWORK)?
+		'ID-Generation' idtype = ID_GEN?
+		('Authentication' auth = Auth)?
+		('API-Version' 'v=' apiVersion = VERSION)?		
+		('Headers' headers+=Header+)?
+		'Caching' caching = Caching
+		'Paging' paging = Paging
+		'JDBC-Driver' jdbcCon = (STRING | "org.sqlite.JDBC")
+		'JDBC-File' jdbcFile = (STRING  | "jdbc:sqlite:mydatabase.db")
+	'}'
+;
+
+
+Caching:
+	type = CACHING_TYPE ('seconds' time = TIME)?
+;
+
+Paging:
+    'size' elementsCount = INT
+;
+
+//Generate corresponding \GET inside the reosource with given Path
+Start:
+	startPath = URL resource=[RESTResource]
+;
+
+Header:
+	name = HEADER_STRING ('Description' description = STRING)? 'default value=' value = STRING
+;
+
+Auth:
+	HTTPBasic | OAuth2
+;
+
+OAuth2:
+	'OAuth2'
+	'{'
+		'URI' authPath = STRING
+		'Encoding' encodign = ENCODING_TYPE
+		'Scope' scoep = STRING
+	'}'
+	
+;
+
+HTTPBasic:
+	'HTTPBasic'
+	'{'
+		'Username' user = STRING 
+		'Password' password = STRING
+		'Role' role = ROLE
+	'}'
+;
+
+RESTResource:
+	'Resource' name = ID 
+	'{'
+		'Attributes'
+		(id = STRING)?
+		attributes += Attribute+  //For every other attribute then id the method musst look like Path("{id}/attributename)
+	'}'
+;
+
+
+RESTUserResource returns RESTResource:
+	'Resource' name = ID
+	'{'
+		'Attributes'
+		(id = STRING)?
+		attributes += UserNameAttribute
+		attributes += (UserPWAttribute | UserTokenAttribute)
+		attributes += Attribute+
+		
+	'}'	
+;
+
+UserPWAttribute returns Attribute:
+	method = HTTPMETHOD value = JavaReference name = 'password'
+;
+
+UserNameAttribute returns Attribute:
+	method = HTTPMETHOD value = JavaReference name = 'username'
+;
+
+UserTokenAttribute returns Attribute: 
+	method = HTTPMETHOD value = JavaReference name = 'token'
+;
+
+ResourceReference :	'Resource' resourceRef = [RESTResource]; 
+JavaReference: 'Java' javaDataType = [types::JvmType|FQN];
+ListReference: 'List' listDataType = [types::JvmType|FQN] '<'  innerType  = [RESTResource]'>';
+Reference: ResourceReference | JavaReference | ListReference;
+
+Attribute: method = HTTPMETHOD value = Reference name = ID;
+
+
+FQN:ID ("." ID)*; 
+enum CACHING_TYPE: ETAG = 'ETag' | MODIFIED = 'Last-Modified' | EXPIRES = 'Expires' | MAXAGE='Max-Age' | DEFAULT = 'Default' | NONE = 'None';
+enum MIME : JSON = 'json' | XML = 'xml';
+enum ID_GEN: LONG = 'long' |  UUID = 'uuid';
+enum HTTPMETHOD : GET | PUT | POST | PATCH | DELETE  | HEAD  | OPTIONS | DEFAULT | NONE;
+enum FRAMEWORK: SPRING = 'Spring' | JERSEY = 'Jersey';
+enum ROLE: ADMIN = 'admin' | USER = 'user';
+enum ENCODING_TYPE: BASE64 = 'base64' | NONE = 'none';
+//https url in as localhost or as IP
+terminal URL: 'http' 's'?  '://' ((ID '.' ID) ('.' ID)* | "localhost" | (INT'.'INT'.'INT'.'INT)) ':' INT+ ('/'ID+)*;
+terminal HEADER_STRING: 'x-'ID('-'ID)*;
+terminal VERSION: ('1'..'9');
+terminal TIME: ('1'..'9')+;

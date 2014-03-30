@@ -1,0 +1,28 @@
+«IMPORT com::xtext::rest::rdsl::ui::wizard»
+
+«DEFINE main FOR RestDslProjectInfo»
+«EXPAND model FOR this»
+«EXPAND workflow FOR this»
+«ENDDEFINE»
+
+«DEFINE model FOR RestDslProjectInfo»
+«FILE "src/model/Model.restdsl"-»
+/*
+ * This is an example model
+ */
+Hello Xtext!
+«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE workflow FOR RestDslProjectInfo»
+«FILE "src/Generator.mwe2"-»
+module Generator
+
+var targetDir = "src-gen"
+var modelPath = "src/model"
+
+Workflow {
+	component = @workflow.RestDslGenerator auto-inject {}
+}
+«ENDFILE»
+«ENDDEFINE»
