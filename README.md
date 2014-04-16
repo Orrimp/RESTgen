@@ -23,39 +23,39 @@ A file can be either a resource or a configuration. The framework uses the first
 ## Example Resource File Entry
 File: resource.rdsl
 Idea: The user defines a resource with a name "Users" and multiple attributes. Every "Attribute" can specify a HTTP Method: GET, NONE; a Java Type: String, Date..; and a attribute name. "username". Other HTTP Methods are generated where they are needed. 
-Content: 
+Content:  
+ 
+Resource Users 
+{ 
+	Attributes 
+	GET Java java.lang.String username 
+	GET Java java.lang.String password 
+	GET Java java.lang.String firstName 
+	GET Java java.lang.String secondName 
+	GET Java java.util.Date birthday 
+    GET Java java.lang.String alias 
+	GET Resource Messages tweets  
+} 
 
-Resource Users
-{
-	Attributes
-	GET Java java.lang.String username
-	GET Java java.lang.String password
-	GET Java java.lang.String firstName
-	GET Java java.lang.String secondName
-	GET Java java.util.Date birthday
-    GET Java java.lang.String alias
-	GET Resource Messages tweets 
-}
+## Example Configuration File 
 
-## Example Configuration File
-
-File: config.rdsl
-Idea: 
-The URI is used with the HATEOAS constraint. 
-Package helps to create order in the project. 
+File: config.rdsl 
+Idea:  
+The URI is used with the HATEOAS constraint.  
+Package helps to create order in the project.  
 The Framework supports currently only JSON MIME and Jersey as REST-Framework. The ID is used to access the resources. 
-The persitency layer is using SQLite DB as seen in the last lines.
-Content: 
-
-Config{
-	Base URI http://localhost:8080/v1 
-	Base Package com.rest.rdsl
-	MIME json
-	Framework Jersey
-	ID-Generation long 
-	API-Version v=1
-	Caching ETag
-	Paging size 10
-	JDBC-Driver org.sqlite.JDBC
-	JDBC-File jdbc:sqlite:mydatabase.db
-}
+The persitency layer is using SQLite DB as seen in the last lines. 
+Content:  
+ 
+Config{ 
+	Base URI http://localhost:8080/v1  
+	Base Package com.rest.rdsl 
+	MIME json 
+	Framework Jersey 
+	ID-Generation long  
+	API-Version v=1 
+	Caching ETag 
+	Paging size 10 
+	JDBC-Driver org.sqlite.JDBC 
+	JDBC-File jdbc:sqlite:mydatabase.db 
+} 
