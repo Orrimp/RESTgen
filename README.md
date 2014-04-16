@@ -28,6 +28,8 @@ Idea: The user defines a resource with a name "Users" and multiple attributes. E
 
 Content:  
  
+{
+
 Resource Users 
 
 { 
@@ -50,6 +52,7 @@ Resource Users
 	
 } 
 
+}
 ## Example Configuration File 
 
 File: config.rdsl 
@@ -62,7 +65,9 @@ The Framework supports currently only JSON MIME and Jersey as REST-Framework. Th
 The persitency layer is using SQLite DB as seen in the last lines. 
 
 Content:  
- 
+
+{
+
 Config{ 
 
 	Base URI http://localhost:8080/v1  
@@ -86,3 +91,5 @@ Config{
 	JDBC-File jdbc:sqlite:mydatabase.db 
 	
 } 
+
+}
