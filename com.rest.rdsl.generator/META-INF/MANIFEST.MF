@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Generator
+Bundle-SymbolicName: com.rest.rdsl.generator
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: REST
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: com.rest.rdsl;bundle-version="1.0.0"
+Eclipse-RegisterBuddy: com.rest.rdsl

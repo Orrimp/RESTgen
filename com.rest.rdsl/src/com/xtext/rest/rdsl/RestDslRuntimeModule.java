@@ -3,7 +3,8 @@
  */
 package com.xtext.rest.rdsl;
  
-import com.xtext.rest.rdsl.generator.MultipleResourceRestDslGenerator;
+import com.xtext.rest.rdsl.generator.IMultipleResourceGenerator;
+import com.xtext.rest.rdsl.generator.RestDslGenerator;
 
 /**
  * Use this class to register components to be used public void doGenerate(ResourceSet input, IFileSystemAccess fsa);at runtime / without the Equinox extension registry.
@@ -14,7 +15,16 @@ public class RestDslRuntimeModule extends com.xtext.rest.rdsl.AbstractRestDslRun
 	 * @return Resource generator which can handle multiple input files
 	 */
 	public Class<? extends IMultipleResourceGenerator> bindIMultipleResourceGenerator() {
-		return MultipleResourceRestDslGenerator.class;
+	    Class<?> clazz;
+        try {
+            clazz = Class.forName("com.xtext.rest.rdsl.generator.MultipleResourceRestDslGenerator");
+            if(clazz != null) {
+                return (Class<? extends IMultipleResourceGenerator>) clazz;
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
 	}
 
 }

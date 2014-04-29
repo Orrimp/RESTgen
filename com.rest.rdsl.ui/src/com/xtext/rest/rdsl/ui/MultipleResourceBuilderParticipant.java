@@ -14,7 +14,7 @@ import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
 
 import com.google.inject.Inject;
-import com.xtext.rest.rdsl.IMultipleResourceGenerator;
+import com.xtext.rest.rdsl.generator.IMultipleResourceGenerator;
 
 public class MultipleResourceBuilderParticipant extends BuilderParticipant {
   @Inject

@@ -33,3 +33,4 @@ Export-Package: com.xtext.rest.rdsl,
  com.xtext.rest.rdsl.scoping,
  com.xtext.rest.rdsl.generator,
  com.xtext.rest.rdsl.formatting
+Eclipse-BuddyPolicy: registered

@@ -10,6 +10,85 @@ RESTResources:
 	resources += RESTResource+
 ;
 
+RESTResource:
+    'Resource' name = ID 
+    '{'
+        (id = STRING)?
+        members += Member+  //For every other attribute then id the method musst look like Path("{id}/attributename)
+    '}'
+;
+
+Member:
+    Attribute
+;
+
+Attribute:
+    method = HTTPMETHOD    
+    type = Type
+    (list ?= '[' ']')? 
+    name = ID
+;
+
+Type:
+    PrimitiveType | ResourceType | JavaType 
+;
+
+PrimitiveType:
+    StringType | IntType | DateType
+;
+
+StringType:
+    typeName = 'String'
+;
+
+IntType:
+    typeName = 'Int'
+;
+
+DateType:
+    typeName = 'Date'
+;
+
+ResourceType:
+    typeName = 'Resource'
+    resourceRef = [RESTResource]
+; 
+
+JavaType:
+    typeName = 'Java'
+    javaDataType = [types::JvmType|FQN]
+;
+
+RESTUserResource returns RESTResource:
+    'UserResource' name = ID
+    '{'
+        (id = STRING)?
+        members += UserNameAttribute
+        members += (UserPWAttribute | UserTokenAttribute)
+        members += Member+        
+    '}' 
+;
+
+UserPWAttribute returns Attribute:
+    method = HTTPMETHOD 
+    type = Type 
+    name = 'password'
+;
+
+UserNameAttribute returns Attribute:
+    method = HTTPMETHOD 
+    type = Type 
+    name = 'username'
+;
+
+UserTokenAttribute returns Attribute: 
+    method = HTTPMETHOD 
+    type = Type 
+    name = 'token'
+;
+
+
+
 RESTConfiguration:
 	'Config'
 	'{'
@@ -69,46 +148,16 @@ HTTPBasic:
 	'}'
 ;
 
-RESTResource:
-	'Resource' name = ID 
-	'{'
-		'Attributes'
-		(id = STRING)?
-		attributes += Attribute+  //For every other attribute then id the method musst look like Path("{id}/attributename)
-	'}'
-;
 
 
-RESTUserResource returns RESTResource:
-	'Resource' name = ID
-	'{'
-		'Attributes'
-		(id = STRING)?
-		attributes += UserNameAttribute
-		attributes += (UserPWAttribute | UserTokenAttribute)
-		attributes += Attribute+
-		
-	'}'	
-;
 
-UserPWAttribute returns Attribute:
-	method = HTTPMETHOD value = JavaReference name = 'password'
-;
 
-UserNameAttribute returns Attribute:
-	method = HTTPMETHOD value = JavaReference name = 'username'
-;
 
-UserTokenAttribute returns Attribute: 
-	method = HTTPMETHOD value = JavaReference name = 'token'
-;
 
-ResourceReference :	'Resource' resourceRef = [RESTResource]; 
-JavaReference: 'Java' javaDataType = [types::JvmType|FQN];
-ListReference: 'List' listDataType = [types::JvmType|FQN] '<'  innerType  = [RESTResource]'>';
-Reference: ResourceReference | JavaReference | ListReference;
 
-Attribute: method = HTTPMETHOD value = Reference name = ID;
+
+
+
 
 
 FQN:ID ("." ID)*; 
