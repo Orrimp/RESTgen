@@ -5,20 +5,20 @@ import com.xtext.rest.rdsl.generator.resources.internal.ExceptionMapper;
 import com.xtext.rest.rdsl.management.Constants;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.Configuration;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 
 @SuppressWarnings("all")
 public class CustomJerseyFilter {
-  private final RESTConfiguration config;
+  private final Configuration config;
   
   private final IFileSystemAccess fsa;
   
-  private RESTResource userResource = null;
+  private ResourceType userResource = null;
   
-  public CustomJerseyFilter(final RESTConfiguration config, final IFileSystemAccess fsa, final RESTResource userResource) {
+  public CustomJerseyFilter(final Configuration config, final IFileSystemAccess fsa, final ResourceType userResource) {
     this.config = config;
     this.fsa = fsa;
     this.userResource = userResource;

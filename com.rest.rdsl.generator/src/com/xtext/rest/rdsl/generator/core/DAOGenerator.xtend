@@ -1,7 +1,7 @@
 package com.xtext.rest.rdsl.generator.core
 
-import com.xtext.rest.rdsl.generator.RESTResourceCollection
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.generator.ResourceTypeCollection
+import com.xtext.rest.rdsl.restDsl.Configuration
 import java.util.HashMap
 import java.util.Map
 import org.eclipse.xtext.generator.IFileSystemAccess
@@ -10,20 +10,19 @@ import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.management.Naming
-import com.xtext.rest.rdsl.restDsl.JavaType
 import com.xtext.rest.rdsl.restDsl.ResourceType
 
 class DAOGenerator {
 	val IFileSystemAccess fsa;
-	val RESTConfiguration config;
+	val Configuration config;
 	val ExceptionMapper mapper;
-	val RESTResourceCollection resourceCol;
+	val ResourceTypeCollection resourceCol;
 	val String idDataType;
 	
 	//Use extension methods from the given class
 	extension ExtensionMethods e = new ExtensionMethods();
 	
-	new(IFileSystemAccess fsa,  RESTResourceCollection resourceCol, RESTConfiguration config) {
+	new(IFileSystemAccess fsa,  ResourceTypeCollection resourceCol, Configuration config) {
 		this.fsa = fsa;
 		this.config = config;
 		this.resourceCol = resourceCol;
@@ -63,10 +62,6 @@ class DAOGenerator {
 			var String updateString = "id = '\"" + "+" + objectName + "." + Naming.METHOD_NAME_ID_GET + "()"+ "+" + "\"'\"";
 			var String createString = ""
 			for(attrib : res.attributes.filter[!it.list]){
-				if( attrib.type instanceof JavaType){
-					createString  = createString + " + " +  "\",'\"" + " + " + objectName + "." + "get" +  attrib.name.toFirstUpper + "()" + " + " + "\"'\""
-					updateString = updateString + " + " + "\", " + attrib.name + " = \"" + " + " + "\"'\"" + "+" + objectName + ".get" + attrib.name.toFirstUpper + "() " + "+" + "\"'\""
-				}
 				if( attrib.type instanceof ResourceType){
 					val String nullcheck = "(" + objectName + ".get" + attrib.name.toFirstUpper + "() != null ? " +  objectName + ".get" + attrib.name.toFirstUpper + "()"+"." +Naming.METHOD_NAME_ID_GET +"() : null)"
 					createString  = createString + " + " +  "\",'\"" + " + " + nullcheck + " + " + "\"'\""
@@ -274,11 +269,9 @@ class DAOGenerator {
 					try{
 						«objectName» = new «res.name»( rs.get«idDataType.toFirstUpper»("id") ) ;
 						«FOR attrib: res.attributes.filter[!it.list]»
-						«IF attrib.type instanceof JavaType»
-						«objectName».set«attrib.name.toFirstUpper»( rs.get«attrib.type.simpleNameOfType»("«attrib.name»") );
-						«ELSEIF attrib.type instanceof ResourceType»
+						«IF attrib.type instanceof ResourceType»
 						«idDataType» id«attrib.name.toLowerCase» = rs.get«idDataType.toFirstUpper»("«attrib.name»");
-						«var String resource = (attrib.type as ResourceType).resourceRef.name»
+						«var String resource = (attrib.type as ResourceType).name»
 						«resource.toFirstUpper» «resource.toLowerCase»  = new «resource.toFirstUpper»(id«attrib.name.toLowerCase»);
 						«objectName».set«attrib.name.toFirstUpper»(«resource.toLowerCase»);
 						«ENDIF»
@@ -360,9 +353,7 @@ class DAOGenerator {
 		for(res: resourceCol.resources){
 			var String value = "id " + idDataType + " NOT NULL," ; 
 			for(attrib: res.attributes){
-				if(attrib.type instanceof JavaType){
-					value = value + " " + attrib.name +  " " + attrib.type.simpleNameOfType.toLowerCase + ",";
-				}else if(attrib.type instanceof ResourceType){
+				if(attrib.type instanceof ResourceType){
 					value = value + " " + attrib.name + "_id " + idDataType.toLowerCase + ","
 				}		
 			}

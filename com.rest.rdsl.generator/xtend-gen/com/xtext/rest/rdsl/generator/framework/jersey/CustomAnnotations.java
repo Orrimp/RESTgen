@@ -4,21 +4,21 @@ import com.xtext.rest.rdsl.generator.framework.jersey.CustomJerseyFilter;
 import com.xtext.rest.rdsl.management.Constants;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.Configuration;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 
 @SuppressWarnings("all")
 public class CustomAnnotations {
-  private final RESTResource resource;
+  private final ResourceType resource;
   
-  private final RESTConfiguration config;
+  private final Configuration config;
   
   private final IFileSystemAccess fsa;
   
-  public CustomAnnotations(final RESTConfiguration config, final IFileSystemAccess fsa, final RESTResource resource) {
+  public CustomAnnotations(final Configuration config, final IFileSystemAccess fsa, final ResourceType resource) {
     this.config = config;
     this.fsa = fsa;
     this.resource = resource;

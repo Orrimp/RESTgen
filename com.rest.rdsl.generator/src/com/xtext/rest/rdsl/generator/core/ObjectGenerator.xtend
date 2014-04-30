@@ -4,24 +4,23 @@ import com.xtext.rest.rdsl.generator.internals.AnnotationUtils
 import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.restDsl.Attribute
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.Configuration
+import com.xtext.rest.rdsl.restDsl.ResourceType
 import java.util.ArrayList
-import com.xtext.rest.rdsl.restDsl.JavaType
 import com.xtext.rest.rdsl.restDsl.ResourceType
 
 ///Erweitern indem ein VaterObjekt extrahiert wird mit Hyperlinks und ID
 class ObjectGenerator {
 	
 	extension ExtensionMethods e = new ExtensionMethods();
-	val RESTResource resource;
-	val RESTConfiguration config;
+	val ResourceType resource;
+	val Configuration config;
 	val ObjectParentGenerator parent;
 	val AnnotationUtils anno;
 	val ArrayList<String> imports = new ArrayList<String>();
 	
 	
-	new(RESTResource resource, RESTConfiguration config, AnnotationUtils anno, ObjectParentGenerator parent) {
+	new(ResourceType resource, Configuration config, AnnotationUtils anno, ObjectParentGenerator parent) {
 		this.resource = resource;
 		this.config = config;
 		this.anno = anno;	
@@ -35,10 +34,7 @@ class ObjectGenerator {
 		imports.add(Naming.CLASS_LINK.classImport);
 		imports.addAll(anno.annoImports);
 		imports.add(Naming.CLASS_OBJPARENT.classImport);
-		resource.attributes.forEach[attrib |
-		    if((attrib.type instanceof JavaType) && !imports.contains(attrib.nameOfType))
-                imports.add(attrib.nameOfType);
-      ]
+
 	
 	var String idDataType = config.IDDataTyp;
 	
@@ -105,9 +101,9 @@ class ObjectGenerator {
 			selfLink = "«config.basePath»/«resource.name.toLowerCase»/" + this.id;
 			this.hyperlinks.add(new «Naming.CLASS_LINK»("self", selfLink));
 		«FOR attribute: resource.attributes.filter[!it.list].filter[it.type instanceof ResourceType]»
-			«IF resource.name != (attribute.type as ResourceType).resourceRef.name»
+			«IF resource.name != (attribute.type as ResourceType).name»
 				if(«attribute.name»  != null)
-				this.hyperlinks.add(new «Naming.CLASS_LINK»("rel", "«config.basePath»/«(attribute.type as ResourceType).resourceRef.name.toLowerCase»" + "/" + «attribute.name».getID()));
+				this.hyperlinks.add(new «Naming.CLASS_LINK»("rel", "«config.basePath»/«(attribute.type as ResourceType).name.toLowerCase»" + "/" + «attribute.name».getID()));
 			«ENDIF»
 		«ENDFOR»
 		}

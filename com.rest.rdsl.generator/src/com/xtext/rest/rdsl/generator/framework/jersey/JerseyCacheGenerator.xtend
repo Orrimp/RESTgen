@@ -2,17 +2,17 @@ package com.xtext.rest.rdsl.generator.framework.jersey
 
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.restDsl.CACHING_TYPE
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.Configuration
+import com.xtext.rest.rdsl.restDsl.ResourceType
 
 class JerseyCacheGenerator {
 	
-	private val RESTResource resource
-	private val RESTConfiguration config;
+	private val ResourceType resource
+	private val Configuration config;
 	private var String response;
 	private var String implementatation;
 	
-	new (RESTResource resource, RESTConfiguration config){
+	new (ResourceType resource, Configuration config){
 		this.resource = resource;
 		this.config = config;	
 		initialize();

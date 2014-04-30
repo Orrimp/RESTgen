@@ -5,8 +5,8 @@ import com.xtext.rest.rdsl.management.Constants;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
 import com.xtext.rest.rdsl.restDsl.Auth;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import com.xtext.rest.rdsl.restDsl.HTTPBasic;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 
@@ -15,11 +15,11 @@ import org.eclipse.xtext.generator.IFileSystemAccess;
  */
 @SuppressWarnings("all")
 public class AuthenticationClass {
-  private RESTConfiguration config = null;
+  private Configuration config = null;
   
   private IFileSystemAccess fsa = null;
   
-  public AuthenticationClass(final RESTConfiguration config, final IFileSystemAccess fsa) {
+  public AuthenticationClass(final Configuration config, final IFileSystemAccess fsa) {
     this.config = config;
     this.fsa = fsa;
   }

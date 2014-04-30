@@ -3,18 +3,59 @@ grammar com.xtext.rest.rdsl.RestDsl with org.eclipse.xtext.common.Terminals
 generate restDsl "http://www.xtext.com/rest/rdsl/RestDsl"
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 
-RESTModel: con = RESTConfiguration | res = RESTResources;
+RESTModel: configuration = Configuration | package = Package;
 
-RESTResources:
-	userRes = RESTUserResource
-	resources += RESTResource+
+Package:
+	(userResource = UserResourceType)?
+	elements += PackageElement+
 ;
 
-RESTResource:
+PackageElement:
+    Type
+;
+
+Type :
+    PrimitiveType | ComplexType
+;
+
+//PrimitiveType: 
+//    name = ID   
+//;
+
+//IntType :
+//    name = 'Int'
+//;
+//
+//StringType:
+//    name = 'String'
+//;
+//
+//DateType:
+//    name = 'Date'
+//;
+
+PrimitiveType: 
+    kind = PrimitiveKind
+;
+enum PrimitiveKind:
+    STRING = 'String' | INT = 'Int' | DATE = 'Date'
+;
+
+ComplexType:
+	DataType | ResourceType
+;
+
+DataType:
+	'Data' name = ID
+	 '{'
+        members += Member+
+    '}'
+;
+
+ResourceType:
     'Resource' name = ID 
     '{'
-        (id = STRING)?
-        members += Member+  //For every other attribute then id the method musst look like Path("{id}/attributename)
+        members += Member+
     '}'
 ;
 
@@ -23,46 +64,15 @@ Member:
 ;
 
 Attribute:
-    method = HTTPMETHOD    
-    type = Type
+    method = HTTPMETHOD
+    (referencedType = [Type] | inlineType = PrimitiveType)
     (list ?= '[' ']')? 
     name = ID
 ;
 
-Type:
-    PrimitiveType | ResourceType | JavaType 
-;
-
-PrimitiveType:
-    StringType | IntType | DateType
-;
-
-StringType:
-    typeName = 'String'
-;
-
-IntType:
-    typeName = 'Int'
-;
-
-DateType:
-    typeName = 'Date'
-;
-
-ResourceType:
-    typeName = 'Resource'
-    resourceRef = [RESTResource]
-; 
-
-JavaType:
-    typeName = 'Java'
-    javaDataType = [types::JvmType|FQN]
-;
-
-RESTUserResource returns RESTResource:
+UserResourceType returns ResourceType:
     'UserResource' name = ID
     '{'
-        (id = STRING)?
         members += UserNameAttribute
         members += (UserPWAttribute | UserTokenAttribute)
         members += Member+        
@@ -70,26 +80,29 @@ RESTUserResource returns RESTResource:
 ;
 
 UserPWAttribute returns Attribute:
-    method = HTTPMETHOD 
-    type = Type 
+    method = HTTPMETHOD
+    (referencedType = [Type] | inlineType = PrimitiveType)
+    (list ?= '[' ']')? 
     name = 'password'
 ;
 
 UserNameAttribute returns Attribute:
-    method = HTTPMETHOD 
-    type = Type 
+    method = HTTPMETHOD
+    (referencedType = [Type] | inlineType = PrimitiveType)
+    (list ?= '[' ']')? 
     name = 'username'
 ;
 
 UserTokenAttribute returns Attribute: 
-    method = HTTPMETHOD 
-    type = Type 
+    method = HTTPMETHOD
+    (referencedType = [Type] | inlineType = PrimitiveType)
+    (list ?= '[' ']')? 
     name = 'token'
 ;
 
 
 
-RESTConfiguration:
+Configuration:
 	'Config'
 	'{'
 		'Base URI' basePath = URL
@@ -118,7 +131,7 @@ Paging:
 
 //Generate corresponding \GET inside the reosource with given Path
 Start:
-	startPath = URL resource=[RESTResource]
+	startPath = URL resource=[ResourceType]
 ;
 
 Header:

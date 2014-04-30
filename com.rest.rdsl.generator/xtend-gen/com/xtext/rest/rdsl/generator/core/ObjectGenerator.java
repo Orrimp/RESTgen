@@ -6,14 +6,11 @@ import com.xtext.rest.rdsl.generator.internals.AnnotationUtils;
 import com.xtext.rest.rdsl.management.ExtensionMethods;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.restDsl.Attribute;
-import com.xtext.rest.rdsl.restDsl.JavaType;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import com.xtext.rest.rdsl.restDsl.ResourceType;
 import com.xtext.rest.rdsl.restDsl.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -25,9 +22,9 @@ public class ObjectGenerator {
   @Extension
   private ExtensionMethods e = new ExtensionMethods();
   
-  private final RESTResource resource;
+  private final ResourceType resource;
   
-  private final RESTConfiguration config;
+  private final Configuration config;
   
   private final ObjectParentGenerator parent;
   
@@ -35,7 +32,7 @@ public class ObjectGenerator {
   
   private final ArrayList<String> imports = new ArrayList<String>();
   
-  public ObjectGenerator(final RESTResource resource, final RESTConfiguration config, final AnnotationUtils anno, final ObjectParentGenerator parent) {
+  public ObjectGenerator(final ResourceType resource, final Configuration config, final AnnotationUtils anno, final ObjectParentGenerator parent) {
     this.resource = resource;
     this.config = config;
     this.anno = anno;
@@ -53,26 +50,6 @@ public class ObjectGenerator {
       this.imports.addAll(_annoImports);
       String _classImport_1 = Naming.CLASS_OBJPARENT.getClassImport();
       this.imports.add(_classImport_1);
-      Iterable<Attribute> _attributes = this.e.getAttributes(this.resource);
-      final Consumer<Attribute> _function = new Consumer<Attribute>() {
-        public void accept(final Attribute attrib) {
-          boolean _and = false;
-          Type _type = attrib.getType();
-          if (!(_type instanceof JavaType)) {
-            _and = false;
-          } else {
-            String _nameOfType = ObjectGenerator.this.e.nameOfType(attrib);
-            boolean _contains = ObjectGenerator.this.imports.contains(_nameOfType);
-            boolean _not = (!_contains);
-            _and = _not;
-          }
-          if (_and) {
-            String _nameOfType_1 = ObjectGenerator.this.e.nameOfType(attrib);
-            ObjectGenerator.this.imports.add(_nameOfType_1);
-          }
-        }
-      };
-      _attributes.forEach(_function);
       String idDataType = this.e.getIDDataTyp(this.config);
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("package ");
@@ -210,8 +187,8 @@ public class ObjectGenerator {
       _builder.newLine();
       _builder.newLine();
       {
-        Iterable<Attribute> _attributes_1 = this.e.getAttributes(this.resource);
-        for(final Attribute attribute : _attributes_1) {
+        Iterable<Attribute> _attributes = this.e.getAttributes(this.resource);
+        for(final Attribute attribute : _attributes) {
           _builder.append("\t");
           _builder.append("\t\t");
           _builder.newLine();
@@ -295,7 +272,7 @@ public class ObjectGenerator {
           _builder.append(";");
           _builder.newLineIfNotEmpty();
           {
-            Type _type = attribute.getType();
+            Type _type = this.e.getType(attribute);
             if ((_type instanceof ResourceType)) {
               _builder.append("\t");
               _builder.append("\t");
@@ -332,27 +309,26 @@ public class ObjectGenerator {
       _builder.append("(\"self\", selfLink));");
       _builder.newLineIfNotEmpty();
       {
-        Iterable<Attribute> _attributes_2 = this.e.getAttributes(this.resource);
-        final Function1<Attribute,Boolean> _function_1 = new Function1<Attribute,Boolean>() {
+        Iterable<Attribute> _attributes_1 = this.e.getAttributes(this.resource);
+        final Function1<Attribute,Boolean> _function = new Function1<Attribute,Boolean>() {
           public Boolean apply(final Attribute it) {
             boolean _isList = it.isList();
             return Boolean.valueOf((!_isList));
           }
         };
-        Iterable<Attribute> _filter = IterableExtensions.<Attribute>filter(_attributes_2, _function_1);
-        final Function1<Attribute,Boolean> _function_2 = new Function1<Attribute,Boolean>() {
+        Iterable<Attribute> _filter = IterableExtensions.<Attribute>filter(_attributes_1, _function);
+        final Function1<Attribute,Boolean> _function_1 = new Function1<Attribute,Boolean>() {
           public Boolean apply(final Attribute it) {
-            Type _type = it.getType();
+            Type _type = ObjectGenerator.this.e.getType(it);
             return Boolean.valueOf((_type instanceof ResourceType));
           }
         };
-        Iterable<Attribute> _filter_1 = IterableExtensions.<Attribute>filter(_filter, _function_2);
+        Iterable<Attribute> _filter_1 = IterableExtensions.<Attribute>filter(_filter, _function_1);
         for(final Attribute attribute_1 : _filter_1) {
           {
             String _name_11 = this.resource.getName();
-            Type _type_1 = attribute_1.getType();
-            RESTResource _resourceRef = ((ResourceType) _type_1).getResourceRef();
-            String _name_12 = _resourceRef.getName();
+            Type _type_1 = this.e.getType(attribute_1);
+            String _name_12 = ((ResourceType) _type_1).getName();
             boolean _notEquals = (!Objects.equal(_name_11, _name_12));
             if (_notEquals) {
               _builder.append("\t");
@@ -368,9 +344,8 @@ public class ObjectGenerator {
               String _basePath_1 = this.config.getBasePath();
               _builder.append(_basePath_1, "\t");
               _builder.append("/");
-              Type _type_2 = attribute_1.getType();
-              RESTResource _resourceRef_1 = ((ResourceType) _type_2).getResourceRef();
-              String _name_14 = _resourceRef_1.getName();
+              Type _type_2 = this.e.getType(attribute_1);
+              String _name_14 = ((ResourceType) _type_2).getName();
               String _lowerCase_1 = _name_14.toLowerCase();
               _builder.append(_lowerCase_1, "\t");
               _builder.append("\" + \"/\" + ");
@@ -451,7 +426,7 @@ public class ObjectGenerator {
   private String putExtra(final Attribute attribute) {
     boolean _isList = attribute.isList();
     if (_isList) {
-      Type _type = attribute.getType();
+      Type _type = this.e.getType(attribute);
       String _nameOfType = this.e.nameOfType(_type);
       String _plus = ("<" + _nameOfType);
       return (_plus + ">");

@@ -2,32 +2,31 @@ package com.xtext.rest.rdsl.generator.framework.jersey
 
 import com.xtext.rest.rdsl.restDsl.Attribute
 import com.xtext.rest.rdsl.restDsl.HTTPMETHOD
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.Configuration
+import com.xtext.rest.rdsl.restDsl.ResourceType
 import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyCacheGenerator
 import com.xtext.rest.rdsl.generator.framework.MethodGenerator
 import com.xtext.rest.rdsl.generator.resources.internal.ExceptionMapper
-import com.xtext.rest.rdsl.restDsl.ResourceType
 
 class JerseyMethodGenerator extends MethodGenerator{
 	
-	var RESTConfiguration config = null;
+	var Configuration config = null;
 	var mime = ""
 	var counter = 0;
 	val String idRegex;
 	val String idDataType;
 	val ExceptionMapper mapper;
 	val String resourceName;
-	val RESTResource resource;
+	val ResourceType resource;
 	val JerseyCacheGenerator caching; 
 	
 	//Use extension methods from the given class
 	extension ExtensionMethods e = new ExtensionMethods();
 	
-	new(RESTConfiguration configuration, RESTResource resource) {
+	new(Configuration configuration, ResourceType resource) {
 		this.config = configuration;
 		this.mapper = new ExceptionMapper(configuration);
 		this.resource = resource;
@@ -149,11 +148,11 @@ class JerseyMethodGenerator extends MethodGenerator{
 
 		'''
 		@GET
-		@Path("/{id «idRegex»}/«type.resourceRef.name.toLowerCase»/{page}")
+		@Path("/{id «idRegex»}/«type.name.toLowerCase»/{page}")
 		@Produces(«mime»)
 		@«Naming.ANNO_USER_AUTH»
-		public Response get«type.resourceRef.name.toFirstUpper»(
-			«FOR attrib: type.resourceRef.attributes»
+		public Response get«type.name.toFirstUpper»(
+			«FOR attrib: type.attributes»
 			«IF !(attrib.list)»
 			@QueryParam("«attrib.name»") «attrib.type.simpleNameOfType» «attrib.name»,
 			«ENDIF»
@@ -164,7 +163,7 @@ class JerseyMethodGenerator extends MethodGenerator{
 				int elementsPerPage = «config.paging.elementsCount»;
 				
 				«Naming.CLASS_DB_QUERY» «Naming.CLASS_DB_QUERY.toString.toLowerCase»  = new «Naming.CLASS_DB_QUERY»();
-				«FOR attrib: type.resourceRef.attributes»
+				«FOR attrib: type.attributes»
 				«IF !(attrib.list)»
 				«Naming.CLASS_DB_QUERY.toString.toLowerCase».put("«attrib.name»", «attrib.name»);
 				«ENDIF»

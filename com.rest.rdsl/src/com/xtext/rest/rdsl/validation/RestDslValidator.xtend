@@ -3,11 +3,6 @@
  */
 package com.xtext.rest.rdsl.validation
 
-import com.xtext.rest.rdsl.restDsl.Attribute
-import com.xtext.rest.rdsl.restDsl.RESTResource
-import com.xtext.rest.rdsl.restDsl.RestDslPackage
-import org.eclipse.xtext.validation.Check
-
 /**
  * Custom validation rules. 
  *
@@ -19,23 +14,23 @@ class RestDslValidator extends AbstractRestDslValidator {
 	public static val INVALID_RES_NAME = "INVALID_RESOURCE_NAME"
 	public static val REST_START_POINT = "REST_START_POINT"
 	
-	@Check
-	def checkAttributStartsWithLowerCase(Attribute attribute) {
-		if (!Character.isLowerCase(attribute.name.charAt(0))) {
-			warning('Attribute names should start with a lower case', 
-					RestDslPackage.Literals.ATTRIBUTE__NAME,
-					INVALID_ATTRIB_NAME)
-		}
-	}
-	
-	@Check 
-	def checkResourceStartsWithKapital(RESTResource resource){
-		if(!Character.isUpperCase(resource.name.charAt(0))){
-			warning ('Resource names should start with capital', 
-					RestDslPackage.Literals.REST_RESOURCE__NAME, 
-					INVALID_RES_NAME)
-		}
-	}
+//	@Check
+//	def checkAttributStartsWithLowerCase(Attribute attribute) {
+//		if (!Character.isLowerCase(attribute.name.charAt(0))) {
+//			warning('Attribute names should start with a lower case', 
+//					RestDslPackage.Literals.ATTRIBUTE__NAME,
+//					INVALID_ATTRIB_NAME)
+//		}
+//	}
+//	
+//	@Check 
+//	def checkResourceStartsWithKapital(RESTResource resource){
+//		if(!Character.isUpperCase(resource.name.charAt(0))){
+//			warning ('Resource names should start with capital', 
+//					RestDslPackage.Literals.REST_RESOURCE__NAME, 
+//					INVALID_RES_NAME)
+//		}
+//	}
 	
 //	@Check
 //	def checkSingleStart(RESTResources resourceCol){

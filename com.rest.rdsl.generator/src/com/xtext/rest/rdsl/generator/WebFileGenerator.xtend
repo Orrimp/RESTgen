@@ -3,14 +3,14 @@ package com.xtext.rest.rdsl.generator
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.PackageManager
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.restDsl.Configuration
 
 class WebFileGenerator {
 	
 	private val IFileSystemAccess fsa;
-	private val RESTConfiguration config;
+	private val Configuration config;
 	
-	new(IFileSystemAccess fsa, RESTConfiguration config) {
+	new(IFileSystemAccess fsa, Configuration config) {
 		this.fsa = fsa;
 		this.config = config;
 	}

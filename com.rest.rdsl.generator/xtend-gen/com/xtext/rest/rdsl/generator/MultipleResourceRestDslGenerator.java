@@ -3,7 +3,7 @@ package com.xtext.rest.rdsl.generator;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.xtext.rest.rdsl.generator.IMultipleResourceGenerator;
-import com.xtext.rest.rdsl.generator.RESTResourceCollection;
+import com.xtext.rest.rdsl.generator.ResourceTypeCollection;
 import com.xtext.rest.rdsl.generator.WebFileGenerator;
 import com.xtext.rest.rdsl.generator.core.DAOGenerator;
 import com.xtext.rest.rdsl.generator.core.FrameworkManager;
@@ -17,10 +17,10 @@ import com.xtext.rest.rdsl.generator.internals.InterfaceGenerator;
 import com.xtext.rest.rdsl.generator.internals.JSONCollectionGenerator;
 import com.xtext.rest.rdsl.management.Constants;
 import com.xtext.rest.rdsl.management.PackageManager;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
+import com.xtext.rest.rdsl.restDsl.Configuration;
+import com.xtext.rest.rdsl.restDsl.PackageElement;
 import com.xtext.rest.rdsl.restDsl.RESTModel;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
-import com.xtext.rest.rdsl.restDsl.RESTResources;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import com.xtext.rest.rdsl.restDsl.impl.RestDslFactoryImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +37,9 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class MultipleResourceRestDslGenerator implements IMultipleResourceGenerator {
-  private RESTConfiguration config = RestDslFactoryImpl.eINSTANCE.createRESTConfiguration();
+  private Configuration config = RestDslFactoryImpl.eINSTANCE.createConfiguration();
   
-  private RESTResourceCollection resources;
+  private ResourceTypeCollection resources;
   
   private ObjectParentGenerator obpgen;
   
@@ -136,8 +136,8 @@ public class MultipleResourceRestDslGenerator implements IMultipleResourceGenera
     this.obpgen.generate(_clientPackage);
     String _objectPackage = PackageManager.getObjectPackage();
     this.obpgen.generate(_objectPackage);
-    List<RESTResource> _resources = this.resources.getResources();
-    for (final RESTResource r : _resources) {
+    List<ResourceType> _resources = this.resources.getResources();
+    for (final ResourceType r : _resources) {
       {
         String _mainPackage = Constants.getMainPackage();
         String _plus = (_mainPackage + Constants.OBJECTPACKAGE);
@@ -159,7 +159,7 @@ public class MultipleResourceRestDslGenerator implements IMultipleResourceGenera
     }
   }
   
-  public CharSequence compileObjects(final ObjectParentGenerator obgen, final RESTResource resource, final RESTConfiguration configuration) {
+  public CharSequence compileObjects(final ObjectParentGenerator obgen, final ResourceType resource, final Configuration configuration) {
     CharSequence _xblockexpression = null;
     {
       final AnnotationUtils anno = new AnnotationUtils();
@@ -170,7 +170,7 @@ public class MultipleResourceRestDslGenerator implements IMultipleResourceGenera
     return _xblockexpression;
   }
   
-  public CharSequence generateClient(final ObjectParentGenerator obgen, final RESTResource resource, final RESTConfiguration config) {
+  public CharSequence generateClient(final ObjectParentGenerator obgen, final ResourceType resource, final Configuration config) {
     CharSequence _xblockexpression = null;
     {
       final AnnotationUtils anno = new AnnotationUtils();
@@ -241,40 +241,41 @@ public class MultipleResourceRestDslGenerator implements IMultipleResourceGenera
    * Search the configuraiton dsl and resources
    * If not found it will throw a NullpointerException
    */
-  public void extractResourcesAndConfiguration(final Iterable<RESTModel> model) {
-    final List<RESTResource> resources = new ArrayList<RESTResource>();
-    RESTResource userResource = null;
-    for (final RESTModel r : model) {
-      RESTResources _res = r.getRes();
-      boolean _notEquals = (!Objects.equal(_res, null));
+  public void extractResourcesAndConfiguration(final Iterable<RESTModel> models) {
+    final List<ResourceType> resources = new ArrayList<ResourceType>();
+    ResourceType userResource = null;
+    for (final RESTModel model : models) {
+      com.xtext.rest.rdsl.restDsl.Package _package = model.getPackage();
+      boolean _notEquals = (!Objects.equal(_package, null));
       if (_notEquals) {
-        RESTResources _res_1 = r.getRes();
-        EList<RESTResource> _resources = _res_1.getResources();
-        for (final RESTResource resource : _resources) {
+        com.xtext.rest.rdsl.restDsl.Package _package_1 = model.getPackage();
+        EList<PackageElement> _elements = _package_1.getElements();
+        Iterable<ResourceType> _filter = Iterables.<ResourceType>filter(_elements, ResourceType.class);
+        for (final ResourceType resource : _filter) {
           resources.add(resource);
         }
-        RESTResources _res_2 = r.getRes();
-        RESTResource _userRes = _res_2.getUserRes();
-        boolean _notEquals_1 = (!Objects.equal(_userRes, null));
+        com.xtext.rest.rdsl.restDsl.Package _package_2 = model.getPackage();
+        ResourceType _userResource = _package_2.getUserResource();
+        boolean _notEquals_1 = (!Objects.equal(_userResource, null));
         if (_notEquals_1) {
-          RESTResources _res_3 = r.getRes();
-          RESTResource _userRes_1 = _res_3.getUserRes();
-          resources.add(_userRes_1);
+          com.xtext.rest.rdsl.restDsl.Package _package_3 = model.getPackage();
+          ResourceType _userResource_1 = _package_3.getUserResource();
+          resources.add(_userResource_1);
         }
-        RESTResources _res_4 = r.getRes();
-        RESTResource _userRes_2 = _res_4.getUserRes();
-        userResource = _userRes_2;
+        com.xtext.rest.rdsl.restDsl.Package _package_4 = model.getPackage();
+        ResourceType _userResource_2 = _package_4.getUserResource();
+        userResource = _userResource_2;
       } else {
-        RESTConfiguration _con = r.getCon();
-        boolean _notEquals_2 = (!Objects.equal(_con, null));
+        Configuration _configuration = model.getConfiguration();
+        boolean _notEquals_2 = (!Objects.equal(_configuration, null));
         if (_notEquals_2) {
-          RESTConfiguration _con_1 = r.getCon();
-          this.config = _con_1;
+          Configuration _configuration_1 = model.getConfiguration();
+          this.config = _configuration_1;
         }
       }
     }
-    RESTResourceCollection _rESTResourceCollection = new RESTResourceCollection(resources);
-    this.resources = _rESTResourceCollection;
+    ResourceTypeCollection _resourceTypeCollection = new ResourceTypeCollection(resources);
+    this.resources = _resourceTypeCollection;
     this.resources.setUserResource(userResource);
     boolean _equals = Objects.equal(this.config, null);
     if (_equals) {

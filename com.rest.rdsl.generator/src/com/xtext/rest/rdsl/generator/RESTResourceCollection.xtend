@@ -1,34 +1,34 @@
 package com.xtext.rest.rdsl.generator
 
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.ResourceType
 import java.util.ArrayList
 import java.util.List
 
-class RESTResourceCollection {
+class ResourceTypeCollection {
 	
-	val List<RESTResource> resources;
-	var RESTResource userResource;
+	val List<ResourceType> resources;
+	var ResourceType userResource;
 	
-	public new (List<RESTResource> resources){
+	public new (List<ResourceType> resources){
 		this.resources = resources;	
 	}
 	
-	public def RESTResource getUserResource(){
+	public def ResourceType getUserResource(){
 		return this.userResource;
 	}
 	
-	public def void setUserResource(RESTResource userResource){
+	public def void setUserResource(ResourceType userResource){
 		if(userResource != null)
 			this.userResource = userResource;
 	}
 	
-	public def List<RESTResource> getResources(){
+	public def List<ResourceType> getResources(){
 		
 		if(resources != null){
 			return this.resources;
 		}
 		else{
-			return new ArrayList<RESTResource>();
+			return new ArrayList<ResourceType>();
 		}
 	}
 }

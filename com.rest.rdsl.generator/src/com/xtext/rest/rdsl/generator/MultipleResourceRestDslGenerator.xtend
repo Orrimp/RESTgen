@@ -9,9 +9,9 @@ import com.xtext.rest.rdsl.generator.internals.HATEOASGenerator
 import com.xtext.rest.rdsl.generator.internals.IDGenerator
 import com.xtext.rest.rdsl.generator.internals.InterfaceGenerator
 import com.xtext.rest.rdsl.generator.internals.JSONCollectionGenerator
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.restDsl.Configuration
 import com.xtext.rest.rdsl.restDsl.RESTModel
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.ResourceType
 import com.xtext.rest.rdsl.restDsl.impl.RestDslFactoryImpl
 import java.util.ArrayList
 import java.util.List
@@ -25,8 +25,8 @@ import com.xtext.rest.rdsl.management.Constants
 class MultipleResourceRestDslGenerator implements IMultipleResourceGenerator {
 
 //For every Object xText generates a factory method
-var RESTConfiguration config = RestDslFactoryImpl.eINSTANCE.createRESTConfiguration;
-var RESTResourceCollection resources;
+var Configuration config = RestDslFactoryImpl.eINSTANCE.createConfiguration;
+var ResourceTypeCollection resources;
 var ObjectParentGenerator obpgen;
 var FrameworkManager frameWorkManager;
 
@@ -116,7 +116,7 @@ var FrameworkManager frameWorkManager;
 		}
 	}
 	
-	def compileObjects(ObjectParentGenerator obgen, RESTResource resource, RESTConfiguration configuration) {
+	def compileObjects(ObjectParentGenerator obgen, ResourceType resource, Configuration configuration) {
 		val AnnotationUtils anno = new AnnotationUtils();
 // 		JAXB Annotations
 //		anno.setClassAnno("@XmlRootElement(name = \"" +resource.name + "\") \r\n@XmlAccessorType(XmlAccessType.FIELD)");
@@ -128,7 +128,7 @@ var FrameworkManager frameWorkManager;
 	
 	
 	
-	def generateClient(ObjectParentGenerator obgen, RESTResource resource, RESTConfiguration config){
+	def generateClient(ObjectParentGenerator obgen, ResourceType resource, Configuration config){
 		val AnnotationUtils anno = new AnnotationUtils();
 
 		val ObjectGenerator objGen = new ObjectGenerator(resource, config, anno, obgen)
@@ -167,22 +167,22 @@ var FrameworkManager frameWorkManager;
 	 * Search the configuraiton dsl and resources
 	 * If not found it will throw a NullpointerException
 	 */
-	def extractResourcesAndConfiguration(Iterable<RESTModel> model) {
-		val List<RESTResource> resources = new ArrayList<RESTResource>();
-		var RESTResource userResource;
-		for(r: model){
-			if(r.res!=null){							//Config file??		
-				for(resource: r.res.resources){
+	def extractResourcesAndConfiguration(Iterable<RESTModel> models) {
+		val List<ResourceType> resources = new ArrayList<ResourceType>();
+		var ResourceType userResource;
+		for(model : models){
+			if(model.package!=null){							//Config file??		
+				for(resource: model.package.elements.filter(ResourceType)){
 					resources.add(resource);
 				}
-				if(r.res.userRes != null)
-					resources.add(r.res.userRes);
-					userResource = r.res.userRes;
-			}else if(r.con != null){
-				this.config = r.con;
+				if(model.package.userResource != null)
+					resources.add(model.package.userResource);
+					userResource = model.package.userResource;
+			}else if(model.configuration != null){
+				this.config = model.configuration;
 			}
 		}
-		this.resources = new RESTResourceCollection(resources);
+		this.resources = new ResourceTypeCollection(resources);
 		this.resources.userResource = userResource;
 		
 		if(config == null)

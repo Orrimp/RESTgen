@@ -1,92 +1,72 @@
 package com.xtext.rest.rdsl.management
 
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.ID_GEN
-import com.xtext.rest.rdsl.restDsl.JavaType
 import com.xtext.rest.rdsl.restDsl.ResourceType
-import com.xtext.rest.rdsl.restDsl.RESTResource
 import com.xtext.rest.rdsl.restDsl.Attribute
+import com.xtext.rest.rdsl.restDsl.Type
+import com.xtext.rest.rdsl.restDsl.ComplexType
+import com.xtext.rest.rdsl.restDsl.Configuration
+import com.xtext.rest.rdsl.restDsl.ID_GEN
 import com.xtext.rest.rdsl.restDsl.PrimitiveType
-import com.xtext.rest.rdsl.restDsl.IntType
-import com.xtext.rest.rdsl.restDsl.StringType
-import com.xtext.rest.rdsl.restDsl.DateType
+import com.xtext.rest.rdsl.restDsl.PrimitiveKind
 
 /**
  * @author Vitaliy
- * Class for with extension methods for ResourceReference, JavaReference
  */
 class ExtensionMethods {
 
-    /** 
-	 * @param Reference from type Resource from the dsl
-	 * @return returns the name of the reference
-	 */
-
-    
-    def dispatch String nameOfType(Attribute ref) {
-        if(ref.list) {
+    def dispatch String nameOfType(Attribute attribute) {
+        if (attribute.list) {
             return listName;
         } else {
-            return nameOfType(ref.type)
+            return nameOfType(attribute.type)
         }
     }
-    
-    def dispatch String simpleNameOfType(Attribute ref) {
-        if(ref.list) {
-            return listName;
-        } else {
-            return simpleNameOfType(ref.type)
+
+    def dispatch String simpleNameOfType(Attribute attribute) {
+        return nameOfType(attribute)
+    }
+
+    def dispatch nameOfType(PrimitiveType type) {
+        if (type.kind == PrimitiveKind.STRING) {
+            return "String"
+        } else if (type.kind == PrimitiveKind.INT) {
+            return "Integer"
+        } else if (type.kind == PrimitiveKind.DATE) {
+            return "java.util.Date"
         }
     }
-    
-    def dispatch nameOfType(ResourceType ref) {
-        return ref?.resourceRef?.name;
+
+    def dispatch simpleNameOfType(PrimitiveType type) {
+        return nameOfType(type)
     }
 
-    def dispatch nameOfType(IntType ref) {
-        return "Integer";
+    def dispatch nameOfType(ComplexType type) {
+        return type.name;
     }
 
-    def dispatch nameOfType(StringType ref) {
-        return "String";
+    def dispatch simpleNameOfType(ComplexType type) {
+        return nameOfType(type);
     }
 
-    def dispatch nameOfType(DateType ref) {
-        return "java.util.Date";
+    def getAttributes(ComplexType type) {
+        return type.members.filter(Attribute)
     }
 
-    def dispatch simpleNameOfType(JavaType ref) {
-        return ref?.javaDataType?.simpleName
-    }
-
-    def dispatch simpleNameOfType(IntType ref) {
-        return nameOfType(ref);
-    }
-
-    def dispatch simpleNameOfType(StringType ref) {
-        return nameOfType(ref);
-    }
-
-    def dispatch simpleNameOfType(ResourceType ref) {
-        return nameOfType(ref)
-    }
-
-    def dispatch simpleNameOfType(DateType ref) {
-        return nameOfType(ref);
-    }
-
-    def dispatch getAttributes(RESTResource resource) {
-        return resource.members.filter(Attribute)
-    }
-    
     def getListName() {
         return "java.util.ArrayList";
     }
 
+    def getType(Attribute attribute) {
+        if (attribute.referencedType == null) {
+            return attribute.inlineType;
+        }
+        return attribute.referencedType;
+    }
+
     /**
-	 * Extends the class RESTConfiguration with additional method to convert the ID Data Type to the one handle-able in Java. 
+	 * Extends the class Configuration with additional method to convert the ID Data Type to the one handle-able in Java. 
 	 */
-    def String getIDDataTyp(RESTConfiguration config) {
+    def String getIDDataTyp(Configuration config) {
         switch (config.getIdtype()) {
             case ID_GEN.LONG: return "Long"
             case ID_GEN.UUID: return "String"

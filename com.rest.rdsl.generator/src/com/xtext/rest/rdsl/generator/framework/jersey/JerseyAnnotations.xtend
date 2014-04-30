@@ -1,18 +1,18 @@
 package com.xtext.rest.rdsl.generator.framework.jersey
 
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.Configuration
+import com.xtext.rest.rdsl.restDsl.ResourceType
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
 
 class CustomAnnotations {
-	val RESTResource resource;
-	val RESTConfiguration config;
+	val ResourceType resource;
+	val Configuration config;
 	val IFileSystemAccess fsa;
 	
-	new(RESTConfiguration config, IFileSystemAccess fsa, RESTResource resource) {
+	new(Configuration config, IFileSystemAccess fsa, ResourceType resource) {
 		this.config = config;
 		this.fsa = fsa;
 		this.resource = resource;

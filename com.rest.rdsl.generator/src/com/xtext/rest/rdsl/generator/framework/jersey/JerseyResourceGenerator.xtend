@@ -4,12 +4,11 @@ import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.restDsl.Attribute
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.Configuration
+import com.xtext.rest.rdsl.restDsl.ResourceType
 import java.util.HashSet
 import java.util.Set
 import com.xtext.rest.rdsl.generator.framework.IResourceGenerator
-import com.xtext.rest.rdsl.restDsl.JavaType
 
 class JerseyResourceGenerator implements IResourceGenerator {
 			
@@ -19,16 +18,11 @@ class JerseyResourceGenerator implements IResourceGenerator {
 	/*
 	 * Generate the class which represents a REST resource. 
 	 */
-	override generate(RESTResource resource, RESTConfiguration config) {
+	override generate(ResourceType resource, Configuration config) {
 	
 	// Analyse the use attributes to import them if necessary 
 	// by extracting the full qaualifed name and addting import later.
 	val Set<String> attributeImports = new HashSet<String>()
-	for(Attribute attrib: resource.attributes){
-		if(attrib.type instanceof JavaType){
-			attributeImports.add(attrib.type.nameOfType);
-		}
-	}
 		
 	'''
 	package «PackageManager.resourcePackage»;
@@ -73,8 +67,7 @@ class JerseyResourceGenerator implements IResourceGenerator {
 		«mGen.generatePATCH()»
 		«mGen.generateQuery()»
 	««« Custom methods for List elements
-		«FOR attribute: resource.attributes»
-		
+		«FOR attribute: resource.attributes»		
 			«IF attribute.list»
 				«mGen.generateQuery(attribute)»
 		 	«ELSE»

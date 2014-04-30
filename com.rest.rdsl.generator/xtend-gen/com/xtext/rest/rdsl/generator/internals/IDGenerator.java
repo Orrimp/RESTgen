@@ -4,8 +4,8 @@ import com.xtext.rest.rdsl.management.Constants;
 import com.xtext.rest.rdsl.management.ExtensionMethods;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import com.xtext.rest.rdsl.restDsl.ID_GEN;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -14,12 +14,12 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class IDGenerator {
   private final IFileSystemAccess fsa;
   
-  private final RESTConfiguration config;
+  private final Configuration config;
   
   @Extension
   private ExtensionMethods e = new ExtensionMethods();
   
-  public IDGenerator(final IFileSystemAccess fsa, final RESTConfiguration config) {
+  public IDGenerator(final IFileSystemAccess fsa, final Configuration config) {
     this.fsa = fsa;
     this.config = config;
   }
@@ -31,7 +31,7 @@ public class IDGenerator {
     this.fsa.generateFile(_plus, _compile);
   }
   
-  public CharSequence compile(final RESTConfiguration config) {
+  public CharSequence compile(final Configuration config) {
     ID_GEN _idtype = config.getIdtype();
     if (_idtype != null) {
       switch (_idtype) {
@@ -46,7 +46,7 @@ public class IDGenerator {
     return null;
   }
   
-  public CharSequence generateLONGClass(final RESTConfiguration config) {
+  public CharSequence generateLONGClass(final Configuration config) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package ");
     String _packageName = Naming.CLASS_ID.getPackageName();
@@ -128,7 +128,7 @@ public class IDGenerator {
     return _builder;
   }
   
-  private CharSequence generateUUIDClass(final RESTConfiguration config) {
+  private CharSequence generateUUIDClass(final Configuration config) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package ");
     String _packageName = Naming.CLASS_ID.getPackageName();

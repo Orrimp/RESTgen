@@ -6,10 +6,8 @@ import com.xtext.rest.rdsl.management.ExtensionMethods;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
 import com.xtext.rest.rdsl.restDsl.Attribute;
-import com.xtext.rest.rdsl.restDsl.JavaType;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
-import com.xtext.rest.rdsl.restDsl.Type;
+import com.xtext.rest.rdsl.restDsl.Configuration;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,19 +22,10 @@ public class JerseyResourceGenerator implements IResourceGenerator {
   /**
    * Generate the class which represents a REST resource.
    */
-  public CharSequence generate(final RESTResource resource, final RESTConfiguration config) {
+  public CharSequence generate(final ResourceType resource, final Configuration config) {
     CharSequence _xblockexpression = null;
     {
       final Set<String> attributeImports = new HashSet<String>();
-      Iterable<Attribute> _attributes = this.e.getAttributes(resource);
-      for (final Attribute attrib : _attributes) {
-        Type _type = attrib.getType();
-        if ((_type instanceof JavaType)) {
-          Type _type_1 = attrib.getType();
-          String _nameOfType = this.e.nameOfType(_type_1);
-          attributeImports.add(_nameOfType);
-        }
-      }
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("package ");
       String _resourcePackage = PackageManager.getResourcePackage();
@@ -167,20 +156,17 @@ public class JerseyResourceGenerator implements IResourceGenerator {
       _builder.append(_generateQuery, "\t");
       _builder.newLineIfNotEmpty();
       {
-        Iterable<Attribute> _attributes_1 = this.e.getAttributes(resource);
-        for(final Attribute attribute : _attributes_1) {
-          _builder.newLine();
+        Iterable<Attribute> _attributes = this.e.getAttributes(resource);
+        for(final Attribute attribute : _attributes) {
           {
             boolean _isList = attribute.isList();
             if (_isList) {
-              _builder.append("\t");
               CharSequence _generateQuery_1 = mGen.generateQuery(attribute);
-              _builder.append(_generateQuery_1, "\t");
+              _builder.append(_generateQuery_1, "");
               _builder.newLineIfNotEmpty();
             } else {
-              _builder.append("\t");
               CharSequence _generate = mGen.generate(attribute);
-              _builder.append(_generate, "\t");
+              _builder.append(_generate, "");
               _builder.newLineIfNotEmpty();
             }
           }

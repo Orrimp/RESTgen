@@ -1,7 +1,7 @@
 package com.xtext.rest.rdsl.generator.internals
 
 import com.xtext.rest.rdsl.restDsl.ID_GEN
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.restDsl.Configuration
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.Naming
@@ -11,11 +11,11 @@ import com.xtext.rest.rdsl.management.PackageManager
 public class IDGenerator {
 	
 	val IFileSystemAccess fsa;
-	val RESTConfiguration config
+	val Configuration config
 	//Use extension methods from the given class
 	extension ExtensionMethods e = new ExtensionMethods();
 	
-	new(IFileSystemAccess fsa, RESTConfiguration config) {
+	new(IFileSystemAccess fsa, Configuration config) {
 		this.fsa = fsa;
 		this.config = config;
 	}
@@ -24,7 +24,7 @@ public class IDGenerator {
 		fsa.generateFile(Naming.CLASS_ID.generationLocation + Constants.JAVA, compile(config))
 	}
 	
-	def compile(RESTConfiguration config) {
+	def compile(Configuration config) {
 	
 		switch(config.idtype){
 		case ID_GEN.LONG: return generateLONGClass(config)
@@ -32,7 +32,7 @@ public class IDGenerator {
 		}
 	}
 	
-	def generateLONGClass(RESTConfiguration config) '''
+	def generateLONGClass(Configuration config) '''
 		package «Naming.CLASS_ID.packageName»;
 		
 		import «Naming.INTERFACE_ID.classImport»;
@@ -57,7 +57,7 @@ public class IDGenerator {
 		}
 	'''
 	
-	private def generateUUIDClass(RESTConfiguration config)'''
+	private def generateUUIDClass(Configuration config)'''
 	package «Naming.CLASS_ID.packageName»;
 	
 	import «PackageManager.interfacePackage».«Naming.INTERFACE_ID»;

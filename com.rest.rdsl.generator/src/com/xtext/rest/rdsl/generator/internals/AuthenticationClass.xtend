@@ -1,6 +1,6 @@
 package com.xtext.rest.rdsl.generator.internals
 
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.restDsl.Configuration
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.restDsl.HTTPBasic
 import com.xtext.rest.rdsl.management.PackageManager
@@ -12,10 +12,10 @@ import com.xtext.rest.rdsl.management.Naming
  */
 class AuthenticationClass {
 	
-	var RESTConfiguration config = null;
+	var Configuration config = null;
 	var IFileSystemAccess fsa  = null;
 		
-	new(RESTConfiguration config, IFileSystemAccess fsa) {
+	new(Configuration config, IFileSystemAccess fsa) {
 		this.config = config;
 		this.fsa = fsa;
 	

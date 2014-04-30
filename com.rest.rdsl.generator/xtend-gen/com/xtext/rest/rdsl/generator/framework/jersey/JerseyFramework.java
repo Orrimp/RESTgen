@@ -1,6 +1,6 @@
 package com.xtext.rest.rdsl.generator.framework.jersey;
 
-import com.xtext.rest.rdsl.generator.RESTResourceCollection;
+import com.xtext.rest.rdsl.generator.ResourceTypeCollection;
 import com.xtext.rest.rdsl.generator.framework.IRESTFramework;
 import com.xtext.rest.rdsl.generator.framework.IResourceGenerator;
 import com.xtext.rest.rdsl.generator.framework.jersey.CustomAnnotations;
@@ -10,8 +10,8 @@ import com.xtext.rest.rdsl.generator.framework.jersey.JAXBResolverContent;
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyBaseContextResolver;
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyResourceGenerator;
 import com.xtext.rest.rdsl.management.Constants;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.Configuration;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import java.util.List;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 
@@ -19,17 +19,17 @@ import org.eclipse.xtext.generator.IFileSystemAccess;
 public class JerseyFramework implements IRESTFramework {
   private final IFileSystemAccess fsa;
   
-  private final RESTConfiguration config;
+  private final Configuration config;
   
-  public JerseyFramework(final IFileSystemAccess fsa, final RESTConfiguration config) {
+  public JerseyFramework(final IFileSystemAccess fsa, final Configuration config) {
     this.fsa = fsa;
     this.config = config;
   }
   
-  public void generateResources(final RESTResourceCollection resourceCol) {
+  public void generateResources(final ResourceTypeCollection resourceCol) {
     final IResourceGenerator generator = new JerseyResourceGenerator();
-    List<RESTResource> _resources = resourceCol.getResources();
-    for (final RESTResource r : _resources) {
+    List<ResourceType> _resources = resourceCol.getResources();
+    for (final ResourceType r : _resources) {
       String _mainPackage = Constants.getMainPackage();
       String _plus = (_mainPackage + Constants.RESOURCEPACKAGE);
       String _plus_1 = (_plus + "/");
@@ -42,15 +42,15 @@ public class JerseyFramework implements IRESTFramework {
     }
   }
   
-  public void generateMisc(final RESTResourceCollection resourceCol) {
-    List<RESTResource> _resources = resourceCol.getResources();
+  public void generateMisc(final ResourceTypeCollection resourceCol) {
+    List<ResourceType> _resources = resourceCol.getResources();
     final IResolverContent jaxb = new JAXBResolverContent(this.fsa, _resources);
-    List<RESTResource> _resources_1 = resourceCol.getResources();
+    List<ResourceType> _resources_1 = resourceCol.getResources();
     final IResolverContent genson = new GensonResolverContent(this.fsa, _resources_1);
     final JerseyBaseContextResolver gensonResolver = new JerseyBaseContextResolver(this.fsa, genson);
     gensonResolver.generateResolver();
     final JerseyBaseContextResolver jaxbResolver = new JerseyBaseContextResolver(this.fsa, jaxb);
-    RESTResource _userResource = resourceCol.getUserResource();
+    ResourceType _userResource = resourceCol.getUserResource();
     final CustomAnnotations annons = new CustomAnnotations(this.config, this.fsa, _userResource);
     annons.generateAuth();
     annons.generatePATCH();

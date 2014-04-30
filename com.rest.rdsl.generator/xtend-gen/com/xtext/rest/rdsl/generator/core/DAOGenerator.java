@@ -1,7 +1,7 @@
 package com.xtext.rest.rdsl.generator.core;
 
 import com.google.common.base.Objects;
-import com.xtext.rest.rdsl.generator.RESTResourceCollection;
+import com.xtext.rest.rdsl.generator.ResourceTypeCollection;
 import com.xtext.rest.rdsl.generator.resources.internal.ExceptionDescription;
 import com.xtext.rest.rdsl.generator.resources.internal.ExceptionMapper;
 import com.xtext.rest.rdsl.management.Constants;
@@ -9,9 +9,7 @@ import com.xtext.rest.rdsl.management.ExtensionMethods;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
 import com.xtext.rest.rdsl.restDsl.Attribute;
-import com.xtext.rest.rdsl.restDsl.JavaType;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import com.xtext.rest.rdsl.restDsl.ResourceType;
 import com.xtext.rest.rdsl.restDsl.Type;
 import java.util.HashMap;
@@ -28,18 +26,18 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class DAOGenerator {
   private final IFileSystemAccess fsa;
   
-  private final RESTConfiguration config;
+  private final Configuration config;
   
   private final ExceptionMapper mapper;
   
-  private final RESTResourceCollection resourceCol;
+  private final ResourceTypeCollection resourceCol;
   
   private final String idDataType;
   
   @Extension
   private ExtensionMethods e = new ExtensionMethods();
   
-  public DAOGenerator(final IFileSystemAccess fsa, final RESTResourceCollection resourceCol, final RESTConfiguration config) {
+  public DAOGenerator(final IFileSystemAccess fsa, final ResourceTypeCollection resourceCol, final Configuration config) {
     this.fsa = fsa;
     this.config = config;
     this.resourceCol = resourceCol;
@@ -50,8 +48,8 @@ public class DAOGenerator {
   }
   
   public void generateInterface() {
-    List<RESTResource> _resources = this.resourceCol.getResources();
-    for (final RESTResource res : _resources) {
+    List<ResourceType> _resources = this.resourceCol.getResources();
+    for (final ResourceType res : _resources) {
       String _mainPackage = Constants.getMainPackage();
       String _plus = (_mainPackage + Constants.DAOPACKAGE);
       String _plus_1 = (_plus + "/");
@@ -140,8 +138,8 @@ public class DAOGenerator {
   }
   
   public void generateDAOs() {
-    List<RESTResource> _resources = this.resourceCol.getResources();
-    for (final RESTResource res : _resources) {
+    List<ResourceType> _resources = this.resourceCol.getResources();
+    for (final ResourceType res : _resources) {
       {
         String _name = res.getName();
         final String objectName = _name.toLowerCase();
@@ -156,82 +154,55 @@ public class DAOGenerator {
         };
         Iterable<Attribute> _filter = IterableExtensions.<Attribute>filter(_attributes, _function);
         for (final Attribute attrib : _filter) {
-          {
-            Type _type = attrib.getType();
-            if ((_type instanceof JavaType)) {
-              String _name_1 = attrib.getName();
-              String _firstUpper = StringExtensions.toFirstUpper(_name_1);
-              String _plus = (((((((createString + " + ") + "\",\'\"") + " + ") + objectName) + ".") + "get") + _firstUpper);
-              String _plus_1 = (_plus + "()");
-              String _plus_2 = (_plus_1 + " + ");
-              String _plus_3 = (_plus_2 + "\"\'\"");
-              createString = _plus_3;
-              String _name_2 = attrib.getName();
-              String _plus_4 = (((updateString + " + ") + "\", ") + _name_2);
-              String _plus_5 = (_plus_4 + " = \"");
-              String _plus_6 = (_plus_5 + " + ");
-              String _plus_7 = (_plus_6 + "\"\'\"");
-              String _plus_8 = (_plus_7 + "+");
-              String _plus_9 = (_plus_8 + objectName);
-              String _plus_10 = (_plus_9 + ".get");
-              String _name_3 = attrib.getName();
-              String _firstUpper_1 = StringExtensions.toFirstUpper(_name_3);
-              String _plus_11 = (_plus_10 + _firstUpper_1);
-              String _plus_12 = (_plus_11 + "() ");
-              String _plus_13 = (_plus_12 + "+");
-              String _plus_14 = (_plus_13 + "\"\'\"");
-              updateString = _plus_14;
-            }
-            Type _type_1 = attrib.getType();
-            if ((_type_1 instanceof ResourceType)) {
-              String _name_4 = attrib.getName();
-              String _firstUpper_2 = StringExtensions.toFirstUpper(_name_4);
-              String _plus_15 = ((("(" + objectName) + ".get") + _firstUpper_2);
-              String _plus_16 = (_plus_15 + "() != null ? ");
-              String _plus_17 = (_plus_16 + objectName);
-              String _plus_18 = (_plus_17 + ".get");
-              String _name_5 = attrib.getName();
-              String _firstUpper_3 = StringExtensions.toFirstUpper(_name_5);
-              String _plus_19 = (_plus_18 + _firstUpper_3);
-              String _plus_20 = (_plus_19 + "()");
-              String _plus_21 = (_plus_20 + ".");
-              String _plus_22 = (_plus_21 + Naming.METHOD_NAME_ID_GET);
-              final String nullcheck = (_plus_22 + "() : null)");
-              createString = ((((((createString + " + ") + "\",\'\"") + " + ") + nullcheck) + " + ") + "\"\'\"");
-              String _name_6 = attrib.getName();
-              String _firstUpper_4 = StringExtensions.toFirstUpper(_name_6);
-              String _plus_23 = ((("(" + objectName) + ".get") + _firstUpper_4);
-              String _plus_24 = (_plus_23 + "() != null ? ");
-              String _plus_25 = (_plus_24 + "\"\'\"");
-              String _plus_26 = (_plus_25 + " + ");
-              String _plus_27 = (_plus_26 + objectName);
-              String _plus_28 = (_plus_27 + ".get");
-              String _name_7 = attrib.getName();
-              String _firstUpper_5 = StringExtensions.toFirstUpper(_name_7);
-              String _plus_29 = (_plus_28 + _firstUpper_5);
-              String _plus_30 = (_plus_29 + "().");
-              String _plus_31 = (_plus_30 + Naming.METHOD_NAME_ID_GET);
-              String _plus_32 = (_plus_31 + "()");
-              String _plus_33 = (_plus_32 + " + ");
-              String _plus_34 = (_plus_33 + "\"\'\"");
-              final String nullcheckExt = (_plus_34 + " : null)");
-              String _name_8 = attrib.getName();
-              String _plus_35 = (((updateString + " + ") + "\", ") + _name_8);
-              String _plus_36 = (_plus_35 + "_id");
-              String _plus_37 = (_plus_36 + " = \"");
-              String _plus_38 = (_plus_37 + " + ");
-              String _plus_39 = (_plus_38 + nullcheckExt);
-              updateString = _plus_39;
-            }
+          Type _type = this.e.getType(attrib);
+          if ((_type instanceof ResourceType)) {
+            String _name_1 = attrib.getName();
+            String _firstUpper = StringExtensions.toFirstUpper(_name_1);
+            String _plus = ((("(" + objectName) + ".get") + _firstUpper);
+            String _plus_1 = (_plus + "() != null ? ");
+            String _plus_2 = (_plus_1 + objectName);
+            String _plus_3 = (_plus_2 + ".get");
+            String _name_2 = attrib.getName();
+            String _firstUpper_1 = StringExtensions.toFirstUpper(_name_2);
+            String _plus_4 = (_plus_3 + _firstUpper_1);
+            String _plus_5 = (_plus_4 + "()");
+            String _plus_6 = (_plus_5 + ".");
+            String _plus_7 = (_plus_6 + Naming.METHOD_NAME_ID_GET);
+            final String nullcheck = (_plus_7 + "() : null)");
+            createString = ((((((createString + " + ") + "\",\'\"") + " + ") + nullcheck) + " + ") + "\"\'\"");
+            String _name_3 = attrib.getName();
+            String _firstUpper_2 = StringExtensions.toFirstUpper(_name_3);
+            String _plus_8 = ((("(" + objectName) + ".get") + _firstUpper_2);
+            String _plus_9 = (_plus_8 + "() != null ? ");
+            String _plus_10 = (_plus_9 + "\"\'\"");
+            String _plus_11 = (_plus_10 + " + ");
+            String _plus_12 = (_plus_11 + objectName);
+            String _plus_13 = (_plus_12 + ".get");
+            String _name_4 = attrib.getName();
+            String _firstUpper_3 = StringExtensions.toFirstUpper(_name_4);
+            String _plus_14 = (_plus_13 + _firstUpper_3);
+            String _plus_15 = (_plus_14 + "().");
+            String _plus_16 = (_plus_15 + Naming.METHOD_NAME_ID_GET);
+            String _plus_17 = (_plus_16 + "()");
+            String _plus_18 = (_plus_17 + " + ");
+            String _plus_19 = (_plus_18 + "\"\'\"");
+            final String nullcheckExt = (_plus_19 + " : null)");
+            String _name_5 = attrib.getName();
+            String _plus_20 = (((updateString + " + ") + "\", ") + _name_5);
+            String _plus_21 = (_plus_20 + "_id");
+            String _plus_22 = (_plus_21 + " = \"");
+            String _plus_23 = (_plus_22 + " + ");
+            String _plus_24 = (_plus_23 + nullcheckExt);
+            updateString = _plus_24;
           }
         }
         String _mainPackage = Constants.getMainPackage();
-        String _plus = (_mainPackage + Constants.DAOPACKAGE);
-        String _plus_1 = (_plus + "/");
-        String _name_1 = res.getName();
-        String _plus_2 = (_plus_1 + _name_1);
-        String _plus_3 = (_plus_2 + "DAO");
-        String _plus_4 = (_plus_3 + Constants.JAVA);
+        String _plus_25 = (_mainPackage + Constants.DAOPACKAGE);
+        String _plus_26 = (_plus_25 + "/");
+        String _name_6 = res.getName();
+        String _plus_27 = (_plus_26 + _name_6);
+        String _plus_28 = (_plus_27 + "DAO");
+        String _plus_29 = (_plus_28 + Constants.JAVA);
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("package ");
         String _databasePackage = PackageManager.getDatabasePackage();
@@ -264,7 +235,7 @@ public class DAOGenerator {
         _builder.append(";");
         _builder.newLineIfNotEmpty();
         {
-          RESTResource _userResource = this.resourceCol.getUserResource();
+          ResourceType _userResource = this.resourceCol.getUserResource();
           boolean _notEquals = (!Objects.equal(_userResource, null));
           if (_notEquals) {
             _builder.append("import ");
@@ -277,8 +248,8 @@ public class DAOGenerator {
             _builder.append(_exceptionPackage, "");
             _builder.append(".");
             ExceptionDescription _get = this.mapper.get(Integer.valueOf(401));
-            String _name_2 = _get.getName();
-            _builder.append(_name_2, "");
+            String _name_7 = _get.getName();
+            _builder.append(_name_7, "");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
             _builder.append("import ");
@@ -286,8 +257,8 @@ public class DAOGenerator {
             _builder.append(_exceptionPackage_1, "");
             _builder.append(".");
             ExceptionDescription _get_1 = this.mapper.get(Integer.valueOf(403));
-            String _name_3 = _get_1.getName();
-            _builder.append(_name_3, "");
+            String _name_8 = _get_1.getName();
+            _builder.append(_name_8, "");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
           }
@@ -295,11 +266,11 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.newLine();
         _builder.append("public class ");
-        String _name_4 = res.getName();
-        _builder.append(_name_4, "");
+        String _name_9 = res.getName();
+        _builder.append(_name_9, "");
         _builder.append("DAO implements I");
-        String _name_5 = res.getName();
-        _builder.append(_name_5, "");
+        String _name_10 = res.getName();
+        _builder.append(_name_10, "");
         _builder.append("DAO{");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -311,17 +282,17 @@ public class DAOGenerator {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("private static final Logger LOGGER = Logger.getLogger( ");
-        String _name_6 = res.getName();
-        String _firstUpper = StringExtensions.toFirstUpper(_name_6);
-        _builder.append(_firstUpper, "\t");
+        String _name_11 = res.getName();
+        String _firstUpper_4 = StringExtensions.toFirstUpper(_name_11);
+        _builder.append(_firstUpper_4, "\t");
         _builder.append("DAO.class );");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public ");
-        String _name_7 = res.getName();
-        _builder.append(_name_7, "\t");
+        String _name_12 = res.getName();
+        _builder.append(_name_12, "\t");
         _builder.append("DAO(){");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
@@ -336,8 +307,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public boolean save(");
-        String _name_8 = res.getName();
-        _builder.append(_name_8, "\t");
+        String _name_13 = res.getName();
+        _builder.append(_name_13, "\t");
         _builder.append(" ");
         _builder.append(objectName, "\t");
         _builder.append(") throws Exception{");
@@ -358,8 +329,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("String insert = \"INSERT INTO ");
-        String _name_9 = res.getName();
-        String _lowerCase = _name_9.toLowerCase();
+        String _name_14 = res.getName();
+        String _lowerCase = _name_14.toLowerCase();
         _builder.append(_lowerCase, "\t\t\t");
         _builder.append(" VALUES(\'\" + ");
         _builder.append(objectName, "\t\t\t");
@@ -418,8 +389,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public boolean update(");
-        String _name_10 = res.getName();
-        _builder.append(_name_10, "\t");
+        String _name_15 = res.getName();
+        _builder.append(_name_15, "\t");
         _builder.append(" ");
         _builder.append(objectName, "\t");
         _builder.append(", ");
@@ -444,8 +415,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("String sql = \"UPDATE ");
-        String _name_11 = res.getName();
-        String _lowerCase_1 = _name_11.toLowerCase();
+        String _name_16 = res.getName();
+        String _lowerCase_1 = _name_16.toLowerCase();
         _builder.append(_lowerCase_1, "\t\t\t");
         _builder.append(" SET ");
         _builder.append(updateString, "\t\t\t");
@@ -502,8 +473,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public ");
-        String _name_12 = res.getName();
-        _builder.append(_name_12, "\t");
+        String _name_17 = res.getName();
+        _builder.append(_name_17, "\t");
         _builder.append(" load(");
         String _iDDataTyp_1 = this.e.getIDDataTyp(this.config);
         _builder.append(_iDDataTyp_1, "\t");
@@ -518,8 +489,8 @@ public class DAOGenerator {
         _builder.append("try{");
         _builder.newLine();
         _builder.append("\t\t\t");
-        String _name_13 = res.getName();
-        _builder.append(_name_13, "\t\t\t");
+        String _name_18 = res.getName();
+        _builder.append(_name_18, "\t\t\t");
         _builder.append(" ");
         _builder.append(objectName, "\t\t\t");
         _builder.append(" = null; ");
@@ -534,8 +505,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("String sqlQuery = \"SELECT * FROM ");
-        String _name_14 = res.getName();
-        String _lowerCase_2 = _name_14.toLowerCase();
+        String _name_19 = res.getName();
+        String _lowerCase_2 = _name_19.toLowerCase();
         _builder.append(_lowerCase_2, "\t\t\t");
         _builder.append(" WHERE ID = \'\" +  id + \"\'\";");
         _builder.newLineIfNotEmpty();
@@ -630,8 +601,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("String sqlDelete = \"DELETE FROM ");
-        String _name_15 = res.getName();
-        String _lowerCase_3 = _name_15.toLowerCase();
+        String _name_20 = res.getName();
+        String _lowerCase_3 = _name_20.toLowerCase();
         _builder.append(_lowerCase_3, "\t\t\t");
         _builder.append(" WHERE ID = \'\" +  id + \"\'\";");
         _builder.newLineIfNotEmpty();
@@ -688,8 +659,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public List<");
-        String _name_16 = res.getName();
-        _builder.append(_name_16, "\t");
+        String _name_21 = res.getName();
+        _builder.append(_name_21, "\t");
         _builder.append("> list(");
         _builder.append(Naming.CLASS_DB_QUERY, "\t");
         _builder.append(" query) throws Exception{");
@@ -704,16 +675,16 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("List<");
-        String _name_17 = res.getName();
-        _builder.append(_name_17, "\t\t\t");
+        String _name_22 = res.getName();
+        _builder.append(_name_22, "\t\t\t");
         _builder.append("> list = new ArrayList<");
-        String _name_18 = res.getName();
-        _builder.append(_name_18, "\t\t\t");
+        String _name_23 = res.getName();
+        _builder.append(_name_23, "\t\t\t");
         _builder.append(">(); ");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t\t");
-        String _name_19 = res.getName();
-        _builder.append(_name_19, "\t\t\t");
+        String _name_24 = res.getName();
+        _builder.append(_name_24, "\t\t\t");
         _builder.append(" ");
         _builder.append(objectName, "\t\t\t");
         _builder.append("; ");
@@ -814,8 +785,8 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("ResultSet r = s.executeQuery(\"SELECT COUNT(*) AS rowcount FROM ");
-        String _name_20 = res.getName();
-        String _lowerCase_4 = _name_20.toLowerCase();
+        String _name_25 = res.getName();
+        String _lowerCase_4 = _name_25.toLowerCase();
         _builder.append(_lowerCase_4, "\t\t\t");
         _builder.append(" \" +  dbquery.getWhere(null));");
         _builder.newLineIfNotEmpty();
@@ -874,13 +845,13 @@ public class DAOGenerator {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("private ");
-        String _name_21 = res.getName();
-        _builder.append(_name_21, "\t");
+        String _name_26 = res.getName();
+        _builder.append(_name_26, "\t");
         _builder.append(" getObject(ResultSet rs){");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
-        String _name_22 = res.getName();
-        _builder.append(_name_22, "\t\t");
+        String _name_27 = res.getName();
+        _builder.append(_name_27, "\t\t");
         _builder.append(" ");
         _builder.append(objectName, "\t\t");
         _builder.append(" = null;");
@@ -891,11 +862,11 @@ public class DAOGenerator {
         _builder.append("\t\t\t");
         _builder.append(objectName, "\t\t\t");
         _builder.append(" = new ");
-        String _name_23 = res.getName();
-        _builder.append(_name_23, "\t\t\t");
+        String _name_28 = res.getName();
+        _builder.append(_name_28, "\t\t\t");
         _builder.append("( rs.get");
-        String _firstUpper_1 = StringExtensions.toFirstUpper(this.idDataType);
-        _builder.append(_firstUpper_1, "\t\t\t");
+        String _firstUpper_5 = StringExtensions.toFirstUpper(this.idDataType);
+        _builder.append(_firstUpper_5, "\t\t\t");
         _builder.append("(\"id\") ) ;");
         _builder.newLineIfNotEmpty();
         {
@@ -909,72 +880,52 @@ public class DAOGenerator {
           Iterable<Attribute> _filter_1 = IterableExtensions.<Attribute>filter(_attributes_1, _function_1);
           for(final Attribute attrib_1 : _filter_1) {
             {
-              Type _type = attrib_1.getType();
-              if ((_type instanceof JavaType)) {
+              Type _type_1 = this.e.getType(attrib_1);
+              if ((_type_1 instanceof ResourceType)) {
+                _builder.append("\t\t\t");
+                _builder.append(this.idDataType, "\t\t\t");
+                _builder.append(" id");
+                String _name_29 = attrib_1.getName();
+                String _lowerCase_5 = _name_29.toLowerCase();
+                _builder.append(_lowerCase_5, "\t\t\t");
+                _builder.append(" = rs.get");
+                String _firstUpper_6 = StringExtensions.toFirstUpper(this.idDataType);
+                _builder.append(_firstUpper_6, "\t\t\t");
+                _builder.append("(\"");
+                String _name_30 = attrib_1.getName();
+                _builder.append(_name_30, "\t\t\t");
+                _builder.append("\");");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t\t");
+                Type _type_2 = this.e.getType(attrib_1);
+                String resource = ((ResourceType) _type_2).getName();
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t\t");
+                String _firstUpper_7 = StringExtensions.toFirstUpper(resource);
+                _builder.append(_firstUpper_7, "\t\t\t");
+                _builder.append(" ");
+                String _lowerCase_6 = resource.toLowerCase();
+                _builder.append(_lowerCase_6, "\t\t\t");
+                _builder.append("  = new ");
+                String _firstUpper_8 = StringExtensions.toFirstUpper(resource);
+                _builder.append(_firstUpper_8, "\t\t\t");
+                _builder.append("(id");
+                String _name_31 = attrib_1.getName();
+                String _lowerCase_7 = _name_31.toLowerCase();
+                _builder.append(_lowerCase_7, "\t\t\t");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
                 _builder.append("\t\t\t");
                 _builder.append(objectName, "\t\t\t");
                 _builder.append(".set");
-                String _name_24 = attrib_1.getName();
-                String _firstUpper_2 = StringExtensions.toFirstUpper(_name_24);
-                _builder.append(_firstUpper_2, "\t\t\t");
-                _builder.append("( rs.get");
-                Type _type_1 = attrib_1.getType();
-                String _simpleNameOfType = this.e.simpleNameOfType(_type_1);
-                _builder.append(_simpleNameOfType, "\t\t\t");
-                _builder.append("(\"");
-                String _name_25 = attrib_1.getName();
-                _builder.append(_name_25, "\t\t\t");
-                _builder.append("\") );");
+                String _name_32 = attrib_1.getName();
+                String _firstUpper_9 = StringExtensions.toFirstUpper(_name_32);
+                _builder.append(_firstUpper_9, "\t\t\t");
+                _builder.append("(");
+                String _lowerCase_8 = resource.toLowerCase();
+                _builder.append(_lowerCase_8, "\t\t\t");
+                _builder.append(");");
                 _builder.newLineIfNotEmpty();
-              } else {
-                Type _type_2 = attrib_1.getType();
-                if ((_type_2 instanceof ResourceType)) {
-                  _builder.append("\t\t\t");
-                  _builder.append(this.idDataType, "\t\t\t");
-                  _builder.append(" id");
-                  String _name_26 = attrib_1.getName();
-                  String _lowerCase_5 = _name_26.toLowerCase();
-                  _builder.append(_lowerCase_5, "\t\t\t");
-                  _builder.append(" = rs.get");
-                  String _firstUpper_3 = StringExtensions.toFirstUpper(this.idDataType);
-                  _builder.append(_firstUpper_3, "\t\t\t");
-                  _builder.append("(\"");
-                  String _name_27 = attrib_1.getName();
-                  _builder.append(_name_27, "\t\t\t");
-                  _builder.append("\");");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t\t\t");
-                  Type _type_3 = attrib_1.getType();
-                  RESTResource _resourceRef = ((ResourceType) _type_3).getResourceRef();
-                  String resource = _resourceRef.getName();
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t\t\t");
-                  String _firstUpper_4 = StringExtensions.toFirstUpper(resource);
-                  _builder.append(_firstUpper_4, "\t\t\t");
-                  _builder.append(" ");
-                  String _lowerCase_6 = resource.toLowerCase();
-                  _builder.append(_lowerCase_6, "\t\t\t");
-                  _builder.append("  = new ");
-                  String _firstUpper_5 = StringExtensions.toFirstUpper(resource);
-                  _builder.append(_firstUpper_5, "\t\t\t");
-                  _builder.append("(id");
-                  String _name_28 = attrib_1.getName();
-                  String _lowerCase_7 = _name_28.toLowerCase();
-                  _builder.append(_lowerCase_7, "\t\t\t");
-                  _builder.append(");");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t\t\t");
-                  _builder.append(objectName, "\t\t\t");
-                  _builder.append(".set");
-                  String _name_29 = attrib_1.getName();
-                  String _firstUpper_6 = StringExtensions.toFirstUpper(_name_29);
-                  _builder.append(_firstUpper_6, "\t\t\t");
-                  _builder.append("(");
-                  String _lowerCase_8 = resource.toLowerCase();
-                  _builder.append(_lowerCase_8, "\t\t\t");
-                  _builder.append(");");
-                  _builder.newLineIfNotEmpty();
-                }
               }
             }
           }
@@ -999,19 +950,19 @@ public class DAOGenerator {
         _builder.append("\t\t");
         _builder.newLine();
         {
-          RESTResource _userResource_1 = this.resourceCol.getUserResource();
+          ResourceType _userResource_1 = this.resourceCol.getUserResource();
           boolean _notEquals_1 = (!Objects.equal(_userResource_1, null));
           if (_notEquals_1) {
             _builder.append("public boolean authenticate(");
             _builder.append(Naming.CLASS_USER_AUTH_DATA, "");
             _builder.append(" authClass) throws ");
             ExceptionDescription _get_2 = this.mapper.get(Integer.valueOf(401));
-            String _name_30 = _get_2.getName();
-            _builder.append(_name_30, "");
+            String _name_33 = _get_2.getName();
+            _builder.append(_name_33, "");
             _builder.append(", ");
             ExceptionDescription _get_3 = this.mapper.get(Integer.valueOf(403));
-            String _name_31 = _get_3.getName();
-            _builder.append(_name_31, "");
+            String _name_34 = _get_3.getName();
+            _builder.append(_name_34, "");
             _builder.append("{");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -1023,7 +974,7 @@ public class DAOGenerator {
         }
         _builder.append("}");
         _builder.newLine();
-        this.fsa.generateFile(_plus_4, _builder);
+        this.fsa.generateFile(_plus_29, _builder);
       }
     }
   }
@@ -1070,8 +1021,8 @@ public class DAOGenerator {
     _builder.append("}");
     _builder.newLine();
     {
-      List<RESTResource> _resources = this.resourceCol.getResources();
-      for(final RESTResource res : _resources) {
+      List<ResourceType> _resources = this.resourceCol.getResources();
+      for(final ResourceType res : _resources) {
         _builder.append("\t");
         _builder.newLine();
         _builder.append("\t");
@@ -1156,8 +1107,8 @@ public class DAOGenerator {
     _builder.append("\t");
     _builder.newLine();
     {
-      List<RESTResource> _resources = this.resourceCol.getResources();
-      for(final RESTResource res : _resources) {
+      List<ResourceType> _resources = this.resourceCol.getResources();
+      for(final ResourceType res : _resources) {
         _builder.append("\t");
         _builder.append("@Override");
         _builder.newLine();
@@ -1192,34 +1143,21 @@ public class DAOGenerator {
   
   public void generateSQLite() {
     final Map<String,String> map = new HashMap<String, String>();
-    List<RESTResource> _resources = this.resourceCol.getResources();
-    for (final RESTResource res : _resources) {
+    List<ResourceType> _resources = this.resourceCol.getResources();
+    for (final ResourceType res : _resources) {
       {
         String value = (("id " + this.idDataType) + " NOT NULL,");
         Iterable<Attribute> _attributes = this.e.getAttributes(res);
         for (final Attribute attrib : _attributes) {
-          Type _type = attrib.getType();
-          if ((_type instanceof JavaType)) {
+          Type _type = this.e.getType(attrib);
+          if ((_type instanceof ResourceType)) {
             String _name = attrib.getName();
             String _plus = ((value + " ") + _name);
-            String _plus_1 = (_plus + " ");
-            Type _type_1 = attrib.getType();
-            String _simpleNameOfType = this.e.simpleNameOfType(_type_1);
-            String _lowerCase = _simpleNameOfType.toLowerCase();
+            String _plus_1 = (_plus + "_id ");
+            String _lowerCase = this.idDataType.toLowerCase();
             String _plus_2 = (_plus_1 + _lowerCase);
             String _plus_3 = (_plus_2 + ",");
             value = _plus_3;
-          } else {
-            Type _type_2 = attrib.getType();
-            if ((_type_2 instanceof ResourceType)) {
-              String _name_1 = attrib.getName();
-              String _plus_4 = ((value + " ") + _name_1);
-              String _plus_5 = (_plus_4 + "_id ");
-              String _lowerCase_1 = this.idDataType.toLowerCase();
-              String _plus_6 = (_plus_5 + _lowerCase_1);
-              String _plus_7 = (_plus_6 + ",");
-              value = _plus_7;
-            }
           }
         }
         boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(value);
@@ -1229,8 +1167,8 @@ public class DAOGenerator {
           int _minus = (_length - 1);
           String _substring = value.substring(0, _minus);
           value = _substring;
-          String _name_2 = res.getName();
-          map.put(_name_2, value);
+          String _name_1 = res.getName();
+          map.put(_name_1, value);
         }
       }
     }
@@ -1375,8 +1313,8 @@ public class DAOGenerator {
     _builder.append("if(connection != null){");
     _builder.newLine();
     {
-      List<RESTResource> _resources_1 = this.resourceCol.getResources();
-      for(final RESTResource res_1 : _resources_1) {
+      List<ResourceType> _resources_1 = this.resourceCol.getResources();
+      for(final ResourceType res_1 : _resources_1) {
         _builder.append("\t\t");
         _builder.append("createTables");
         String _name = res_1.getName();
@@ -1394,8 +1332,8 @@ public class DAOGenerator {
     _builder.append("\t");
     _builder.newLine();
     {
-      List<RESTResource> _resources_2 = this.resourceCol.getResources();
-      for(final RESTResource res_2 : _resources_2) {
+      List<ResourceType> _resources_2 = this.resourceCol.getResources();
+      for(final ResourceType res_2 : _resources_2) {
         _builder.append("\t");
         _builder.append("protected void createTables");
         String _name_1 = res_2.getName();

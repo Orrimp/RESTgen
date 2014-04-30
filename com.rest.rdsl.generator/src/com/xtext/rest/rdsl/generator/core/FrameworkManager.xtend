@@ -1,9 +1,9 @@
 package com.xtext.rest.rdsl.generator.core;
 
-import com.xtext.rest.rdsl.generator.RESTResourceCollection
+import com.xtext.rest.rdsl.generator.ResourceTypeCollection
 import com.xtext.rest.rdsl.generator.internals.ExceptionGenerator
 import com.xtext.rest.rdsl.restDsl.FRAMEWORK
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.restDsl.Configuration
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.generator.internals.IExceptionGenerator
 import com.xtext.rest.rdsl.generator.framework.spring.ResourceAbstractSpringGenerator
@@ -16,14 +16,14 @@ import com.xtext.rest.rdsl.generator.resources.internal.ExceptionMapper
 
 class FrameworkManager {
 	
-	val RESTConfiguration config;
+	val Configuration config;
 	val IFileSystemAccess fsa
-	val RESTResourceCollection resourceCol;
+	val ResourceTypeCollection resourceCol;
 	var IBaseResourceGenerator abstractGenerator;
 	var IExceptionGenerator exceptionGenerator
 	var IRESTFramework restFramework;
 	
-	new(IFileSystemAccess fsa, RESTConfiguration config, RESTResourceCollection resourceCol) {
+	new(IFileSystemAccess fsa, Configuration config, ResourceTypeCollection resourceCol) {
 		this.config = config;
 		this.fsa = fsa;
 		this.resourceCol = resourceCol;

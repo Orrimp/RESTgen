@@ -4,7 +4,7 @@ import com.xtext.rest.rdsl.management.Constants;
 import com.xtext.rest.rdsl.management.ExtensionMethods;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -13,12 +13,12 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class InterfaceGenerator {
   private IFileSystemAccess fsa;
   
-  private RESTConfiguration config;
+  private Configuration config;
   
   @Extension
   private ExtensionMethods e = new ExtensionMethods();
   
-  public InterfaceGenerator(final IFileSystemAccess fsa, final RESTConfiguration config) {
+  public InterfaceGenerator(final IFileSystemAccess fsa, final Configuration config) {
     this.fsa = fsa;
     this.config = config;
   }

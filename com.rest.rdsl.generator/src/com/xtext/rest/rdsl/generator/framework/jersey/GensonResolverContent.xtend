@@ -2,17 +2,17 @@ package com.xtext.rest.rdsl.generator.framework.jersey
 
 import org.eclipse.xtext.generator.IFileSystemAccess
 import java.util.List
-import com.xtext.rest.rdsl.restDsl.RESTResource
+import com.xtext.rest.rdsl.restDsl.ResourceType
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.management.Naming
 
 class GensonResolverContent implements IResolverContent {
 	
 	private val IFileSystemAccess fsa;
-	private val List<RESTResource> resources;
+	private val List<ResourceType> resources;
 	
 	
-	new(IFileSystemAccess fsa, List<RESTResource> resources) {
+	new(IFileSystemAccess fsa, List<ResourceType> resources) {
 		this.fsa = fsa;
 		this.resources = resources;
 	

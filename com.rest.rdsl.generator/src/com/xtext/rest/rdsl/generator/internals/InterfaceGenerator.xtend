@@ -1,6 +1,6 @@
 package com.xtext.rest.rdsl.generator.internals
 
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.restDsl.Configuration
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.ExtensionMethods
@@ -10,11 +10,11 @@ import com.xtext.rest.rdsl.management.Constants
 public class InterfaceGenerator {
 	
 	private var IFileSystemAccess fsa
-	private var RESTConfiguration config
+	private var Configuration config
 	//Use extension methods from the given class
 	extension ExtensionMethods e = new ExtensionMethods();
 	
-	new(IFileSystemAccess fsa, RESTConfiguration config) {
+	new(IFileSystemAccess fsa, Configuration config) {
 		this.fsa = fsa;
 		this.config = config;
 	}

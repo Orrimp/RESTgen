@@ -3,22 +3,22 @@ package com.xtext.rest.rdsl.generator.framework.jersey;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.restDsl.CACHING_TYPE;
 import com.xtext.rest.rdsl.restDsl.Caching;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.Configuration;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class JerseyCacheGenerator {
-  private final RESTResource resource;
+  private final ResourceType resource;
   
-  private final RESTConfiguration config;
+  private final Configuration config;
   
   private String response;
   
   private String implementatation;
   
-  public JerseyCacheGenerator(final RESTResource resource, final RESTConfiguration config) {
+  public JerseyCacheGenerator(final ResourceType resource, final Configuration config) {
     this.resource = resource;
     this.config = config;
     this.initialize();

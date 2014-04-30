@@ -9,12 +9,11 @@ import com.xtext.rest.rdsl.management.Constants;
 import com.xtext.rest.rdsl.management.ExtensionMethods;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.restDsl.Attribute;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import com.xtext.rest.rdsl.restDsl.HTTPMETHOD;
 import com.xtext.rest.rdsl.restDsl.Header;
 import com.xtext.rest.rdsl.restDsl.MIME;
 import com.xtext.rest.rdsl.restDsl.Paging;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
 import com.xtext.rest.rdsl.restDsl.ResourceType;
 import com.xtext.rest.rdsl.restDsl.Type;
 import java.util.function.Consumer;
@@ -25,7 +24,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class JerseyMethodGenerator extends MethodGenerator {
-  private RESTConfiguration config = null;
+  private Configuration config = null;
   
   private String mime = "";
   
@@ -39,14 +38,14 @@ public class JerseyMethodGenerator extends MethodGenerator {
   
   private final String resourceName;
   
-  private final RESTResource resource;
+  private final ResourceType resource;
   
   private final JerseyCacheGenerator caching;
   
   @Extension
   private ExtensionMethods e = new ExtensionMethods();
   
-  public JerseyMethodGenerator(final RESTConfiguration configuration, final RESTResource resource) {
+  public JerseyMethodGenerator(final Configuration configuration, final ResourceType resource) {
     this.config = configuration;
     ExceptionMapper _exceptionMapper = new ExceptionMapper(configuration);
     this.mapper = _exceptionMapper;
@@ -193,7 +192,7 @@ public class JerseyMethodGenerator extends MethodGenerator {
     _builder.append("//Generate ETag");
     _builder.newLine();
     _builder.append("\t");
-    Type _type = attribute.getType();
+    Type _type = this.e.getType(attribute);
     String _nameOfType = this.e.nameOfType(_type);
     _builder.append(_nameOfType, "\t");
     _builder.append(" ");
@@ -418,7 +417,7 @@ public class JerseyMethodGenerator extends MethodGenerator {
   public CharSequence generateQuery(final Attribute attribute) {
     CharSequence _xblockexpression = null;
     {
-      Type _type = attribute.getType();
+      Type _type = this.e.getType(attribute);
       ResourceType type = ((ResourceType) _type);
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("@GET");
@@ -426,8 +425,7 @@ public class JerseyMethodGenerator extends MethodGenerator {
       _builder.append("@Path(\"/{id ");
       _builder.append(this.idRegex, "");
       _builder.append("}/");
-      RESTResource _resourceRef = type.getResourceRef();
-      String _name = _resourceRef.getName();
+      String _name = type.getName();
       String _lowerCase = _name.toLowerCase();
       _builder.append(_lowerCase, "");
       _builder.append("/{page}\")");
@@ -440,15 +438,13 @@ public class JerseyMethodGenerator extends MethodGenerator {
       _builder.append(Naming.ANNO_USER_AUTH, "");
       _builder.newLineIfNotEmpty();
       _builder.append("public Response get");
-      RESTResource _resourceRef_1 = type.getResourceRef();
-      String _name_1 = _resourceRef_1.getName();
+      String _name_1 = type.getName();
       String _firstUpper = StringExtensions.toFirstUpper(_name_1);
       _builder.append(_firstUpper, "");
       _builder.append("(");
       _builder.newLineIfNotEmpty();
       {
-        RESTResource _resourceRef_2 = type.getResourceRef();
-        Iterable<Attribute> _attributes = this.e.getAttributes(_resourceRef_2);
+        Iterable<Attribute> _attributes = this.e.getAttributes(type);
         for(final Attribute attrib : _attributes) {
           {
             boolean _isList = attrib.isList();
@@ -459,7 +455,7 @@ public class JerseyMethodGenerator extends MethodGenerator {
               String _name_2 = attrib.getName();
               _builder.append(_name_2, "\t");
               _builder.append("\") ");
-              Type _type_1 = attrib.getType();
+              Type _type_1 = this.e.getType(attrib);
               String _simpleNameOfType = this.e.simpleNameOfType(_type_1);
               _builder.append(_simpleNameOfType, "\t");
               _builder.append(" ");
@@ -502,8 +498,7 @@ public class JerseyMethodGenerator extends MethodGenerator {
       _builder.append("();");
       _builder.newLineIfNotEmpty();
       {
-        RESTResource _resourceRef_3 = type.getResourceRef();
-        Iterable<Attribute> _attributes_1 = this.e.getAttributes(_resourceRef_3);
+        Iterable<Attribute> _attributes_1 = this.e.getAttributes(type);
         for(final Attribute attrib_1 : _attributes_1) {
           {
             boolean _isList_1 = attrib_1.isList();
@@ -666,7 +661,7 @@ public class JerseyMethodGenerator extends MethodGenerator {
               String _name = attrib.getName();
               _builder.append(_name, "\t");
               _builder.append("\") ");
-              Type _type = attrib.getType();
+              Type _type = this.e.getType(attrib);
               String _simpleNameOfType = this.e.simpleNameOfType(_type);
               _builder.append(_simpleNameOfType, "\t");
               _builder.append(" ");

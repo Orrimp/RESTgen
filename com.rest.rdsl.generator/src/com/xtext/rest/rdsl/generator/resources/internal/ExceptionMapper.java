@@ -3,18 +3,18 @@ package com.xtext.rest.rdsl.generator.resources.internal;
 import java.util.HashMap;
 
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyStatusCodes;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 
 public class ExceptionMapper extends HashMap<Integer, ExceptionDescription> {
 
 	private static final long serialVersionUID = -7875742742350805097L;
 	private String baseErrorMessage ="An error occured!";
 
-	public ExceptionMapper(RESTConfiguration config){
+	public ExceptionMapper(Configuration config){
 		initialize(config);
 	}
 	
-	private void initialize(RESTConfiguration config){
+	private void initialize(Configuration config){
 		
 		switch(config.getFramework()){
 		case JERSEY: 

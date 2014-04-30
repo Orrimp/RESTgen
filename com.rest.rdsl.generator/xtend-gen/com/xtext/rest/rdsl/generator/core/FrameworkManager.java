@@ -1,6 +1,6 @@
 package com.xtext.rest.rdsl.generator.core;
 
-import com.xtext.rest.rdsl.generator.RESTResourceCollection;
+import com.xtext.rest.rdsl.generator.ResourceTypeCollection;
 import com.xtext.rest.rdsl.generator.framework.IBaseResourceGenerator;
 import com.xtext.rest.rdsl.generator.framework.IRESTFramework;
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyAbstractResourceGenerator;
@@ -11,18 +11,18 @@ import com.xtext.rest.rdsl.generator.internals.ExceptionGenerator;
 import com.xtext.rest.rdsl.generator.internals.IExceptionGenerator;
 import com.xtext.rest.rdsl.generator.resources.internal.ExceptionDescription;
 import com.xtext.rest.rdsl.generator.resources.internal.ExceptionMapper;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import com.xtext.rest.rdsl.restDsl.FRAMEWORK;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
 import java.util.Collection;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 
 @SuppressWarnings("all")
 public class FrameworkManager {
-  private final RESTConfiguration config;
+  private final Configuration config;
   
   private final IFileSystemAccess fsa;
   
-  private final RESTResourceCollection resourceCol;
+  private final ResourceTypeCollection resourceCol;
   
   private IBaseResourceGenerator abstractGenerator;
   
@@ -30,7 +30,7 @@ public class FrameworkManager {
   
   private IRESTFramework restFramework;
   
-  public FrameworkManager(final IFileSystemAccess fsa, final RESTConfiguration config, final RESTResourceCollection resourceCol) {
+  public FrameworkManager(final IFileSystemAccess fsa, final Configuration config, final ResourceTypeCollection resourceCol) {
     this.config = config;
     this.fsa = fsa;
     this.resourceCol = resourceCol;

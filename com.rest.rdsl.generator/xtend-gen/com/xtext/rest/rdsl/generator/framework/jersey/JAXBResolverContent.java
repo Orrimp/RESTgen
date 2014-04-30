@@ -3,7 +3,7 @@ package com.xtext.rest.rdsl.generator.framework.jersey;
 import com.xtext.rest.rdsl.generator.framework.jersey.IResolverContent;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -11,9 +11,9 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class JAXBResolverContent implements IResolverContent {
-  private final List<RESTResource> resources;
+  private final List<ResourceType> resources;
   
-  public JAXBResolverContent(final IFileSystemAccess fsa, final List<RESTResource> resources) {
+  public JAXBResolverContent(final IFileSystemAccess fsa, final List<ResourceType> resources) {
     this.resources = resources;
   }
   
@@ -24,7 +24,7 @@ public class JAXBResolverContent implements IResolverContent {
     _builder.append("Class[] typesArr = new Class[]{");
     {
       boolean _hasElements = false;
-      for(final RESTResource r : this.resources) {
+      for(final ResourceType r : this.resources) {
         if (!_hasElements) {
           _hasElements = true;
         } else {
@@ -73,7 +73,7 @@ public class JAXBResolverContent implements IResolverContent {
     _builder.newLine();
     _builder.newLine();
     {
-      for(final RESTResource r : this.resources) {
+      for(final ResourceType r : this.resources) {
         _builder.append("import ");
         String _objectPackage = PackageManager.getObjectPackage();
         _builder.append(_objectPackage, "");

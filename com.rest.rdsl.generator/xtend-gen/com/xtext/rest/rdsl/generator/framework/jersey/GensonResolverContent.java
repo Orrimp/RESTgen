@@ -3,7 +3,7 @@ package com.xtext.rest.rdsl.generator.framework.jersey;
 import com.xtext.rest.rdsl.generator.framework.jersey.IResolverContent;
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
-import com.xtext.rest.rdsl.restDsl.RESTResource;
+import com.xtext.rest.rdsl.restDsl.ResourceType;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -13,9 +13,9 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class GensonResolverContent implements IResolverContent {
   private final IFileSystemAccess fsa;
   
-  private final List<RESTResource> resources;
+  private final List<ResourceType> resources;
   
-  public GensonResolverContent(final IFileSystemAccess fsa, final List<RESTResource> resources) {
+  public GensonResolverContent(final IFileSystemAccess fsa, final List<ResourceType> resources) {
     this.fsa = fsa;
     this.resources = resources;
   }
@@ -37,7 +37,7 @@ public class GensonResolverContent implements IResolverContent {
     _builder.append(".setDateFormat(format)");
     _builder.newLine();
     {
-      for(final RESTResource res : this.resources) {
+      for(final ResourceType res : this.resources) {
         _builder.append("\t");
         _builder.append(".addAlias(\"");
         String _name = res.getName();
@@ -86,7 +86,7 @@ public class GensonResolverContent implements IResolverContent {
     _builder.newLine();
     _builder.newLine();
     {
-      for(final RESTResource res : this.resources) {
+      for(final ResourceType res : this.resources) {
         _builder.append("import ");
         String _objectPackage = PackageManager.getObjectPackage();
         _builder.append(_objectPackage, "");

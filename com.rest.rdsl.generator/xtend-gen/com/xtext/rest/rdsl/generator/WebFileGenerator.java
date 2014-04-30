@@ -2,7 +2,7 @@ package com.xtext.rest.rdsl.generator;
 
 import com.xtext.rest.rdsl.management.Naming;
 import com.xtext.rest.rdsl.management.PackageManager;
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration;
+import com.xtext.rest.rdsl.restDsl.Configuration;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 
@@ -10,9 +10,9 @@ import org.eclipse.xtext.generator.IFileSystemAccess;
 public class WebFileGenerator {
   private final IFileSystemAccess fsa;
   
-  private final RESTConfiguration config;
+  private final Configuration config;
   
-  public WebFileGenerator(final IFileSystemAccess fsa, final RESTConfiguration config) {
+  public WebFileGenerator(final IFileSystemAccess fsa, final Configuration config) {
     this.fsa = fsa;
     this.config = config;
   }
