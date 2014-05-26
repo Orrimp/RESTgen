@@ -52,7 +52,7 @@ public final class Naming {
 	public static final ClassPackageInfo ABSTRACT_CLASS_DAO 		= new ClassPackageInfo("DataAccessObjectFactory", PackageManager.getDatabasePackage(), CLASSTYPE.ABSTRACT_CLASS);
 	public static final ClassPackageInfo CLASS_DAO 					= new ClassPackageInfo("DataAccessObject" , PackageManager.getDatabasePackage());
 	public static final ClassPackageInfo CLASS_DB_QUERY				= new ClassPackageInfo("DBQuery", PackageManager.getDatabasePackage());
-	public static final ClassPackageInfo CLASS_ID 					= new ClassPackageInfo("IDGenerator", PackageManager.getResourcePackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo CLASS_ID 					= new ClassPackageInfo("IDGenerator", PackageManager.getFrameworkPackage(), CLASSTYPE.CLASS);
 	public static final ClassPackageInfo CLASS_ABSTRACT_RESOURCE	= new ClassPackageInfo("AbstractResource", PackageManager.getResourcePackage());
 	public static final ClassPackageInfo CLASS_SQLITEDAO			= new ClassPackageInfo("SQLiteDataAccessObjectFactory", PackageManager.getDatabasePackage());
 	public static final ClassPackageInfo CLASS_SQLITE				= new ClassPackageInfo("SQLitePersistence", PackageManager.getDatabasePackage(), CLASSTYPE.CLASS, sqliteImports);

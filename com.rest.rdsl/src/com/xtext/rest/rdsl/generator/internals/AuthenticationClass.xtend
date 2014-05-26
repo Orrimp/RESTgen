@@ -30,7 +30,7 @@ class AuthenticationClass {
 	'''
 	package «PackageManager.authPackage»;
 	 
-	import com.sun.jersey.core.util.Base64;
+	import org.glassfish.jersey.internal.util.Base64;
 	import «PackageManager.interfacePackage».«Naming.INTERFACE_AUTH_DECODER»;
 	 
 	/**
@@ -66,14 +66,14 @@ class AuthenticationClass {
 		private void decodeHeaderB64(String header){
 		«IF config.auth instanceof HTTPBasic»
 		 	final String withoutBasic = header.replaceFirst("[Bb]asic ", "");
-			final String userColonPass = Base64.base64Decode(withoutBasic);
+			final String userColonPass = Base64.decodeAsString(withoutBasic);
 		 	final String [] asArray = userColonPass.split(":");
 		 	if(asArray.length == 2){
 		 	this.name = asArray[0];
 		 	this.passwd = asArray[1];
 		}
 		«ELSE»
-			final String tokenReadable = Base64.base64Decode(header);
+			final String tokenReadable = Base64.decodeAsString(header);
 			final String[] asArray = tokenReadable.split(":");
 			if(asArray.length == 3){
 			this.token = asArray[0];

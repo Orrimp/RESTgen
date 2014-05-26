@@ -41,9 +41,9 @@ public class IDGenerator {
 			private  long counter = «Constants.LONG_COUTNER_VALUE»;  
 			private static «Naming.CLASS_ID» instance = null;
 			
-			protected «Naming.CLASS_ID»(){}
+			private «Naming.CLASS_ID»(){}
 			
-			public synchronized static «Naming.CLASS_ID» getInstantce(){
+			public synchronized static «Naming.CLASS_ID» getInstance(){
 				if(instance == null){
 					instance = new «Naming.CLASS_ID»();
 				}

@@ -285,7 +285,7 @@ class JerseyMethodGenerator extends MethodGenerator{
 		try{
 			«resourceName.toFirstUpper»  res = «Naming.ABSTRACT_CLASS_DAO».getInstance().create«resourceName.toFirstUpper»DAO().load(«resourceName.toFirstLower».«Naming.METHOD_NAME_ID_GET»());
 			if(res==null){
-				«Naming.INTERFACE_ID» idGen = new «Naming.CLASS_ID»();
+				«Naming.INTERFACE_ID» idGen = «Naming.CLASS_ID».getInstance();
 				«idDataType» newID  = idGen.generateID();
 				URI newUri = new URI("«uriPart»" + newID);
 				«resourceName.toFirstLower».setID(newID);

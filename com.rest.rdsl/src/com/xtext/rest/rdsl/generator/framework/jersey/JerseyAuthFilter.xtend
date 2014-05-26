@@ -42,7 +42,7 @@ class CustomJerseyFilter {
 			import «PackageManager.objectPackage».*;
 			import «Naming.CLASS_USER_AUTH_DATA.classImport»;
 			import «Naming.ABSTRACT_CLASS_DAO.classImport»;
-			import com.rest.rdsl.databsase.«userResource.name»DAO;
+			import «PackageManager.getDatabasePackage».«userResource.name»DAO;
 			
 			import java.io.IOException;
 			
