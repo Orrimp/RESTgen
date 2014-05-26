@@ -1,7 +1,7 @@
 RESTgen
 =======
 
-This projekts allows to generate RESTful Jersey source code defined by a model. It uses Xtend and Xtend features to generate the source code. 
+This projekts allows to generate RESTful Jersey 2.8 compatible source code defined by a model. It uses Xtend and Xtend features to generate the source code. 
 
 
 ## Using RESTgen
@@ -17,6 +17,7 @@ This projekts allows to generate RESTful Jersey source code defined by a model. 
 8. Create a Java project in the new Eclipse instance
 9. Add a file with the extension ".rdsl" and confirm the xtext nature. 
 10. Define the REST model, save the file and wait for the stuff to be generated.
+11. Add the Maven POM and Web.XML file from WebFile Package to your project and build. 
 
 A file can be either a resource or a configuration. The framework uses the first config file its find. The user can specify multiple resource files which all be used. 
 
