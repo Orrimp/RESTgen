@@ -29,17 +29,16 @@ Idea: The user defines a resource with a name "Users" and multiple attributes. E
 
 Content:  
 ```java 
-Resource Users 
-{ 
-	Attributes 
-	GET Java java.lang.String username 
-	GET Java java.lang.String password 
-	GET Java java.lang.String firstName 
-	GET Java java.lang.String secondName 
-	GET Java java.util.Date birthday 
-    GET Java java.lang.String alias 
-	GET Resource Messages tweets  
-} 
+Resource Messages{
+	Attributes
+	GET Java String messageBody
+	GET Java String messageHeader
+	NONE Java String internalHash
+	GET List of Resources Users followers
+	GET List of Resources Tags tags 
+	GET List of Type String keywords
+	GET Resource Media image
+}
 ```
 ## Example Configuration File 
 
