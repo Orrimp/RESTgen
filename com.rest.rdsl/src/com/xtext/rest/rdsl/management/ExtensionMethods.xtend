@@ -27,7 +27,7 @@ class ExtensionMethods {
 	 * @return returns the name of the reference
 	 */
 	def dispatch String nameOfType(JavaReference ref){
-		return ref?.javaDataType?.literal;
+		return ref?.javaDataType?.dataType.literal;
 	}
 	
 	def dispatch String fullNameOfType(JavaReference reference){
@@ -36,7 +36,7 @@ class ExtensionMethods {
 	
 	def String nameOfInnerType(ListReference ref){
 		if(ref.innerType.primitiveType != null){
-			return ref.innerType.primitiveType.literal
+			return ref.innerType.primitiveType.dataType.literal
 		}else{
 			return ref.innerType.resource.name
 		}
@@ -49,7 +49,7 @@ class ExtensionMethods {
 
 	
 	private def fullJavaNameOfType(PrimitiveType pType) {
-		switch(pType){
+		switch(pType.dataType){
 			case STRING: return "java.lang.String"
 			case DATE: return "java.util.Date"
 			case INT: return ""

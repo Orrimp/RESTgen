@@ -105,7 +105,15 @@ Reference: ResourceReference | JavaReference | ListReference;
 
 Attribute: method = HTTPMETHOD value = Reference name = ID;
 
-enum PrimitiveType:
+PrimitiveType:
+	dataType = Datatype ('(' start =  (FLOAT | STRING) '...' stop = (FLOAT | STRING) ')')? (context = Context)?
+;
+
+enum Context:
+	EMAIL="email" | URL='url' | INTERNAL='internal'  
+;
+
+enum Datatype:
     STRING='String' | INT='Int' | DATE='Date' | FLOAT='Float';
 
 
@@ -122,3 +130,4 @@ terminal URL: 'http' 's'?  '://' ((ID '.' ID) ('.' ID)* | "localhost" | (INT'.'I
 terminal HEADER_STRING: 'x-'ID('-'ID)*;
 terminal VERSION: ('1'..'9');
 terminal TIME: ('1'..'9')+;
+terminal FLOAT: (INT+'.'INT+);
