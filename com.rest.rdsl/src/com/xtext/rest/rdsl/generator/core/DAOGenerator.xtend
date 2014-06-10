@@ -275,7 +275,7 @@ class DAOGenerator {
 						«objectName» = new «res.name»( rs.get«idDataType.toFirstUpper»("id") ) ;
 						«FOR attrib: res.attributes»
 						«IF attrib.value instanceof JavaReference»
-						«objectName».set«attrib.name.toFirstUpper»( rs.get«attrib.value.simpleNameOfType»("«attrib.name»") );
+						«objectName».set«attrib.name.toFirstUpper»( rs.get«attrib.value.nameOfType»("«attrib.name»") );
 						«ELSE»
 						«IF attrib.value instanceof ResourceReference»
 						«idDataType» id«attrib.name.toLowerCase» = rs.get«idDataType.toFirstUpper»("«attrib.name»");
@@ -363,7 +363,7 @@ class DAOGenerator {
 			var String value = "id " + idDataType + " NOT NULL," ; 
 			for(attrib: res.attributes){
 				if(attrib.value instanceof JavaReference){
-					value = value + " " + attrib.name +  " " + attrib.value.simpleNameOfType.toLowerCase + ",";
+					value = value + " " + attrib.name +  " " + attrib.value.nameOfType.toLowerCase + ",";
 				}else if(attrib.value instanceof ResourceReference){
 					value = value + " " + attrib.name + "_id " + idDataType.toLowerCase + ","
 				}		

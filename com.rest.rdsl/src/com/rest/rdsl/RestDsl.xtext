@@ -37,11 +37,6 @@ Paging:
     'size' elementsCount = INT
 ;
 
-//Generate corresponding \GET inside the reosource with given Path
-Start:
-	startPath = URL resource=[RESTResource]
-;
-
 Header:
 	name = HEADER_STRING ('Description' description = STRING)? 'default value=' value = STRING
 ;
@@ -78,7 +73,6 @@ RESTResource:
 	'}'
 ;
 
-
 RESTUserResource returns RESTResource:
 	'Resource' name = ID
 	'{'
@@ -104,11 +98,15 @@ UserTokenAttribute returns Attribute:
 ;
 
 ResourceReference :	'Resource' resourceRef = [RESTResource]; 
-JavaReference: 'Java' javaDataType = [types::JvmType|FQN];
-ListReference: 'List' listDataType = [types::JvmType|FQN] '<'  innerType  = [RESTResource]'>';
+JavaReference: 'Java' javaDataType = PrimitiveType;
+ListReference: 'List of' innerType  =  InnerType;
+InnerType : ('Resources ' resource = [RESTResource]) | ('Type' primitiveType = PrimitiveType);
 Reference: ResourceReference | JavaReference | ListReference;
 
 Attribute: method = HTTPMETHOD value = Reference name = ID;
+
+enum PrimitiveType:
+    STRING='String' | INT='Int' | DATE='Date' | FLOAT='Float';
 
 
 FQN:ID ("." ID)*; 

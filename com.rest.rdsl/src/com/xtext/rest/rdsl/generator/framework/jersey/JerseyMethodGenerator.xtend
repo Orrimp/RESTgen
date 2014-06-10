@@ -147,13 +147,13 @@ class JerseyMethodGenerator extends MethodGenerator{
 		val ListReference reference = attribute.value as ListReference;		
 		'''
 		@GET
-		@Path("/{id «idRegex»}/«reference.innerType.name.toLowerCase»/{page}")
+		@Path("/{id «idRegex»}/«reference.nameOfInnerType.toLowerCase»/{page}")
 		@Produces(«mime»)
 		@«Naming.ANNO_USER_AUTH»
-		public Response get«reference.innerType.name.toFirstUpper»(
-			«FOR attrib: reference.innerType.attributes»
+		public Response get«reference.nameOfInnerType.toFirstUpper»(
+			«FOR attrib: reference.innerType.resource.attributes»
 			«IF !(attrib.value instanceof ListReference)»
-			@QueryParam("«attrib.name»") «attrib.value.simpleNameOfType» «attrib.name»,
+			@QueryParam("«attrib.name»") «attrib.value.nameOfType» «attrib.name»,
 			«ENDIF»
 			«ENDFOR»
 			@PathParam("page") int page, @PathParam("id") «config.getIDDataTyp» id){
@@ -162,7 +162,7 @@ class JerseyMethodGenerator extends MethodGenerator{
 				int elementsPerPage = «config.paging.elementsCount»;
 				
 				«Naming.CLASS_DB_QUERY» «Naming.CLASS_DB_QUERY.toString.toLowerCase»  = new «Naming.CLASS_DB_QUERY»();
-				«FOR attrib: reference.innerType.attributes»
+				«FOR attrib: reference.innerType.resource.attributes»
 				«IF !(attrib.value instanceof ListReference)»
 				«Naming.CLASS_DB_QUERY.toString.toLowerCase».put("«attrib.name»", «attrib.name»);
 				«ENDIF»
@@ -201,7 +201,7 @@ class JerseyMethodGenerator extends MethodGenerator{
 		public Response get«resourceName»Query(
 			«FOR attrib: resource.attributes»
 			«IF !(attrib.value instanceof ListReference)»
-			@QueryParam("«attrib.name»") «attrib.value.simpleNameOfType» «attrib.name»,
+			@QueryParam("«attrib.name»") «attrib.value.nameOfType» «attrib.name»,
 			«ENDIF»
 			«ENDFOR»
 			@PathParam("page") int page){

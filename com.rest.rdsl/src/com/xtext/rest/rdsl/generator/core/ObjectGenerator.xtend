@@ -38,8 +38,8 @@ class ObjectGenerator {
 		imports.add(Naming.CLASS_OBJPARENT.classImport);
 		for(attrib: resource.attributes)
 		{
-			if((attrib.value instanceof JavaReference) && !imports.contains(attrib.value.nameOfType))
-				imports.add(attrib.value.nameOfType);
+			if((attrib.value instanceof JavaReference) && !imports.contains((attrib.value as JavaReference).fullNameOfType))
+				imports.add((attrib.value as JavaReference).fullNameOfType);
 		}
 	
 	var String idDataType = config.IDDataTyp;
@@ -86,15 +86,15 @@ class ObjectGenerator {
 		«FOR attribute: resource.attributes»	
 				
 		«anno.fieldAnno»
-		private «attribute.value.simpleNameOfType»«putExtra(attribute)» «attribute.name.toFirstLower»;
+		private «attribute.value.nameOfType»«putExtra(attribute)» «attribute.name.toFirstLower»;
 		
 		«anno.getGetMethodAnno»
-		public «attribute.value.simpleNameOfType»«putExtra(attribute)» get«attribute.name.toFirstUpper»(){
+		public «attribute.value.nameOfType»«putExtra(attribute)» get«attribute.name.toFirstUpper»(){
 			return this.«attribute.name.toFirstLower»;
 		}
 		
 		«anno.getSetMethodAnno»
-		public void set«attribute.name.toFirstUpper»(«attribute.value.simpleNameOfType»«putExtra(attribute)» «attribute.name.toFirstLower»){
+		public void set«attribute.name.toFirstUpper»(«attribute.value.nameOfType»«putExtra(attribute)» «attribute.name.toFirstLower»){
 			this.«attribute.name.toFirstLower» = «attribute.name.toFirstLower»;
 			«IF attribute.value instanceof ResourceReference»
 			resetLinks();
@@ -134,10 +134,11 @@ class ObjectGenerator {
 	}
 	'''
 	}
+
 	
 	private def String putExtra(Attribute attribute){
 		if( attribute.value instanceof ListReference)
-			return  "<" + (attribute.value as ListReference).innerType.name + ">"
+			return  "<" + (attribute.value as ListReference).innerType + ">"
 		else
 			return ""
 	}

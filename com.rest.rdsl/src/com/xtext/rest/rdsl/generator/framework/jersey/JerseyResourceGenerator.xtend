@@ -76,7 +76,7 @@ class JerseyResourceGenerator implements IResourceGenerator {
 	««« Custom methods for List elements
 		«FOR attribute: resource.attributes»
 		
-			«IF attribute.value instanceof ListReference»
+			«IF attribute.value instanceof ListReference && (attribute.value as ListReference).innerType.resource != null »
 				«mGen.generateQuery(attribute)»
 		 	«ELSE»
 				«mGen.generate(attribute)»
