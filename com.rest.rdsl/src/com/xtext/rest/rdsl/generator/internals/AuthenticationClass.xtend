@@ -48,10 +48,28 @@ class AuthenticationClass {
 	«IF config.auth instanceof HTTPBasic»		
 		private String name = "";
 		private String passwd = "";
+		
+		public String getName(){
+			return this.name;
+		}
+		
+		public String getPasswd(){
+			return this.passwd;
+		}
 	«ELSE»
 		private String token = "";
 		private String scope = "";
 		private String user = "";
+		
+			public String getToken(){
+			return this.token;
+		}
+			public String getScope(){
+			return this.scope;
+		}
+			public String getUser(){
+			return this.user;
+		}
 	«ENDIF»	
 		public «className»(String header){
 			this.header = header;

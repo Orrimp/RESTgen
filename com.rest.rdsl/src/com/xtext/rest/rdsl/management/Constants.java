@@ -25,7 +25,7 @@ public class Constants {
 	public static final String INTERFACEPACKAGE = "interfaces";
 	public static final String AUTHPACKAGE = "authentication";
 	public static final String DAOPACKAGE= "database";
-	public static final String LONG_COUTNER_VALUE = "101337";
+	public static final String LONG_COUTNER_VALUE = "1";
 	public static final String WEBPACKAGE = "web";
 	public static final String FRAMEWORKPACKAGE = "framework";
 }

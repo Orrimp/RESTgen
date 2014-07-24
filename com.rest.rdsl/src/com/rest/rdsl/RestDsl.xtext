@@ -106,7 +106,7 @@ Reference: ResourceReference | JavaReference | ListReference;
 Attribute: method = HTTPMETHOD value = Reference name = ID;
 
 PrimitiveType:
-	dataType = Datatype ('(' start =  (FLOAT | STRING) '...' stop = (FLOAT | STRING) ')')? (context = Context)?
+	dataType = Datatype ('(' start =  (LONG | FLOAT | STRING) '...' stop = (LONG | FLOAT | STRING) ')')? (context = Context)?
 ;
 
 enum Context:
@@ -114,7 +114,7 @@ enum Context:
 ;
 
 enum Datatype:
-    STRING='String' | INT='Int' | DATE='Date' | FLOAT='Float';
+    STRING='String' | INT='Int' | LONG='Long' | FLOAT='Float';
 
 
 FQN:ID ("." ID)*; 
@@ -131,3 +131,4 @@ terminal HEADER_STRING: 'x-'ID('-'ID)*;
 terminal VERSION: ('1'..'9');
 terminal TIME: ('1'..'9')+;
 terminal FLOAT: (INT+'.'INT+);
+terminal LONG: INT+;

@@ -68,7 +68,7 @@ class WebFileGenerator {
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
-			<version>2.8</version>
+			<version>2.10.1</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

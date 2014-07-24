@@ -12,6 +12,7 @@ import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.management.Naming
+import com.xtext.rest.rdsl.restDsl.HTTPBasic
 
 class DAOGenerator {
 	val IFileSystemAccess fsa;
@@ -128,6 +129,7 @@ class DAOGenerator {
 						}
 					}
 				}
+				
 				public boolean update(«res.name» «objectName», «config.getIDDataTyp» id) throws Exception{
 					
 					Connection con = null;
@@ -184,6 +186,39 @@ class DAOGenerator {
 						}
 					}
 				}
+				
+				
+			public Users load(String username) throws Exception{
+			    
+				Connection con = null;
+				try{
+				Users users = null; 
+				con = sqlite.getConnection();
+				Statement stmt = con.createStatement();
+				    
+				String sqlQuery = "SELECT * FROM users WHERE username = '" +  username + "'";
+				    
+				ResultSet rs = stmt.executeQuery(sqlQuery);
+				    
+					if(rs.next()){
+						users = getObject(rs);
+					}
+					
+				return users;
+							
+				}catch(SQLException ex){
+				LOGGER.error("SQLException: " + ex.getMessage()); 
+				throw ex;
+				}finally{
+					if (con != null){
+						try { con.close( );  }
+						catch ( Exception ex ) {
+							LOGGER.error("SQLException: " + ex.getMessage()); 
+							throw ex;
+						}
+					}
+				}
+			}
 				
 				public boolean delete(«config.getIDDataTyp» id) throws Exception{
 					
@@ -292,9 +327,40 @@ class DAOGenerator {
 				}
 					
 			«IF resourceCol.userResource != null»
+			
 				public boolean authenticate(«Naming.CLASS_USER_AUTH_DATA» authClass) throws «mapper.get(401).name», «mapper.get(403).name»{
-					return true;
+					«res.name» user	this.load(authClass.getName());
+					
+					if(user != null){
+						if(user.getPassword().equals(autClass.getPasswd()){
+							return true;
+					}
+					
+					return false;
+					
 				}
+				
+				«IF config.auth instanceof HTTPBasic»
+			
+				public void createInitialUser(){
+				   User user = new User();
+				   try{
+				   		user.setUsername("«(config.auth as HTTPBasic).user»");
+				   		user.setPassword("«(config.auth as HTTPBasic).password»");
+				   		«IF config.IDDataTyp == "String"»
+				   		«config.IDDataTyp» id = "0";
+				   		«ENDIF»
+				   		«IF config.IDDataTyp == "Long"»
+				   		«config.IDDataTyp» id = 0;
+				   		«ENDIF»
+				   		user.«Naming.METHOD_NAME_ID_SET»(id);
+				   		this.save(user);
+				   
+				   } catch (Exception ex) {
+						LOGGER.error("Exception: " + ex.getMessage()); 
+				   }
+				}
+				«ENDIF»
 			«ENDIF»
 			}
 			''');

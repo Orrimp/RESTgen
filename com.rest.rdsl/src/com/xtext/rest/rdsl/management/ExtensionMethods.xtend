@@ -51,9 +51,9 @@ class ExtensionMethods {
 	private def fullJavaNameOfType(PrimitiveType pType) {
 		switch(pType.dataType){
 			case STRING: return "java.lang.String"
-			case DATE: return "java.util.Date"
-			case INT: return ""
-			case FLOAT: return ""
+			case LONG: return "java.lang.Long"
+			case INT: return "java.lang.Integer"
+			case FLOAT: return "java.lang.Float"
 		}
 	}
 

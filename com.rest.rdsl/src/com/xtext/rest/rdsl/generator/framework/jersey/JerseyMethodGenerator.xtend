@@ -359,9 +359,9 @@ class JerseyMethodGenerator extends MethodGenerator{
 	private def createRegex() {
 		switch(config.getIDDataTyp.toLowerCase){
 			case "string": 
-				return  ": [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+"
+				return  ": ([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+"
 			case "long":
-				return ": d+"
+				return ": \\d+"
 			default: 
 				return ""	
 		}
