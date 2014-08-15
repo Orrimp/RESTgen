@@ -1,0 +1,5 @@
+true
+
+select distinct `tab0`.`_CarId`, `tab0`.`_CompanyId`, `tab0`.`_revision`, `tab0`.`weight` from `CarcompaniesCompanycars` `tab0`
+where (true)
+limit 40, 10

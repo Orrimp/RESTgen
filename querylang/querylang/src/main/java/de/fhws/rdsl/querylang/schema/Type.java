@@ -4,14 +4,27 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-public class Type extends Element {
+public abstract class Type extends Element {
 
-    public List<Member> members = Lists.newArrayList();
-    public String name;
+    private List<Member> members = Lists.newArrayList();
+    private String name;
+
+    public Type(String name) {
+        super();
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public List<Member> getMembers() {
+        return this.members;
+    }
 
     public Member getMember(String name) {
         for (Member member : this.members) {
-            if (name.equals(member.name)) {
+            if (name.equalsIgnoreCase(member.getName())) {
                 return member;
             }
         }

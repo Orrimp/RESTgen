@@ -1,9 +1,9 @@
 package de.fhws.rdsl.querylang.sql.formatters;
 
-import de.fhws.rdsl.querylang.Element;
+import de.fhws.rdsl.querylang.TransformerContext;
+import de.fhws.rdsl.querylang.elements.Element;
+import de.fhws.rdsl.querylang.elements.NullElement;
 import de.fhws.rdsl.querylang.formatter.Formatter;
-import de.fhws.rdsl.querylang.formatter.FormatterContext;
-import de.fhws.rdsl.querylang.sql.elements.NullElement;
 
 public class NullFormatter implements Formatter {
 
@@ -13,7 +13,7 @@ public class NullFormatter implements Formatter {
     }
 
     @Override
-    public String format(Element element, FormatterContext context) {
+    public String format(Element element, TransformerContext context) {
         return "null";
     }
 

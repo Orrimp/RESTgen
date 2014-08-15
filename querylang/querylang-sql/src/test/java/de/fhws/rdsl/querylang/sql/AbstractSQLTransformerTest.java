@@ -19,178 +19,96 @@ public class AbstractSQLTransformerTest {
     }
 
     private static List<Type> getTypes() {
-        RootResourceType person = getPersonType();
-        SubResourceType address = getAddressType();
-        SubResourceType addressDescription = getAddressDescriptionType();
-        SubResourceType dummy1 = getDummy1Type();
-        SubResourceType dummy2 = getDummy2Type();
-        RootResourceType company = getCompanyType();
-        SubResourceType addressTags = getAddressTagsType();
-        ReferenceType personManagedCompanyManager = getPersonManagedCompanyManagerType();
-        person.members.add(new Containment() {
-            {
-                this.list = true;
-                this.name = "addresses";
-                this.resourceType = address;
-            }
-        });
-        person.members.add(new Reference() {
-            {
-                this.list = true;
-                this.name = "managedCompany";
-                this.resourceType = company;
-                this.opposite = "manager";
-                this.referenceType = personManagedCompanyManager;
-            }
-        });
-        person.members.add(new Attribute() {
-            {
-                this.list = false;
-                this.name = "name";
-            }
-        });
-        address.members.add(new Containment() {
-            {
-                this.list = false;
-                this.name = "description";
-                this.resourceType = addressDescription;
-            }
-        });
-        address.members.add(new Attribute() {
-            {
-                this.list = false;
-                this.name = "code";
-            }
-        });
-        address.members.add(new Containment() {
-            {
-                this.list = true;
-                this.name = "tags";
-                this.resourceType = addressTags;
-            }
-        });
-        addressTags.members.add(new Attribute() {
-            {
-                this.list = false;
-                this.name = "value";
-            }
-        });
-        addressDescription.members.add(new Containment() {
-            {
-                this.list = true;
-                this.name = "dummy1";
-                this.resourceType = dummy1;
-            }
-        });
-        addressDescription.members.add(new Containment() {
-            {
-                this.list = false;
-                this.name = "dummy2";
-                this.resourceType = dummy2;
-            }
-        });
-        addressDescription.members.add(new Attribute() {
-            {
-                this.list = true;
-                this.name = "author";
-            }
-        });
-        company.members.add(new Attribute() {
-            {
-                this.list = false;
-                this.name = "name";
-            }
-        });
 
-        company.members.add(new Reference() {
-            {
-                this.list = true;
-                this.name = "manager";
-                this.resourceType = person;
-                this.opposite = "managedCompany";
-                this.referenceType = personManagedCompanyManager;
-            }
-        });
-        dummy1.members.add(new Attribute() {
-            {
-                this.list = false;
-                this.name = "name";
-            }
-        });
+        RootResourceType person = new RootResourceType("Person");
+        RootResourceType company = new RootResourceType("Company");
+        RootResourceType car = new RootResourceType("Car");
+        SubResourceType address = new SubResourceType("Address");
+        SubResourceType addressDescription = new SubResourceType("AddressDescription");
+        SubResourceType addressTags = new SubResourceType("AddressTags");
+        ReferenceType companyemployeesPersoncompany = new ReferenceType("CompanyemployeesPersoncompany");
+        ReferenceType companymanagerPersonmanagedCompany = new ReferenceType("CompanymanagerPersonmanagedCompany");
+        ReferenceType carcompaniesCompanycars = new ReferenceType("CarcompaniesCompanycars");
+        SubResourceType names = new SubResourceType("Names");
+        SubResourceType dummy = new SubResourceType("Dummy");
 
-        dummy2.members.add(new Attribute() {
-            {
-                this.list = false;
-                this.name = "name";
-            }
-        });
-        personManagedCompanyManager.members.add(new Reference() {
-            {
-                this.list = false;
-                this.name = "person";
-                this.resourceType = person;
-            }
-        });
-        personManagedCompanyManager.members.add(new Reference() {
-            {
-                this.list = false;
-                this.name = "company";
-                this.resourceType = company;
-            }
-        });
+        person.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
+        person.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        person.getMembers().add(new Attribute("name", Attribute.STRING));
+        person.getMembers().add(new Attribute("active", Attribute.BOOLEAN));
+        person.getMembers().add(new Containment("addresses", true, address, null));
+        person.getMembers().add(new Reference("company", false, company, companyemployeesPersoncompany, "employees"));
+        person.getMembers().add(new Reference("managedCompany", false, company, companymanagerPersonmanagedCompany, "manager"));
 
-        return Lists.newArrayList(person, address, addressDescription, dummy1, dummy2, company, addressTags, personManagedCompanyManager);
+        address.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
+        address.getMembers().add(new Attribute("_addressId", Attribute.STRING)); // Keys
+        address.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        address.getMembers().add(new Attribute("code", Attribute.INTEGER));
+        address.getMembers().add(new Containment("description", false, addressDescription, null));
+        address.getMembers().add(new Containment("tags", true, addressTags, null));
+        address.getMembers().add(new Containment("description", false, addressDescription, null));
+
+        names.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
+        names.getMembers().add(new Attribute("_addressId", Attribute.STRING)); // Keys
+        names.getMembers().add(new Attribute("_namesId", Attribute.STRING)); // Keys
+        names.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        names.getMembers().add(new Attribute("val", Attribute.STRING));
+
+        addressTags.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
+        addressTags.getMembers().add(new Attribute("_addressId", Attribute.STRING)); // Keys
+        addressTags.getMembers().add(new Attribute("_addressTagsId", Attribute.STRING)); // Keys
+        addressTags.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        addressTags.getMembers().add(new Attribute("value", Attribute.STRING));
+
+        addressDescription.getMembers().add(new Attribute("author", Attribute.STRING));
+        addressDescription.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        addressDescription.getMembers().add(new Containment("names", true, names, null));
+        addressDescription.getMembers().add(new Containment("dummy", false, dummy, null));
+
+        dummy.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        dummy.getMembers().add(new Attribute("val", Attribute.STRING));
+
+        company.getMembers().add(new Attribute("_companyId", Attribute.STRING)); // Keys
+        company.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        company.getMembers().add(new Attribute("name", Attribute.STRING));
+        company.getMembers().add(new Reference("manager", false, person, companymanagerPersonmanagedCompany, "managedCompany"));
+        company.getMembers().add(new Reference("employees", true, person, companyemployeesPersoncompany, "company"));
+        company.getMembers().add(new Reference("cars", true, car, carcompaniesCompanycars, "companies"));
+
+        car.getMembers().add(new Attribute("_carId", Attribute.STRING)); // Keys
+        car.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        car.getMembers().add(new Attribute("name", Attribute.STRING));
+        car.getMembers().add(new Reference("companies", true, company, carcompaniesCompanycars, "cars"));
+
+        carcompaniesCompanycars.getMembers().add(new Attribute("_companyId", Attribute.STRING)); // Keys
+        carcompaniesCompanycars.getMembers().add(new Reference("_company", false, company, carcompaniesCompanycars, null));
+        carcompaniesCompanycars.getMembers().add(new Attribute("_carId", Attribute.STRING)); // Keys
+        carcompaniesCompanycars.getMembers().add(new Reference("_car", false, car, carcompaniesCompanycars, null));
+        carcompaniesCompanycars.getMembers().add(new Attribute("_revision", Attribute.STRING));
+        carcompaniesCompanycars.getMembers().add(new Attribute("weight", Attribute.INTEGER));
+
+        companyemployeesPersoncompany.getMembers().add(new Attribute("_companyId", Attribute.STRING)); // Keys
+        companyemployeesPersoncompany.getMembers().add(new Reference("_company", false, company, companyemployeesPersoncompany, null));
+        companyemployeesPersoncompany.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
+        companyemployeesPersoncompany.getMembers().add(new Reference("_person", false, person, companyemployeesPersoncompany, null));
+        companyemployeesPersoncompany.getMembers().add(new Attribute("_revision", Attribute.STRING));
+
+        companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_companyId", Attribute.STRING)); // Keys
+        companymanagerPersonmanagedCompany.getMembers().add(new Reference("_company", false, company, companymanagerPersonmanagedCompany, null));
+        companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
+        companymanagerPersonmanagedCompany.getMembers().add(new Reference("_person", false, person, companymanagerPersonmanagedCompany, null));
+        companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_revision", Attribute.STRING));
+
+        // personManagedCompanyManager.getMembers().add(new
+        // Attribute("personId", false, Attribute.STRING));
+        // personManagedCompanyManager.getMembers().add(new Reference("person",
+        // false, person, null, null));
+        // personManagedCompanyManager.getMembers().add(new
+        // Attribute("companyId", false, Attribute.STRING));
+        // personManagedCompanyManager.getMembers().add(new Reference("company",
+        // false, company, null, null));
+
+        return Lists.newArrayList(person, company, car, address, addressDescription, addressTags, companyemployeesPersoncompany,
+                companymanagerPersonmanagedCompany, carcompaniesCompanycars);
     }
-
-    private static RootResourceType getPersonType() {
-        RootResourceType person = new RootResourceType();
-        person.name = "Person";
-        return person;
-    }
-
-    private static SubResourceType getAddressType() {
-        SubResourceType address = new SubResourceType();
-        address.name = "Address";
-        return address;
-    }
-
-    private static SubResourceType getAddressDescriptionType() {
-        SubResourceType description = new SubResourceType();
-        description.name = "AddressDescription";
-        return description;
-    }
-
-    private static SubResourceType getAddressTagsType() {
-        SubResourceType tempType = new SubResourceType() {
-            {
-                this.name = "AddressTags";
-            }
-        };
-        return tempType;
-    }
-
-    private static SubResourceType getDummy1Type() {
-        SubResourceType dummy = new SubResourceType();
-        dummy.name = "Dummy1";
-        return dummy;
-    }
-
-    private static SubResourceType getDummy2Type() {
-        SubResourceType dummy = new SubResourceType();
-        dummy.name = "Dummy2";
-        return dummy;
-    }
-
-    private static RootResourceType getCompanyType() {
-        RootResourceType company = new RootResourceType();
-        company.name = "Company";
-        return company;
-    }
-
-    private static ReferenceType getPersonManagedCompanyManagerType() {
-        ReferenceType company = new ReferenceType();
-        company.name = "PersonManagedCompanyManager";
-        return company;
-    }
-
 }

@@ -1,5 +1,8 @@
 package de.fhws.rdsl.querylang.sql;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import de.fhws.rdsl.querylang.schema.Member;
 import de.fhws.rdsl.querylang.schema.Type;
 
@@ -34,7 +37,7 @@ public class Join {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " [from: " + this.from + ", to: " + this.to + "]";
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
 }

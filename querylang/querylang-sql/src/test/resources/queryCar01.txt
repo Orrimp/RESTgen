@@ -1,0 +1,5 @@
+name.eq("vw")
+
+select distinct `tab0`.`_CarId`, `tab0`.`_revision`, `tab0`.`name` from `Car` `tab0`
+where ((`tab0`.`name` = "vw"))
+limit 40, 10

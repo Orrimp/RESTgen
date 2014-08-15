@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import de.fhws.rdsl.querylang.Element;
+import de.fhws.rdsl.querylang.elements.Element;
 
 public class JoinElement extends Element {
     private String table;

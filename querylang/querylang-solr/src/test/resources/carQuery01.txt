@@ -1,0 +1,3 @@
+name.eq("Microsoft")
+
+q=(name:"Microsoft")

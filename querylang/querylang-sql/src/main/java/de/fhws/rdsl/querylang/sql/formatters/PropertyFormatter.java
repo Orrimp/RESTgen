@@ -1,10 +1,12 @@
 package de.fhws.rdsl.querylang.sql.formatters;
 
-import de.fhws.rdsl.querylang.Element;
+import com.google.common.base.Joiner;
+
 import de.fhws.rdsl.querylang.Property;
+import de.fhws.rdsl.querylang.TransformerContext;
+import de.fhws.rdsl.querylang.elements.Element;
+import de.fhws.rdsl.querylang.elements.PropertyElement;
 import de.fhws.rdsl.querylang.formatter.Formatter;
-import de.fhws.rdsl.querylang.formatter.FormatterContext;
-import de.fhws.rdsl.querylang.sql.elements.PropertyElement;
 
 public class PropertyFormatter implements Formatter {
 
@@ -14,14 +16,10 @@ public class PropertyFormatter implements Formatter {
     }
 
     @Override
-    public String format(Element element, FormatterContext context) {
+    public String format(Element element, TransformerContext context) {
         PropertyElement propertyElement = (PropertyElement) element;
         Property prop = propertyElement.getProperty();
-        if (prop.getNamespace() == null) {
-            return "`" + prop.getName() + "`";
-        } else {
-            return "`" + prop.getNamespace() + "`.`" + prop.getName() + "`";
-        }
+        return Joiner.on('.').join(prop.getPath().stream().map(name -> "`" + name + "`").iterator());
     }
 
 }

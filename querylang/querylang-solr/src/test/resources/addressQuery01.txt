@@ -1,0 +1,3 @@
+description.dummy.val.eq("hello") || description.author.eq("test") && code.eq(123)
+
+q=((_personId:"123") AND (description_dummy_val:"hello" OR (description_author:"test" AND code:123)))

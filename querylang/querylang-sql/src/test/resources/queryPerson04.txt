@@ -1,0 +1,7 @@
+name.eq("Leonid") && addresses.code.eq(876) && addresses.tags.value.eq("tag")
+
+select distinct `tab0`.`_PersonId`, `tab0`.`_revision`, `tab0`.`name`, `tab0`.`active` from `Person` `tab0`
+join Address tab1 on (`tab0`.`_PersonId` = `tab1`.`_PersonId`)
+join AddressTags tab2 on (`tab1`.`_PersonId` = `tab2`.`_PersonId`) and (`tab1`.`_AddressId` = `tab2`.`_AddressId`)
+where (((`tab0`.`name` = "Leonid") and (`tab1`.`code` = 876) and (`tab2`.`value` = "tag")))
+limit 40, 10

@@ -1,45 +1,66 @@
 package de.fhws.rdsl.querylang;
 
-import com.google.common.base.Strings;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.google.common.collect.Lists;
 
 public class Property {
 
-    private String namespace;
-    private String name;
+    private List<String> path = Lists.newArrayList();
 
-    public Property(String namespace, String name) {
+    public Property(String... names) {
         super();
-        this.namespace = namespace;
-        this.name = name;
+        Collections.addAll(this.path, names);
     }
 
-    public Property(String name) {
-        this(null, name);
+    public Property(List<String> names) {
+        super();
+        this.path.addAll(names);
     }
 
     public String getName() {
-        return this.name;
+        return this.path.get(this.path.size() - 1);
     }
 
-    public String getNamespace() {
-        return this.namespace;
+    public List<String> getNamespace() {
+        if (this.path.size() == 1) {
+            return Collections.emptyList();
+        } else {
+            return this.path.subList(0, this.path.size() - 1);
+        }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<String> getPath() {
+        return this.path;
     }
 
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Property) {
+            Property other = (Property) obj;
+            if (other.getPath().size() == getPath().size()) {
+                for (int i = 0; i < other.getPath().size(); i++) {
+                    if (getPath().get(i).equalsIgnoreCase(other.getPath().get(i))) {
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public String toString() {
-        if (Strings.isNullOrEmpty(this.namespace)) {
-            return this.name;
-        } else {
-            return this.namespace + "." + this.name;
-        }
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
 }

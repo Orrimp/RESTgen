@@ -1,0 +1,5 @@
+description.author.eq("Leonid") && code.eq(123)
+
+select distinct `tab0`.`_PersonId`, `tab0`.`_AddressId`, `tab0`.`_revision`, `tab0`.`code` from `Address` `tab0`
+where (((`tab0`.`description_author` = "Leonid") and (`tab0`.`code` = 123)) and ((`tab0`.`_PersonId` = "123")))
+limit 40, 10

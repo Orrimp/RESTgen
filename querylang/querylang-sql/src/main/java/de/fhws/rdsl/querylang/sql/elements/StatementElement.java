@@ -4,12 +4,36 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import de.fhws.rdsl.querylang.Element;
+import de.fhws.rdsl.querylang.elements.Element;
+import de.fhws.rdsl.querylang.elements.JunctionElement;
 
 public class StatementElement extends Element {
     private SelectElement select;
     private List<JoinElement> joins = Lists.newArrayList();
     private JunctionElement filter;
+    private OrderElement order;
+    private Long start;
+    private Long offset;
+
+    public Long getOffset() {
+        return this.offset;
+    }
+
+    public void setOffset(Long offset) {
+        this.offset = offset;
+    }
+
+    public Long getStart() {
+        return this.start;
+    }
+
+    public void setStart(Long start) {
+        this.start = start;
+    }
+
+    public void setOrder(OrderElement order) {
+        this.order = order;
+    }
 
     public SelectElement getSelect() {
         return this.select;
@@ -29,6 +53,10 @@ public class StatementElement extends Element {
 
     public void setFilter(JunctionElement filter) {
         this.filter = filter;
+    }
+
+    public OrderElement getOrder() {
+        return this.order;
     }
 
 }

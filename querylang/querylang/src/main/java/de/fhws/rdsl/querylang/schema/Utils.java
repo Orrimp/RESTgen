@@ -1,45 +1,29 @@
 package de.fhws.rdsl.querylang.schema;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Utils {
 
     public static Member findMemberByName(String name, Type type) {
-        for (Member member : type.members) {
-            if (name.equalsIgnoreCase(member.name)) {
-                return member;
-            }
-        }
-        return null;
+        return type.getMembers().stream().filter(member -> member.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public static Type findTypeByName(String name, List<Type> types) {
-        for (Type type : types) {
-            if (type.name.equalsIgnoreCase(name)) {
-                return type;
-            }
-        }
-        return null;
+        return types.stream().filter(type -> type.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public static Containment findContainment(Type type, List<Type> types) {
-        for (Type element : types) {
-            for (Member member : element.members) {
-                if (member instanceof Containment) {
-                    if (((Containment) member).resourceType == type) {
-                        return (Containment) member;
-                    }
-                }
-            }
-        }
-        return null;
+        Stream<Member> members = types.stream().map(t -> t.getMembers()).flatMap(Collection::stream);
+        return (Containment) members.filter(m -> m instanceof Containment && ((Containment) m).getResourceType() == type).findFirst().orElse(null);
     }
 
     public static Type findContainer(Type type, List<Type> types) {
         for (Type element : types) {
-            for (Member member : element.members) {
+            for (Member member : element.getMembers()) {
                 if (member instanceof Containment) {
-                    if (((Containment) member).resourceType == type) {
+                    if (((Containment) member).getResourceType() == type) {
                         return element;
                     }
                 }
@@ -50,11 +34,11 @@ public class Utils {
 
     public static Reference findFirstReference(ReferenceType type, Type target, List<Type> types) {
         for (Type element : types) {
-            for (Member member : element.members) {
+            for (Member member : element.getMembers()) {
                 if (member instanceof Reference) {
-                    if (((Reference) member).referenceType == type) {
+                    if (((Reference) member).getReferenceType() == type) {
                         if (target != null) {
-                            if (((Reference) member).resourceType == target) {
+                            if (((Reference) member).getResourceType() == target) {
                                 return (Reference) member;
                             }
                         } else {
@@ -73,7 +57,7 @@ public class Utils {
 
     public static Type findType(Member attribute, List<Type> types) {
         for (Type element : types) {
-            for (Member member : element.members) {
+            for (Member member : element.getMembers()) {
                 if (member == attribute) {
                     return element;
                 }

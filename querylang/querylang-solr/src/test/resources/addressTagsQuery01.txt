@@ -1,0 +1,3 @@
+value.eq("hello")
+
+q=((_personId:"123" AND _addressId:"56") AND value:"hello")&start=100&rows=40

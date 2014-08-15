@@ -1,8 +1,32 @@
 package de.fhws.rdsl.querylang.schema;
 
-public class Member extends Element {
+public abstract class Member extends Element {
 
-    public String name;
-    public boolean list;
+    private String name;
+    private boolean list;
+    private boolean queryable;
+
+    public Member(String name, boolean list) {
+        super();
+        this.name = name;
+        this.list = list;
+        this.queryable = true;
+    }
+
+    public boolean isQueryable() {
+        return this.queryable;
+    }
+
+    public void setQueryable(boolean queryable) {
+        this.queryable = queryable;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public boolean isList() {
+        return this.list;
+    }
 
 }

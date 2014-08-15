@@ -1,9 +1,9 @@
 package de.fhws.rdsl.querylang.sql.formatters;
 
-import de.fhws.rdsl.querylang.Element;
+import de.fhws.rdsl.querylang.TransformerContext;
+import de.fhws.rdsl.querylang.elements.Element;
+import de.fhws.rdsl.querylang.elements.StringElement;
 import de.fhws.rdsl.querylang.formatter.Formatter;
-import de.fhws.rdsl.querylang.formatter.FormatterContext;
-import de.fhws.rdsl.querylang.sql.elements.StringElement;
 
 public class StringFormatter implements Formatter {
 
@@ -13,7 +13,7 @@ public class StringFormatter implements Formatter {
     }
 
     @Override
-    public String format(Element element, FormatterContext context) {
+    public String format(Element element, TransformerContext context) {
         return "\"" + ((StringElement) element).getValue().toString() + "\"";
     }
 

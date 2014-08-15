@@ -1,6 +1,6 @@
 package de.fhws.rdsl.querylang.formatter;
 
-import de.fhws.rdsl.querylang.Element;
+import de.fhws.rdsl.querylang.elements.Element;
 
 public interface FormatterProvider {
 

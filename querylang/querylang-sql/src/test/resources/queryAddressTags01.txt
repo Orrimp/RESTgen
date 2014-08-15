@@ -1,0 +1,5 @@
+value.eq("hello")
+
+select distinct `tab0`.`_PersonId`, `tab0`.`_AddressId`, `tab0`.`_AddressTagsId`, `tab0`.`_revision`, `tab0`.`value` from `AddressTags` `tab0`
+where ((`tab0`.`value` = "hello") and ((`tab0`.`_PersonId` = 123) and (`tab0`.`_AddressId` = 789)))
+limit 40, 10

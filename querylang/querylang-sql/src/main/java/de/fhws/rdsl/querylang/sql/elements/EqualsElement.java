@@ -1,5 +1,6 @@
 package de.fhws.rdsl.querylang.sql.elements;
 
+import de.fhws.rdsl.querylang.elements.ExpressionElement;
 
 public class EqualsElement extends ExpressionElement {
     private ExpressionElement left;

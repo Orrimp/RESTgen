@@ -18,15 +18,15 @@ import de.fhws.rdsl.querylang.schema.Utils;
 public class Names {
 
     public static String getReferenceTableIdProperty(RootResourceType type) {
-        return type.name + "Id";
+        return "_" + type.getName() + "Id";
     }
 
     public static String getTableName(Type type, List<Type> allTypes) {
         Type currentType = type;
         while (true) {
             Containment containment = Utils.findContainment(currentType, allTypes);
-            if (containment == null || containment.list) {
-                return currentType.name;
+            if (containment == null || containment.isList()) {
+                return currentType.getName();
             } else {
                 currentType = Utils.findContainer(currentType, allTypes);
             }
@@ -35,23 +35,25 @@ public class Names {
 
     public static List<Property> getKeys(String prefix, Type type, List<Type> allTypes) {
         LinkedList<String> keys = Lists.newLinkedList();
-        if (type instanceof ReferenceType) {
+        if (type instanceof RootResourceType) {
+            keys.add("_" + type.getName() + "Id");
+        } else if (type instanceof ReferenceType) {
             Reference reference = Utils.findFirstReference((ReferenceType) type, allTypes);
             RootResourceType container = (RootResourceType) Utils.findType(reference, allTypes);
-            keys.addAll(Lists.newArrayList(getReferenceTableIdProperty(reference.resourceType), getReferenceTableIdProperty(container)));
+            keys.addAll(Lists.newArrayList(getReferenceTableIdProperty(reference.getResourceType()), getReferenceTableIdProperty(container)));
         } else {
             Type currentType = type;
             while (true) {
                 Containment containment = Utils.findContainment(currentType, allTypes);
                 if (containment == null) { // root
-                    keys.addLast("id");
+                    keys.addFirst("_" + currentType.getName() + "Id");
                     break;
                 }
-                currentType = Utils.findContainer(currentType, allTypes);
-                if (!containment.list) { // 1:1
+                if (!containment.isList()) { // 1:1
                 } else { // 1:n
-                    keys.addFirst(getTableName(currentType, allTypes) + "Id");
+                    keys.addFirst("_" + getTableName(currentType, allTypes) + "Id");
                 }
+                currentType = Utils.findContainer(currentType, allTypes);
             }
         }
 
