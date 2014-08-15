@@ -1,0 +1,7 @@
+company.name.eq("test") && person.addresses.code.eq(790)
+
+select distinct `tab0`.`CompanyId`, `tab0`.`PersonId` from `PersonManagedCompanyManager` `tab0`
+join Company tab1 on (`tab0`.`CompanyId` = `tab1`.`id`)
+join Person tab2 on (`tab0`.`PersonId` = `tab2`.`id`)
+join Address tab3 on (`tab2`.`id` = `tab3`.`PersonId`)
+where (((`tab1`.`name` = "test") and (`tab3`.`code` = 790)))

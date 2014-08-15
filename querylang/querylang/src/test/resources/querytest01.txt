@@ -1,0 +1,4 @@
+name.eq("test")
+
+select distinct `tab0`.`id` from `Person` `tab0`
+where ((`tab0`.`name` = "test"))

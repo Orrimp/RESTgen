@@ -1,0 +1,4 @@
+name.eq(true)
+
+select distinct `tab0`.`PersonId`, `tab0`.`AddressId`, `tab0`.`id` from `Dummy1` `tab0`
+where ((`tab0`.`name` = true) and ((`tab0`.`PersonId` = "123") or (`tab0`.`AddressId` = "789")))

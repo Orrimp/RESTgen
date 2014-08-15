@@ -1,0 +1,6 @@
+managedCompany.name.eq(true) && name.eq("test2")
+
+select distinct `tab0`.`id` from `Person` `tab0`
+join PersonManagedCompanyManager PersonManagedCompanyManager on (`tab0`.`id` = `PersonManagedCompanyManager`.`PersonId`)
+join Company tab1 on (`PersonManagedCompanyManager`.`CompanyId` = `tab1`.`id`)
+where (((`tab1`.`name` = true) and (`tab0`.`name` = "test2")))
