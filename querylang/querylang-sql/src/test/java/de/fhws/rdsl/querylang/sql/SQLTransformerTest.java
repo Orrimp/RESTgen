@@ -122,6 +122,11 @@ public class SQLTransformerTest extends AbstractSQLTransformerTest {
         doTest("queryAddress05.txt", "address", Lists.newArrayList("123"), 40l, 10l, null);
     }
 
+    @Test
+    public void test21() {
+        doTest("queryAddress06.txt", "address", Lists.newArrayList("123"), 40l, 10l, null);
+    }
+
     // @Test
     // public void test01() {
     // doTest("querytest01.txt", "person", Lists.newArrayList(), 40l, 10l,
