@@ -227,12 +227,27 @@ public class SQLNodeTransformer implements NodeTransformer, FunctionContext {
                     realPath = realPath + containment.getName() + "_";
                 }
                 currentType = containment.getResourceType();
-            } else if (member instanceof Reference) {
+            } else if (member instanceof Reference && currentType instanceof ReferenceType) {
                 Reference reference = (Reference) member;
                 fullTablePath = parts.subList(0, i + 1);
                 String alias = this.aliases.get(Names.joinPath(fullTablePath));
                 realPath = alias + ".";
                 currentType = reference.getResourceType();
+                // i++;
+            } else if (member instanceof Reference && currentType instanceof RootResourceType) {
+                Reference reference = (Reference) member;
+                Member nextMember = reference.getReferenceType().getMember(parts.get(i + 1));
+                if (nextMember instanceof Attribute) {
+                    fullTablePath = parts.subList(0, i + 1);
+                    currentType = reference.getReferenceType();
+                } else {
+                    fullTablePath = parts.subList(0, i + 2);
+                    currentType = reference.getResourceType();
+                }
+                String alias = this.aliases.get(Names.joinPath(fullTablePath));
+                realPath = alias + ".";
+
+                // i++;
             } else if (member instanceof Attribute) {
                 realPath = realPath + member.getName();
                 break;
@@ -282,10 +297,20 @@ public class SQLNodeTransformer implements NodeTransformer, FunctionContext {
                     }
                     fromType = toType;
                 } else if (member instanceof Reference) {
-                    Reference reference = (Reference) member;
-                    Type toType = reference.getResourceType();
-                    updateJoins(tablePath, tablePath = parts.subList(0, i + 1), new Join(fromType, reference, toType));
-                    fromType = toType;
+                    // Member nextMember = fromType.getMember(parts.get(i + 1));
+                    if (fromType instanceof ReferenceType) {
+                        Reference reference = (Reference) member;
+                        Type toType = reference.getResourceType();
+                        Join join = new Join(fromType, reference, toType);
+                        updateJoins(tablePath, tablePath = parts.subList(0, i + 1), join);
+                        fromType = toType;
+                    } else if (fromType instanceof RootResourceType) {
+                        Reference reference = (Reference) member;
+                        Type toType = reference.getReferenceType();
+                        Join join = new Join(fromType, reference, toType);
+                        updateJoins(tablePath, tablePath = parts.subList(0, i + 1), join);
+                        fromType = toType;
+                    }
                 }
             }
         }
@@ -335,13 +360,28 @@ public class SQLNodeTransformer implements NodeTransformer, FunctionContext {
                 joinElements.add(toJoinString(table, join.aliasTo, fromKeys, toKeys.subList(0, toKeys.size() - 1)));
                 return joinElements;
             }
-        } else if (join.via instanceof Reference && join.from instanceof ReferenceType) {
+        } else if (join.from instanceof RootResourceType && join.to instanceof ReferenceType) {
             // Join from ReferenceType to RootResourceType
             String table = Names.getTableName(join.to, this.context.getSchema().getAllTypes());
-            String propertyName = Names.getReferenceTableIdProperty((RootResourceType) join.to);
+            String propertyName = Names.getReferenceTableIdProperty((RootResourceType) join.from);
             List<Property> fromKeys = Lists.newArrayList(new Property(join.aliasFrom, propertyName));
-            List<Property> toKeys = Lists.newArrayList(new Property(join.aliasTo, "_" + join.to.getName() + "Id"));
+            List<Property> toKeys = Lists.newArrayList(new Property(join.aliasTo, "_" + join.from.getName() + "Id"));
             joinElements.add(toJoinString(table, join.aliasTo, fromKeys, toKeys));
+            return joinElements;
+        } else if (join.to instanceof RootResourceType && join.from instanceof ReferenceType) {
+            // Join from RootResourceType to RootResourceType
+            Reference reference = (Reference) join.via;
+            {
+                String table = Names.getTableName(join.to, this.context.getSchema().getAllTypes());
+                String propertyName = Names.getReferenceTableIdProperty((RootResourceType) join.to);
+                // List<Property> fromKeys =
+                // Lists.newArrayList(prop(Names.getTableName(reference.getReferenceType(),
+                // this.context.getSchema().getAllTypes()),
+                // propertyName));
+                List<Property> fromKeys = Lists.newArrayList(new Property(join.aliasFrom, propertyName));
+                List<Property> toKeys = Names.getKeys(join.aliasTo, reference.getResourceType(), this.context.getSchema().getAllTypes());
+                joinElements.add(toJoinString(table, join.aliasTo, fromKeys, toKeys));
+            }
             return joinElements;
         } else if (join.via instanceof Reference) {
             // Join from RootResourceType to RootResourceType

@@ -1,9 +1,9 @@
-name.eq("Microsoft") || employees.name.eq("Leonid") && cars.name.eq("vw")
+name.eq("Microsoft") || employees._person.name.eq("Leonid") && cars._car.name.eq("vw")
 
 select distinct `tab0`.`_CompanyId`, `tab0`.`_revision`, `tab0`.`name` from `Company` `tab0`
-join CompanyemployeesPersoncompany CompanyemployeesPersoncompany on (`tab0`.`_CompanyId` = `CompanyemployeesPersoncompany`.`_CompanyId`)
-join Person tab1 on (`CompanyemployeesPersoncompany`.`_PersonId` = `tab1`.`_PersonId`)
-join CarcompaniesCompanycars CarcompaniesCompanycars on (`tab0`.`_CompanyId` = `CarcompaniesCompanycars`.`_CompanyId`)
-join Car tab2 on (`CarcompaniesCompanycars`.`_CarId` = `tab2`.`_CarId`)
-where (((`tab0`.`name` = "Microsoft") or ((`tab1`.`name` = "Leonid") and (`tab2`.`name` = "vw"))))
+join CompanyemployeesPersoncompany tab1 on (`tab0`.`_CompanyId` = `tab1`.`_CompanyId`)
+join Person tab2 on (`tab1`.`_PersonId` = `tab2`.`_PersonId`)
+join CarcompaniesCompanycars tab3 on (`tab0`.`_CompanyId` = `tab3`.`_CompanyId`)
+join Car tab4 on (`tab3`.`_CarId` = `tab4`.`_CarId`)
+where (((`tab0`.`name` = "Microsoft") or ((`tab2`.`name` = "Leonid") and (`tab4`.`name` = "vw"))))
 limit 40, 10

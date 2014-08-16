@@ -1,5 +1,6 @@
-code.eq(address.tags.value.val())
+code.eq(tags.value.val())
 
 select distinct `tab0`.`_PersonId`, `tab0`.`_AddressId`, `tab0`.`_revision`, `tab0`.`code` from `Address` `tab0`
-where ((`tab0`.`code` = 123) and ((`tab0`.`_PersonId` = 123)))
+join AddressTags tab1 on (`tab0`.`_PersonId` = `tab1`.`_PersonId`) and (`tab0`.`_AddressId` = `tab1`.`_AddressId`)
+where ((`tab0`.`code` = `tab1`.`value`) and ((`tab0`.`_PersonId` = "123")))
 limit 40, 10
