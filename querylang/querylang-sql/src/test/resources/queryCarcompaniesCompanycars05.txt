@@ -1,6 +1,6 @@
 _car.name.eq("vw") && _company.name.eq("Microsoft")
 
-select distinct `tab0`.`_CarId`, `tab0`.`_CompanyId`, `tab0`.`_revision`, `tab0`.`weight` from `CarcompaniesCompanycars` `tab0`
+select distinct `tab0`.`_CompanyId`, `tab0`.`_CarId`, `tab0`.`_revision`, `tab0`.`weight` from `CarcompaniesCompanycars` `tab0`
 join Car tab1 on (`tab0`.`_CarId` = `tab1`.`_CarId`)
 join Company tab2 on (`tab0`.`_CompanyId` = `tab2`.`_CompanyId`)
 where (((`tab1`.`name` = "vw") and (`tab2`.`name` = "Microsoft")))

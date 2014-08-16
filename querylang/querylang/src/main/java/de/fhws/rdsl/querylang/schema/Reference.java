@@ -2,14 +2,12 @@ package de.fhws.rdsl.querylang.schema;
 
 public class Reference extends Member {
 
-    private RootResourceType resourceType;
-    private ReferenceType referenceType;
+    private Type type;
     private String opposite;
 
-    public Reference(String name, boolean list, RootResourceType resourceType, ReferenceType referenceType, String opposite) {
+    public Reference(String name, boolean list, Type type, String opposite) {
         super(name, list);
-        this.resourceType = resourceType;
-        this.referenceType = referenceType;
+        this.type = type;
         this.opposite = opposite;
     }
 
@@ -17,12 +15,8 @@ public class Reference extends Member {
         return this.opposite;
     }
 
-    public ReferenceType getReferenceType() {
-        return this.referenceType;
-    }
-
-    public RootResourceType getResourceType() {
-        return this.resourceType;
+    public Type getType() {
+        return this.type;
     }
 
 }

@@ -1,6 +1,0 @@
-addresses.description.dummy1.name.eq("test")
-
-select distinct `tab0`.`id` from `Person` `tab0`
-join Address tab1 on (`tab0`.`id` = `tab1`.`PersonId`)
-join Dummy1 tab2 on (`tab1`.`PersonId` = `tab2`.`PersonId`) and (`tab1`.`id` = `tab2`.`AddressId`)
-where ((`tab2`.`name` = "test"))

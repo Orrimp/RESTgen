@@ -1,6 +1,0 @@
-manager.name.eq("test") || name.eq("test2")
-
-select distinct `tab0`.`id` from `Company` `tab0`
-join PersonManagedCompanyManager PersonManagedCompanyManager on (`tab0`.`id` = `PersonManagedCompanyManager`.`CompanyId`)
-join Person tab1 on (`PersonManagedCompanyManager`.`PersonId` = `tab1`.`id`)
-where (((`tab1`.`name` = "test") or (`tab0`.`name` = "test2")))

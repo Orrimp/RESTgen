@@ -1,4 +1,0 @@
-value.eq("tag")
-
-select distinct `tab0`.`PersonId`, `tab0`.`AddressId`, `tab0`.`id` from `AddressTags` `tab0`
-where ((`tab0`.`value` = "tag") and ((`tab0`.`PersonId` = "123") or (`tab0`.`AddressId` = "789")))

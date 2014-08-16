@@ -36,9 +36,9 @@ public class Utils {
         for (Type element : types) {
             for (Member member : element.getMembers()) {
                 if (member instanceof Reference) {
-                    if (((Reference) member).getReferenceType() == type) {
+                    if (((Reference) member).getType() == type) {
                         if (target != null) {
-                            if (((Reference) member).getResourceType() == target) {
+                            if (((Reference) member).getType() == target) {
                                 return (Reference) member;
                             }
                         } else {

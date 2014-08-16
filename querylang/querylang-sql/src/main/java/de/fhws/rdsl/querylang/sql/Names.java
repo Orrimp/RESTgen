@@ -17,10 +17,6 @@ import de.fhws.rdsl.querylang.schema.Utils;
 
 public class Names {
 
-    public static String getReferenceTableIdProperty(RootResourceType type) {
-        return "_" + type.getName() + "Id";
-    }
-
     public static String getTableName(Type type, List<Type> allTypes) {
         Type currentType = type;
         while (true) {
@@ -38,9 +34,8 @@ public class Names {
         if (type instanceof RootResourceType) {
             keys.add("_" + type.getName() + "Id");
         } else if (type instanceof ReferenceType) {
-            Reference reference = Utils.findFirstReference((ReferenceType) type, allTypes);
-            RootResourceType container = (RootResourceType) Utils.findType(reference, allTypes);
-            keys.addAll(Lists.newArrayList(getReferenceTableIdProperty(reference.getResourceType()), getReferenceTableIdProperty(container)));
+            keys.addAll(type.getMembers().stream().filter(member -> member instanceof Reference).map(member -> ((Reference) member).getType())
+                    .map(t -> "_" + t.getName() + "Id").collect(Collectors.toList()));
         } else {
             Type currentType = type;
             while (true) {

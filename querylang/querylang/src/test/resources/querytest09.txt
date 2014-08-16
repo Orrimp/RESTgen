@@ -1,5 +1,0 @@
-addresses.tags.value.eq("tag") || addresses.code.eq(789) && addresses.description.dummy2.name.eq("huhu")
-
-select distinct `tab0`.`PersonId`, `tab0`.`id` from `Address` `tab0`
-join AddressTags tab1 on (`tab0`.`PersonId` = `tab1`.`PersonId`) and (`tab0`.`id` = `tab1`.`AddressId`)
-where (((`tab1`.`value` = "tag") or ((`tab0`.`code` = 789) and (`tab0`.`description_dummy2_name` = "huhu"))) and ((`tab0`.`PersonId` = "123")))

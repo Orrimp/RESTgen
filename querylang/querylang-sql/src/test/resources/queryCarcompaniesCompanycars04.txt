@@ -1,5 +1,5 @@
 weight.eq(5) && _carId.eq("890")
 
-select distinct `tab0`.`_CarId`, `tab0`.`_CompanyId`, `tab0`.`_revision`, `tab0`.`weight` from `CarcompaniesCompanycars` `tab0`
+select distinct `tab0`.`_CompanyId`, `tab0`.`_CarId`, `tab0`.`_revision`, `tab0`.`weight` from `CarcompaniesCompanycars` `tab0`
 where (((`tab0`.`weight` = 5) and (`tab0`.`_carId` = "890")))
 limit 40, 10
