@@ -63,7 +63,12 @@ public class RiakUtils {
 
     public static JSONObject fetchJSON(IRiakObject riakObject, JSONConverter jsonConverter) throws IOException {
         if (riakObject != null) {
-            return jsonConverter.fromBytes(riakObject.getValue(), UTF8);
+            byte[] bytes = riakObject.getValue();
+            if (bytes == null || bytes.length == 0) {
+                return null;
+            } else {
+                return jsonConverter.fromBytes(bytes, UTF8);
+            }
         } else {
             return null;
         }
