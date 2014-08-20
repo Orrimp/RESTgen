@@ -64,7 +64,7 @@ public class SolrNodeTransformer implements NodeTransformer, FunctionContext {
         }
 
         QueryElement queryElement = new QueryElement();
-        queryElement.setOffset(context.getQuery().getOffset());
+        queryElement.setOffset(context.getQuery().getSize());
         queryElement.setStart(context.getQuery().getStart());
         queryElement.setQuery(andJunctionElement);
         return queryElement;

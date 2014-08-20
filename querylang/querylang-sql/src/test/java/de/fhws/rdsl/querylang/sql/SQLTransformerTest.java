@@ -257,7 +257,7 @@ public class SQLTransformerTest extends AbstractSQLTransformerTest {
         query.setText(text);
         query.getIdentifiers().addAll(keys);
         query.setStart(start);
-        query.setOffset(offset);
+        query.setSize(offset);
         query.setOrder(order);
         List<Type> types = createTypes();
         Schema schema = new Schema(types);

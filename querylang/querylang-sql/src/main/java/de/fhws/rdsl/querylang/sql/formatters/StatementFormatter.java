@@ -24,10 +24,10 @@ public class StatementFormatter implements Formatter {
         if (statementElement.getOrder() != null) {
             sql += "\n" + context.format(statementElement.getOrder());
         }
-        if (statementElement.getStart() != null && statementElement.getOffset() != null) {
-            sql += "\nlimit " + statementElement.getStart() + ", " + statementElement.getOffset();
-        } else if (statementElement.getOffset() != null && statementElement.getStart() == null) {
-            sql += "\nlimit " + statementElement.getOffset();
+        if (statementElement.getStart() != null && statementElement.getSize() != null) {
+            sql += "\nlimit " + statementElement.getStart() + ", " + statementElement.getSize();
+        } else if (statementElement.getSize() != null && statementElement.getStart() == null) {
+            sql += "\nlimit " + statementElement.getSize();
         }
         return sql;
     }

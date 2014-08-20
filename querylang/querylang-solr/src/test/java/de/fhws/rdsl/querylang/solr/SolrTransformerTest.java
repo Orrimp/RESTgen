@@ -102,7 +102,7 @@ public class SolrTransformerTest extends AbstractSolrTransformerTest {
         query.setText(text);
         query.getIdentifiers().addAll(keys);
         query.setStart(start);
-        query.setOffset(offset);
+        query.setSize(offset);
         List<Type> types = createTypes();
         Schema schema = new Schema(types);
         try {

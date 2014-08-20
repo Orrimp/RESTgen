@@ -14,7 +14,7 @@ public class Query {
     private String text;
     private String order;
     private Long start;
-    private Long offset;
+    private Long size;
     private boolean orderDesc;
 
     public void setOrderDesc(boolean orderDesc) {
@@ -29,8 +29,8 @@ public class Query {
         return this.identifiers;
     }
 
-    public Long getOffset() {
-        return this.offset;
+    public Long getSize() {
+        return this.size;
     }
 
     public Long getStart() {
@@ -57,8 +57,8 @@ public class Query {
         this.order = order;
     }
 
-    public void setOffset(Long offset) {
-        this.offset = offset;
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     public void setStart(Long start) {

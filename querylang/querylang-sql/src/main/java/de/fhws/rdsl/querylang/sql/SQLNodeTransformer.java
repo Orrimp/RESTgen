@@ -86,7 +86,7 @@ public class SQLNodeTransformer implements NodeTransformer, FunctionContext {
         queryStatement.getJoins().addAll(buildJoins());
         queryStatement.setFilter(buildWhere());
         queryStatement.setStart(this.query.getStart());
-        queryStatement.setOffset(this.query.getOffset());
+        queryStatement.setSize(this.query.getSize());
         if (this.query.getOrder() != null) {
             queryStatement.setOrder(createOrderElement());
         }
@@ -118,6 +118,7 @@ public class SQLNodeTransformer implements NodeTransformer, FunctionContext {
         List<Property> properties = Lists.newArrayList(getKeys().stream().collect(Collectors.toList()));
         if (!count) {
             properties.addAll(getTableAttributes().stream().filter(prop -> !properties.contains(prop)).collect(Collectors.toList()));
+            properties.addAll(getTableReferences().stream().filter(prop -> !properties.contains(prop)).collect(Collectors.toList()));
         }
         selectElement.getProperties().addAll(properties.stream().map(PropertyElement::new).collect(Collectors.toList()));
         return selectElement;
@@ -131,6 +132,11 @@ public class SQLNodeTransformer implements NodeTransformer, FunctionContext {
     private List<Property> getTableAttributes() {
         return this.type.getMembers().stream().filter(Attribute.class::isInstance).filter(member -> !member.isList())
                 .map(member -> getAliasProperty(Lists.newArrayList(member.getName()))).collect(Collectors.toList());
+    }
+
+    private List<Property> getTableReferences() {
+        return this.type.getMembers().stream().filter(Reference.class::isInstance).filter(member -> !member.isList() && !member.getName().startsWith("_"))
+                .map(member -> prop("tab0", member.getName())).collect(Collectors.toList());
     }
 
     private JunctionElement buildWhere() {

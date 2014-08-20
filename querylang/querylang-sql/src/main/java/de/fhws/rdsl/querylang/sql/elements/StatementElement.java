@@ -13,14 +13,14 @@ public class StatementElement extends Element {
     private JunctionElement filter;
     private OrderElement order;
     private Long start;
-    private Long offset;
+    private Long size;
 
-    public Long getOffset() {
-        return this.offset;
+    public Long getSize() {
+        return this.size;
     }
 
-    public void setOffset(Long offset) {
-        this.offset = offset;
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     public Long getStart() {

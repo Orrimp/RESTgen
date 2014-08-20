@@ -1,6 +1,6 @@
 name.eq("Microsoft") || manager._person.active.eq(true)
 
-select distinct `tab0`.`_CompanyId`, `tab0`.`_revision`, `tab0`.`name` from `Company` `tab0`
+select distinct `tab0`.`_CompanyId`, `tab0`.`_revision`, `tab0`.`name`, `tab0`.`manager` from `Company` `tab0`
 join CompanymanagerPersonmanagedCompany tab1 on (`tab0`.`_CompanyId` = `tab1`.`_CompanyId`)
 join Person tab2 on (`tab1`.`_PersonId` = `tab2`.`_PersonId`)
 where (((`tab0`.`name` = "Microsoft") or (`tab2`.`active` = true)))
