@@ -1,4 +1,4 @@
-package de.fhws.rdsl.riak.utils.solr;
+package de.fhws.rdsl.riak;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,10 +14,10 @@ import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.fhws.rdsl.riak.solr.DefaultRiakSolrClient;
-import de.fhws.rdsl.riak.solr.Doc;
-import de.fhws.rdsl.riak.solr.RiakSolrClient;
-import de.fhws.rdsl.riak.solr.RiakSolrResponse;
+import de.fhws.rdsl.riak.DefaultRiakSolrClient;
+import de.fhws.rdsl.riak.Doc;
+import de.fhws.rdsl.riak.RiakSolrClient;
+import de.fhws.rdsl.riak.RiakSolrResponse;
 
 public class RiakSolrClientTest {
 

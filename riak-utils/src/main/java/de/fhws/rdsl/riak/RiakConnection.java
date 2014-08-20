@@ -9,8 +9,6 @@ import com.basho.riak.client.raw.RiakResponse;
 import com.basho.riak.client.raw.StoreMeta;
 import com.basho.riak.client.raw.query.indexes.IndexQuery;
 
-import de.fhws.rdsl.riak.solr.RiakSolrResponse;
-
 public interface RiakConnection extends AutoCloseable {
 
     RiakResponse fetch(String bucket, String key) throws IOException;

@@ -1,4 +1,4 @@
-package de.fhws.rdsl.riak.solr;
+package de.fhws.rdsl.riak;
 
 import java.io.Closeable;
 import java.io.IOException;

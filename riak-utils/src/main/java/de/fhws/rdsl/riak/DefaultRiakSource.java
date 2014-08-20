@@ -6,9 +6,6 @@ import com.basho.riak.client.raw.RawClient;
 import com.basho.riak.client.raw.pbc.PBClientConfig;
 import com.basho.riak.client.raw.pbc.PBRiakClientFactory;
 
-import de.fhws.rdsl.riak.solr.DefaultRiakSolrClient;
-import de.fhws.rdsl.riak.solr.RiakSolrClient;
-
 public class DefaultRiakSource implements RiakSource {
 
     private String host = null;

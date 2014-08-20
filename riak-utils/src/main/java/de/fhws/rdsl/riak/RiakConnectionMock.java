@@ -20,8 +20,6 @@ import com.basho.riak.client.raw.StoreMeta;
 import com.basho.riak.client.raw.query.indexes.IndexQuery;
 import com.google.common.collect.Lists;
 
-import de.fhws.rdsl.riak.solr.RiakSolrResponse;
-
 public class RiakConnectionMock implements RiakConnection {
 
     private Map<String, IRiakObject> objects = newHashMap();

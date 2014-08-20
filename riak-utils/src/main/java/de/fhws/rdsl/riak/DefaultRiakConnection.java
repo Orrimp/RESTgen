@@ -10,9 +10,6 @@ import com.basho.riak.client.raw.RiakResponse;
 import com.basho.riak.client.raw.StoreMeta;
 import com.basho.riak.client.raw.query.indexes.IndexQuery;
 
-import de.fhws.rdsl.riak.solr.RiakSolrClient;
-import de.fhws.rdsl.riak.solr.RiakSolrResponse;
-
 public class DefaultRiakConnection implements RiakConnection {
 
     private RawClient client;
