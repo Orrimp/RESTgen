@@ -1,7 +1,7 @@
-name.eq("vw") && companies.weight.eq(780) && companies._company.name.eq("Microsoft")
+name.eq("vw") && companies.weight.eq(780) && companies._ref__cars_Company.name.eq("Microsoft")
 
 select distinct `tab0`.`_CarId`, `tab0`.`_revision`, `tab0`.`name` from `Car` `tab0`
-join CarcompaniesCompanycars tab1 on (`tab0`.`_CarId` = `tab1`.`_CarId`)
-join Company tab2 on (`tab1`.`_CompanyId` = `tab2`.`_CompanyId`)
+join CarcompaniesCompanycars tab1 on (`tab0`.`_CarId` = `tab1`.`_companies_Car`)
+join Company tab2 on (`tab1`.`_cars_Company` = `tab2`.`_CompanyId`)
 where (((`tab0`.`name` = "vw") and (`tab1`.`weight` = 780) and (`tab2`.`name` = "Microsoft")))
 limit 40, 10

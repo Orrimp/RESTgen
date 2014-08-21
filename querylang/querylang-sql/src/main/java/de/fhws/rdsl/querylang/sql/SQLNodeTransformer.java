@@ -334,14 +334,45 @@ public class SQLNodeTransformer implements NodeTransformer, FunctionContext {
             return joinElements;
         } else if (join.via instanceof Reference) {
             String table = Names.getTableName(join.to, this.context.getSchema().getAllTypes());
-            String fromKey = join.from instanceof ReferenceType ? "_" + join.to.getName() + "Id" : "_" + join.from.getName() + "Id";
-            String toKey = join.to instanceof ReferenceType ? "_" + join.from.getName() + "Id" : "_" + join.to.getName() + "Id";
+            String fromKey = null;
+            String toKey = null;
+            if (join.from instanceof ReferenceType) {
+                fromKey = getKey((ReferenceType) join.from, join.to);
+                toKey = "_" + join.to.getName() + "Id";
+            } else if (join.to instanceof ReferenceType) {
+                fromKey = "_" + join.from.getName() + "Id";
+                toKey = getKey(join.from, (ReferenceType) join.to);
+            }
             List<Property> fromKeys = Lists.newArrayList(prop(join.aliasFrom, fromKey));
             List<Property> toKeys = Lists.newArrayList(prop(join.aliasTo, toKey));
             joinElements.add(toJoinString(table, join.aliasTo, fromKeys, toKeys));
             return joinElements;
         }
         return joinElements;
+    }
+
+    private String getKey(ReferenceType fromType, Type toType) {
+        for (Member member : fromType.getMembers()) {
+            if (member instanceof Reference) {
+                Reference reference = (Reference) member;
+                if (toType == reference.getType()) {
+                    return reference.getName().replace("_ref_", "");
+                }
+            }
+        }
+        return null;
+    }
+
+    private String getKey(Type fromType, ReferenceType toType) {
+        for (Member member : fromType.getMembers()) {
+            if (member instanceof Reference) {
+                Reference reference = (Reference) member;
+                if (toType == reference.getType()) {
+                    return "_" + reference.getName() + "_" + fromType.getName();
+                }
+            }
+        }
+        return null;
     }
 
     private Property prop(String ns, String name) {

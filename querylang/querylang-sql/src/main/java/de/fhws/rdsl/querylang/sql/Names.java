@@ -34,8 +34,8 @@ public class Names {
         if (type instanceof RootResourceType) {
             keys.add("_" + type.getName() + "Id");
         } else if (type instanceof ReferenceType) {
-            keys.addAll(type.getMembers().stream().filter(member -> member instanceof Reference).map(member -> ((Reference) member).getType())
-                    .map(t -> "_" + t.getName() + "Id").collect(Collectors.toList()));
+            keys.addAll(type.getMembers().stream().filter(member -> member instanceof Reference)
+                    .map(member -> ((Reference) member).getName().replace("_ref_", "")).collect(Collectors.toList()));
         } else {
             Type currentType = type;
             while (true) {

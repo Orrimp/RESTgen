@@ -80,23 +80,23 @@ public class AbstractSQLTransformerTest {
         car.getMembers().add(new Attribute("name", Attribute.STRING));
         car.getMembers().add(new Reference("companies", true, carcompaniesCompanycars, "cars"));
 
-        carcompaniesCompanycars.getMembers().add(new Attribute("_companyId", Attribute.STRING)); // Keys
-        carcompaniesCompanycars.getMembers().add(new Reference("_company", false, company, null));
-        carcompaniesCompanycars.getMembers().add(new Attribute("_carId", Attribute.STRING)); // Keys
-        carcompaniesCompanycars.getMembers().add(new Reference("_car", false, car, null));
+        carcompaniesCompanycars.getMembers().add(new Attribute("_cars_Company", Attribute.STRING)); // Keys
+        carcompaniesCompanycars.getMembers().add(new Reference("_ref__cars_Company", false, company, null));
+        carcompaniesCompanycars.getMembers().add(new Attribute("_companies_Car", Attribute.STRING)); // Keys
+        carcompaniesCompanycars.getMembers().add(new Reference("_ref__companies_Car", false, car, null));
         carcompaniesCompanycars.getMembers().add(new Attribute("_revision", Attribute.STRING));
         carcompaniesCompanycars.getMembers().add(new Attribute("weight", Attribute.INTEGER));
 
-        companyemployeesPersoncompany.getMembers().add(new Attribute("_companyId", Attribute.STRING)); // Keys
-        companyemployeesPersoncompany.getMembers().add(new Reference("_company", false, company, null));
-        companyemployeesPersoncompany.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
-        companyemployeesPersoncompany.getMembers().add(new Reference("_person", false, person, null));
+        companyemployeesPersoncompany.getMembers().add(new Attribute("_employees_Company", Attribute.STRING)); // Keys
+        companyemployeesPersoncompany.getMembers().add(new Reference("_ref__employees_Company", false, company, null));
+        companyemployeesPersoncompany.getMembers().add(new Attribute("_company_Person", Attribute.STRING)); // Keys
+        companyemployeesPersoncompany.getMembers().add(new Reference("_ref__company_Person", false, person, null));
         companyemployeesPersoncompany.getMembers().add(new Attribute("_revision", Attribute.STRING));
 
-        companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_companyId", Attribute.STRING)); // Keys
-        companymanagerPersonmanagedCompany.getMembers().add(new Reference("_company", false, company, null));
-        companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_personId", Attribute.STRING)); // Keys
-        companymanagerPersonmanagedCompany.getMembers().add(new Reference("_person", false, person, null));
+        companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_manager_Company", Attribute.STRING)); // Keys
+        companymanagerPersonmanagedCompany.getMembers().add(new Reference("_ref__manager_Company", false, company, null));
+        companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_managedCompany_Person", Attribute.STRING)); // Keys
+        companymanagerPersonmanagedCompany.getMembers().add(new Reference("_ref__managedCompany_Person", false, person, null));
         companymanagerPersonmanagedCompany.getMembers().add(new Attribute("_revision", Attribute.STRING));
 
         // personManagedCompanyManager.getMembers().add(new
