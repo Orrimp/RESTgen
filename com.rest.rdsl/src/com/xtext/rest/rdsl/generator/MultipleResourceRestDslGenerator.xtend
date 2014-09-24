@@ -1,15 +1,20 @@
 package com.xtext.rest.rdsl.generator
 
+import com.rest.rdsl.unittests.UnitTestManager
+import com.rest.rdsl.unittests.performance.PerformanceTestManager
 import com.xtext.rest.rdsl.IMultipleResourceGenerator
 import com.xtext.rest.rdsl.generator.core.DAOGenerator
 import com.xtext.rest.rdsl.generator.core.FrameworkManager
 import com.xtext.rest.rdsl.generator.core.ObjectGenerator
 import com.xtext.rest.rdsl.generator.core.ObjectParentGenerator
+import com.xtext.rest.rdsl.generator.internals.AnnotationUtils
 import com.xtext.rest.rdsl.generator.internals.AuthenticationClass
 import com.xtext.rest.rdsl.generator.internals.HATEOASGenerator
 import com.xtext.rest.rdsl.generator.internals.IDGenerator
 import com.xtext.rest.rdsl.generator.internals.InterfaceGenerator
 import com.xtext.rest.rdsl.generator.internals.JSONCollectionGenerator
+import com.xtext.rest.rdsl.management.Constants
+import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.restDsl.RESTConfiguration
 import com.xtext.rest.rdsl.restDsl.RESTModel
 import com.xtext.rest.rdsl.restDsl.RESTResource
@@ -19,9 +24,6 @@ import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.generator.IFileSystemAccess
-import com.xtext.rest.rdsl.generator.internals.AnnotationUtils
-import com.xtext.rest.rdsl.management.PackageManager
-import com.xtext.rest.rdsl.management.Constants
 
 class MultipleResourceRestDslGenerator implements IMultipleResourceGenerator {
 
@@ -30,6 +32,8 @@ var RESTConfiguration config = RestDslFactoryImpl.eINSTANCE.createRESTConfigurat
 var RESTResourceCollection resources;
 var ObjectParentGenerator obpgen;
 var FrameworkManager frameWorkManager;
+var UnitTestManager unitTestManager;
+var PerformanceTestManager performanceTestManager;
 
 	/**
 	 * This method is sometimes use more then once so be careful here and reset all the data. 
@@ -44,6 +48,7 @@ var FrameworkManager frameWorkManager;
 		doGenerateMain(fsa);
 		doGenerateOnes(fsa);
 		generateDAO(fsa);
+		doGenerateTests(fsa);
 	}
 	
 	/**
@@ -56,6 +61,14 @@ var FrameworkManager frameWorkManager;
 		generateCollectionJSON(fsa);
 		generateOtherFiles(fsa);		
 		generateMisc(fsa);
+	}
+	
+	def doGenerateTests(IFileSystemAccess fsa) 
+	{
+		this.unitTestManager = new UnitTestManager(fsa, config, resources);
+		this.unitTestManager.generate();
+		this.performanceTestManager = new PerformanceTestManager(fsa, config, resources);
+		this.performanceTestManager.generate();
 	}
 	
 	/**
@@ -161,7 +174,16 @@ var FrameworkManager frameWorkManager;
 		PackageManager.setAuthPackage(config.package + "." + Constants.AUTHPACKAGE);
 		PackageManager.setDatabasePackage(config.package + "." + Constants.DAOPACKAGE);
 		PackageManager.setFrameworkPackage(config.package + "." + Constants.FRAMEWORKPACKAGE);
-		PackageManager.setWebPackage(config.package + "." + Constants.WEBPACKAGE);		
+		PackageManager.setWebPackage(config.package + "." + Constants.WEBPACKAGE);	
+		
+		PackageManager.setUnitTestPackage(Constants.UNITTESTPACKAGE);
+		PackageManager.setDataGeneratorPackage(Constants.DATAGENERATORPACKAGE);
+		PackageManager.setDateDataPackage(Constants.DATEDATAPACKAGE);
+		PackageManager.setDoubleDataPackage(Constants.DOUBLEDATAPACKAGE);
+		PackageManager.setLongDataPackage(Constants.LONGDATAPACKAGE);
+		PackageManager.setStringDataPackage(Constants.STRINGDATAPACKAGE);
+		PackageManager.setPerformancePackage(Constants.PERFORMANCEPACKAGE);
+		PackageManager.setUtilityPackage(Constants.UTILITYPACKAGE);	
 	}
 	
 	/**

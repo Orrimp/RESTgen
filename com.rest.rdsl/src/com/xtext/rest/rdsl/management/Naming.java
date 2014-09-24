@@ -13,6 +13,12 @@ public final class Naming {
     private static List<String> sqliteImports = new ArrayList<String>();
     private static List<String> annoImports = new ArrayList<String>();
     
+    private static List<String> junitImports = new ArrayList<String>();
+    private static List<String> staticJunitImports = new ArrayList<String>();
+    private static List<String> junitparamsImports = new ArrayList<String>();
+    private static List<String> apacheHttpImports = new ArrayList<String>();
+    private static List<String> utilityImports = new ArrayList<String>();
+    
 	static{
 		JAXBAnnoImports.add("javax.xml.bind.annotation.XmlAccessType");
 		JAXBAnnoImports.add("javax.xml.bind.annotation.XmlAccessorType");
@@ -42,6 +48,24 @@ public final class Naming {
 		annoImports.add("java.lang.annotation.RetentionPolicy");
 		annoImports.add("java.lang.annotation.Target");
 		annoImports.add("javax.ws.rs.NameBinding");
+		
+		junitImports.add("org.junit.After");
+		junitImports.add("org.junit.Before");
+		junitImports.add("org.junit.Test");
+		junitImports.add("org.junit.runner.RunWith");
+		
+		staticJunitImports.add("static org.junit.Assert.*");
+		
+		junitparamsImports.add("junitparams.JUnitParamsRunner");
+		junitparamsImports.add("junitparams.Parameters");
+		
+		apacheHttpImports.add("org.apache.http.client.methods.CloseableHttpResponse");
+		
+		utilityImports.add("utility.HttpTestClient");
+		utilityImports.add("utility.StatusCode");
+		utilityImports.add("utility.ResponseHeader");
+		utilityImports.add("utility.ResponseBody");
+		utilityImports.add("utility.ResponseLinks");
 	};	
 
 
@@ -73,5 +97,89 @@ public final class Naming {
 	public static final String COLLECTION_JSON_MIME 	= "application/vnd.collection+json";
 	public static final String METHOD_NAME_ID_GET		= "getID";
 	public static final String METHOD_NAME_ID_SET		= "setID";
+
+	public static final ClassPackageInfo RESOURCE_TESTS = 
+			new ClassPackageInfo("ResourceTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_STATUS_CODE_TESTS = 
+			new ClassPackageInfo("ResourceStatusCodeTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_HEADER_TESTS = 
+			new ClassPackageInfo("ResourceHeaderTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_BODY_TESTS = 
+			new ClassPackageInfo("ResourceBodyTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_METHOD_NOT_ALLOWED_TESTS = 
+			new ClassPackageInfo("ResourceMethodNotAllowedTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_INTERNAL_SERVER_ERROR_TESTS =
+			new ClassPackageInfo("ResourceInternalServerErrorTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_GET_ID_TESTS = 
+			new ClassPackageInfo("ResourceGetIdTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_DELETE_ID_TESTS = 
+			new ClassPackageInfo("ResourceDeleteIdTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_PUT_ID_TESTS = 
+			new ClassPackageInfo("ResourcePutIdTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_POST_TESTS = 
+			new ClassPackageInfo("ResourcePostTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_PATCH_TESTS = 
+			new ClassPackageInfo("ResourcePatchTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_GET_ID_ATTRIBUTE_TESTS = 
+			new ClassPackageInfo("ResourceGetIdAttributeTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
+	public static final ClassPackageInfo RESOURCE_GET_QUERY_TESTS = 
+			new ClassPackageInfo("ResourceGetQueryTests", PackageManager.getUnitTestPackage(), CLASSTYPE.ABSTRACT_CLASS);
 	
+	public static final ClassPackageInfo JSON_RESOURCE = 
+			new ClassPackageInfo("JsonResource", PackageManager.getDataGeneratorPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo JSON_RESOURCE_GENERATOR = 
+			new ClassPackageInfo("JsonResourceGenerator", PackageManager.getDataGeneratorPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo RANDOM_JSON_RESOURCE_GENERATOR = 
+			new ClassPackageInfo("RandomJsonResourceGenerator", PackageManager.getDataGeneratorPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo TEST_DATA_GENERATOR = 
+			new ClassPackageInfo("TestDataGenerator", PackageManager.getDataGeneratorPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo DATE_GENERATOR	= 
+			new ClassPackageInfo("DateGenerator", PackageManager.getDateDataPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo DOUBLE_GENERATOR = 
+			new ClassPackageInfo("DoubleGenerator", PackageManager.getDoubleDataPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo LONG_GENERATOR	= 
+			new ClassPackageInfo("LongGenerator", PackageManager.getLongDataPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo STRING_GENERATOR = 
+			new ClassPackageInfo("StringGenerator", PackageManager.getStringDataPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo STRING_CONTEXT_GENERATOR =
+			new ClassPackageInfo("StringContextGenerator", PackageManager.getStringDataPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo RANDOM_EMAIL_GENERATOR =
+			new ClassPackageInfo("RandomEmailGenerator", PackageManager.getStringDataPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo RANDOM_URL_GENERATOR =
+			new ClassPackageInfo("RandomUrlGenerator", PackageManager.getStringDataPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo RANDOM_STRING_GENERATOR =
+			new ClassPackageInfo("RandomStringGenerator", PackageManager.getStringDataPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo FIELD_SPECIFICATIONS = 
+			new ClassPackageInfo("FieldSpecifications", PackageManager.getDataGeneratorPackage(), CLASSTYPE.CLASS);
+	
+	public static final ClassPackageInfo TEST_REPORT = 
+			new ClassPackageInfo("TestReport", PackageManager.getPerformancePackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo PERFORMANCE_STATISTICS = 
+			new ClassPackageInfo("PerformanceStatistics", PackageManager.getPerformancePackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo PERFORMANCE_TESTS = 
+			new ClassPackageInfo("PerformanceTests", PackageManager.getPerformancePackage(), CLASSTYPE.ABSTRACT_CLASS);
+	
+	public static final ClassPackageInfo HTTP_CLIENT = 
+			new ClassPackageInfo("HttpTestClient", PackageManager.getUtilityPackage(), CLASSTYPE.INTERFACE);
+	public static final ClassPackageInfo HTTP_CLIENT_IMPL = 
+			new ClassPackageInfo("HttpTestClientImpl", PackageManager.getUtilityPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo STATUS_CODE = 
+			new ClassPackageInfo("StatusCode", PackageManager.getUtilityPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo RESPONSE_BODY = 
+			new ClassPackageInfo("ResponseBody", PackageManager.getUtilityPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo RESPONSE_HEADER = 
+			new ClassPackageInfo("ResponseHeader", PackageManager.getUtilityPackage(), CLASSTYPE.CLASS);
+	public static final ClassPackageInfo RESPONSE_LINKS =
+			new ClassPackageInfo("ResponseLinks", PackageManager.getUtilityPackage(), CLASSTYPE.CLASS);
+
+	public static final ClassPackageInfo JUNIT = 
+			new ClassPackageInfo("JUNIT", "", CLASSTYPE.OTHER, junitImports);
+	public static final ClassPackageInfo STATIC_JUNIT = 
+			new ClassPackageInfo("STATIC_JUNIT", "", CLASSTYPE.OTHER, staticJunitImports);
+	public static final ClassPackageInfo JUNIT_PARAMS = 
+			new ClassPackageInfo("JUNIT_PARAMS", "", CLASSTYPE.OTHER, junitparamsImports);
+	public static final ClassPackageInfo APACHE_HTTP = 
+			new ClassPackageInfo("APACHE_HTTP", "", CLASSTYPE.OTHER, apacheHttpImports);
+	public static final ClassPackageInfo UTILITY = 
+			new ClassPackageInfo("UTILTIY", "", CLASSTYPE.OTHER, utilityImports);
 }

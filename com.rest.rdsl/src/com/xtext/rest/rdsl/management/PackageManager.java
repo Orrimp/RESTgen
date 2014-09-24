@@ -17,6 +17,15 @@ public class PackageManager {
 	private static String frameworkPackage = "";
 	private static String webPackage = "";
 	
+	private static String unitTestPackage = "";
+	private static String dataGeneratorPackage = "";
+	private static String dateDataPackage = "";
+	private static String doubleDataPackage = "";
+	private static String longDataPackage = "";
+	private static String stringDataPackage = "";
+	private static String performancePackage = "";
+	private static String utilityPackage = "";
+	
 	/**
 	 * @return the objectPackage
 	 */
@@ -136,5 +145,83 @@ public class PackageManager {
 	 */
 	public static void setWebPackage(String webPackage) {
 		PackageManager.webPackage = webPackage;
+	}
+	
+	public static String getUnitTestPackage()
+	{
+		return unitTestPackage;
+	}
+	
+	public static void setUnitTestPackage(String unitTestPackage)
+	{
+		PackageManager.unitTestPackage = unitTestPackage;
+	}
+	
+	public static String getDataGeneratorPackage()
+	{
+		return dataGeneratorPackage;
+	}
+	
+	public static void setDataGeneratorPackage(String dataGeneratorPackage)
+	{
+		PackageManager.dataGeneratorPackage = dataGeneratorPackage;
+	}
+	
+	public static String getDateDataPackage()
+	{
+		return dateDataPackage;
+	}
+	
+	public static void setDateDataPackage(String dateDataPackage)
+	{
+		PackageManager.dateDataPackage = dateDataPackage;
+	}
+	
+	public static String getDoubleDataPackage()
+	{
+		return doubleDataPackage;
+	}
+	
+	public static void setDoubleDataPackage(String doubleDataPackage)
+	{
+		PackageManager.doubleDataPackage = doubleDataPackage;
+	}
+	
+	public static String getLongDataPackage()
+	{
+		return longDataPackage;
+	}
+	
+	public static void setLongDataPackage(String longDataPackage)
+	{
+		PackageManager.longDataPackage = longDataPackage;
+	}
+	
+	public static String getStringDataPackage()
+	{
+		return stringDataPackage;
+	}
+	
+	public static void setStringDataPackage(String stringDataPackage)
+	{
+		PackageManager.stringDataPackage = stringDataPackage;
+	}
+	
+	public static String getPerformancePackage()
+	{
+		return performancePackage;
+	}
+	public static void setPerformancePackage(String performancePackage)
+	{
+		PackageManager.performancePackage = performancePackage;
+	}
+	public static String getUtilityPackage()
+	{
+		return utilityPackage;
+	}
+	
+	public static void setUtilityPackage(String utilityPackage)
+	{
+		PackageManager.utilityPackage = utilityPackage;
 	}
 }

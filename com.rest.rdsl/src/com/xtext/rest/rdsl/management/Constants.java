@@ -28,4 +28,26 @@ public class Constants {
 	public static final String LONG_COUTNER_VALUE = "1";
 	public static final String WEBPACKAGE = "web";
 	public static final String FRAMEWORKPACKAGE = "framework";
+	
+	public static final String UNITTESTPACKAGE = "unittests";
+	public static final String DATAGENERATORPACKAGE = "datagenerator";
+	public static final String DATEDATAPACKAGE = "datagenerator.datedata";
+	public static final String DOUBLEDATAPACKAGE = "datagenerator.doubledata";
+	public static final String LONGDATAPACKAGE = "datagenerator.longdata";
+	public static final String STRINGDATAPACKAGE = "datagenerator.stringdata";
+	public static final String PERFORMANCEPACKAGE = "performance";
+	public static final String UTILITYPACKAGE = "utility";
+	
+	public static final String VALID_AUTHORIZATION = "root:0000";
+	public static final String VALID_IF_MATCH_HEADER = "headers[0].getValue()";
+	public static final String DEFAULT_MEDIA_TYPE = "MediaType.APPLICATION_JSON";
+	
+	public static final String PRIMITIVE_ATTRIBUTE_PARAMS = "getPrimitiveAttributes";
+	public static final String PRIMITIVES_WITH_LOWER_BOUND_PARAMS = "getPrimitivesWithLowerBound";
+	public static final String PRIMITIVES_WITH_UPPER_BOUND_PARAMS = "getPrimitivesWithUpperBound";
+	public static final String STRING_ATTRIBUTE_PARAMS = "getStringAttributes";
+	public static final String STRING_ATTRIBUTE_WITH_CONTEXT_PARAMS = "getStringAttributesWithContext";
+	public static final String NON_STRING_ATTRIBUTE_PARAMS = "getNonStringAttributes";
+	public static final String PERMUTATED_PATCH_PARAMS = "permutatedPatchResources";
+	public static final String QUERY_PARAMS = "getQueryParameters";
 }

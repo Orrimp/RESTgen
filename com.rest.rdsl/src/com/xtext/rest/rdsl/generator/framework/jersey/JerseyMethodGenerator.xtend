@@ -361,7 +361,7 @@ class JerseyMethodGenerator extends MethodGenerator{
 			case "string": 
 				return  ": ([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+"
 			case "long":
-				return ": \\d+"
+				return ": \\\\d+"
 			default: 
 				return ""	
 		}

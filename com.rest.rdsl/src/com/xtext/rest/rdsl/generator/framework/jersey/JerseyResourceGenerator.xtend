@@ -27,7 +27,7 @@ class JerseyResourceGenerator implements IResourceGenerator {
 	val Set<String> attributeImports = new HashSet<String>()
 	for(Attribute attrib: resource.attributes){
 		if(attrib.value instanceof JavaReference){
-			attributeImports.add(attrib.value.nameOfType);
+			attributeImports.add(fullJavaNameOfType((attrib.value as JavaReference).javaDataType));
 		}
 	}
 		
