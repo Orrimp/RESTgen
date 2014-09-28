@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RDSL Riak Generator
+Bundle-SymbolicName: de.fhws.rdsl.generator.db.riak
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.fhws.rdsl.generator.db.riak.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ de.fhws.rdsl.generator.db;bundle-version="1.0.0",
+ com.google.guava,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Eclipse-RegisterBuddy: de.fhws.rdsl.generator.db

@@ -1,6 +1,0 @@
-name.eq("Leonid") && active.eq(true)
-
-select distinct `tab0`.`_PersonId`, `tab0`.`_revision`, `tab0`.`name`, `tab0`.`active`, `tab0`.`company`, `tab0`.`managedCompany` from `Person` `tab0`
-where (((`tab0`.`name` = "Leonid") and (`tab0`.`active` = true)))
-order by `tab0`.`name` asc
-limit 40, 10

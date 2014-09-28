@@ -1,0 +1,11 @@
+/ConcurrencyException.java
+/ConstraintException.java
+/DataNotFoundException.java
+/DatabaseException.java
+/DuplicateDataException.java
+/InitializationException.java
+/InternalStorageException.java
+/OneToManyConstraintException.java
+/OneToOneConstraintException.java
+/QueryException.java
+/SessionException.java

@@ -1,7 +1,0 @@
-name.eq("Microsoft") || employees._ref__company_Person.name.eq("Leonid")
-
-select distinct `tab0`.`_CompanyId`, `tab0`.`_revision`, `tab0`.`name`, `tab0`.`manager` from `Company` `tab0`
-join CompanyemployeesPersoncompany tab1 on (`tab0`.`_CompanyId` = `tab1`.`_employees_Company`)
-join Person tab2 on (`tab1`.`_company_Person` = `tab2`.`_PersonId`)
-where (((`tab0`.`name` = "Microsoft") or (`tab2`.`name` = "Leonid")))
-limit 40, 10

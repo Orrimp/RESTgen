@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.fhws.rdsl.generator.model/src" modelPluginID="de.fhws.rdsl.generator.model"
+    modelName="Table" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>table.ecore</foreignModel>
+  <genPackages prefix="Table" basePackage="de.fhws.rdsl.generator" disposableProviderFactory="true"
+      ecorePackage="table.ecore#/">
+    <genClasses ecoreClass="table.ecore#//TableElement"/>
+    <genClasses ecoreClass="table.ecore#//Table">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//Table/members"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//Table/identifiers"/>
+    </genClasses>
+    <genClasses ecoreClass="table.ecore#//TableMember"/>
+    <genClasses ecoreClass="table.ecore#//Named">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//Named/name"/>
+    </genClasses>
+    <genClasses ecoreClass="table.ecore#//TableAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableAttribute/type"/>
+    </genClasses>
+    <genClasses ecoreClass="table.ecore#//TableReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//TableReference/referenceTable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableReference/list"/>
+    </genClasses>
+    <genClasses ecoreClass="table.ecore#//TableContainment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableContainment/list"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableContainment/subTable"/>
+    </genClasses>
+    <genClasses ecoreClass="table.ecore#//SubTable"/>
+    <genClasses ecoreClass="table.ecore#//RootTable"/>
+    <genClasses ecoreClass="table.ecore#//ReferenceTable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//ReferenceTable/left"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//ReferenceTable/right"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

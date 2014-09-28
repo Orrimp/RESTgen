@@ -1,0 +1,43 @@
+Resource Person {
+	firstName: String
+	lastName: String
+	movies: references many of Movie -> staff as Occupation
+}
+
+Resource Studio {
+	name: String
+	movies: references many of Movie -> studio
+	contact: contains Contact
+}
+
+SubResource Contact {
+	street: String
+	code: Int
+	phones: contains many of Phone
+}
+
+SubResource Phone {
+	type: String
+	number: String
+}
+
+Resource Movie {
+	title: String
+	releaseDate: Date
+	description: contains many of Synopsis
+	staff: references many of Person -> movies as Occupation
+	studio: references Studio -> movies
+	tags: many of String
+}
+
+SubResource Synopsis {
+	text: String
+	author: String
+}
+
+Reference Occupation {
+	name: String
+	from: Date
+	to: Date
+}
+

@@ -1,0 +1,7 @@
+{
+	"host": "riak",
+	"port": 10017,
+	"poolSize": 2,	
+	"queryPort": 10018,
+    "queryPoolSize": 10
+}

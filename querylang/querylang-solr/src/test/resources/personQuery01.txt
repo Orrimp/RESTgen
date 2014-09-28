@@ -1,3 +1,0 @@
-name.eq("test")
-
-q=(name:"test")

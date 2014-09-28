@@ -1,0 +1,8 @@
+{
+	"host": "localhost",
+	"port": 3306,
+	"database": "test2", 
+	"poolSize": 2,
+	"user": null,
+	"password": null
+}

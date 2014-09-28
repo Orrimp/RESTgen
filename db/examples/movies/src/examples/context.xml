@@ -1,0 +1,13 @@
+<Context>
+
+	<!-- Riak -->
+	<Resource name="bean/RiakSourceFactory" auth="Container"
+		type="de.fhws.rdsl.riak.DefaultRiakSource" factory="org.apache.naming.factory.BeanFactory"
+		host="riak" port="10017" queryPort="10018" poolSize="5" queryPoolSize="5" />
+	
+	<!-- MySQL -->
+	<Resource name="jdbc/DataSource" auth="Container" type="javax.sql.DataSource"
+		maxActive="100" maxIdle="30" maxWait="10000" username="" password=""
+		driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/test" />
+
+</Context>

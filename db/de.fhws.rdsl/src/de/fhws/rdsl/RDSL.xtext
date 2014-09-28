@@ -1,0 +1,178 @@
+grammar de.fhws.rdsl.RDSL with org.eclipse.xtext.common.Terminals
+
+generate rdsl "http://www.fhws.de/rdsl"
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
+
+// internal (GET, ...) beachten
+
+Model:
+    configuration=Configuration | package=Package;
+
+Package:
+    (elements+=PackageElement)*;
+
+PackageElement:
+    Type;
+
+Type:
+    ResourceType;
+
+ResourceType:
+    RootResourceType | SubResourceType | ReferenceType;
+
+
+
+SubResourceType:
+    'SubResource' name=ID
+    '{'
+    (members+=Member)+
+    '}';
+
+RootResourceType:
+    'Resource' name=ID
+    '{'
+    (members+=Member)+
+    '}';
+
+ReferenceType: // Attribute an Referenzen! Wird nicht verwendet!
+    'Reference' name=ID
+    '{'
+    (attributes+=Attribute)+
+    '}'
+;
+
+Member:
+    Attribute | Reference | Containment;
+
+Containment:
+	name=ID ':' 'contains'
+    (list?='many of')?
+    resourceType=[SubResourceType]
+    ;
+
+Reference:
+    name=ID ':'    
+    'references'
+    (list?='many of')?    
+    resourceType=[RootResourceType]
+    '->' opposite=ID
+    ('as' referenceType=[ReferenceType])?
+    ;
+
+Attribute:
+    name=ID ':'
+    (list?='many of')?
+    primitiveType=PrimitiveType
+    (queryable?='queryable')?
+    ;    
+
+enum PrimitiveType:
+    STRING='String' | INT='Int' | DATE='Date' | FLOAT='Float' | BOOLEAN="Boolean";
+
+Configuration:
+    'Config'
+    '{'
+    'Base Package' package=FQN
+    'REST Configuration' restConfiguration=RESTConfiguration
+    'Database Configuration' databaseConfiguration = DatabaseConfiguration
+    '}';
+
+DatabaseConfiguration:
+	RiakConfiguration | MySQLConfiguration
+;
+
+MySQLConfiguration:
+	'MySQL {'
+	'Test Connection File' testConnectionFile=STRING
+	'}'
+;
+
+RiakConfiguration:
+	'Riak'
+	'{'
+	'String Analyzer' name=('standard_analyzer_factory' | 'whitespace_analyzer_factory')
+	'Test Connection File' testConnectionFile=STRING
+	'}'
+;
+
+RESTConfiguration: 
+	'{'
+	'MIME' (mimeType+=MIME)+
+    ('Framework' framework=FRAMEWORK)?
+    'ID-Generation' idtype=ID_GEN?
+    ('Authentication' auth=Auth)?
+    ('API-Version' 'v=' apiVersion=VERSION)?
+    ('Headers' headers+=Header+)?
+    'Caching' caching=Caching
+    'Paging' paging=Paging
+	'}'
+;
+
+Caching:
+    type=CACHING_TYPE ('seconds' time=TIME)?;
+
+Paging:
+    'size' elementsCount=INT;
+
+    //Generate corresponding \GET inside the reosource with given Path
+Start:
+    startPath=URL resource=[ResourceType];
+
+Header:
+    name=HEADER_STRING ('Description' description=STRING)? 'default value=' value=STRING;
+
+Auth:
+    HTTPBasic | OAuth2;
+
+OAuth2:
+    'OAuth2'
+    '{'
+    'URI' authPath=STRING
+    'Encoding' encodign=ENCODING_TYPE
+    'Scope' scoep=STRING
+    '}';
+
+HTTPBasic:
+    'HTTPBasic'
+    '{'
+    'Username' user=STRING
+    'Password' password=STRING
+    'Role' role=ROLE
+    '}';
+
+FQN:
+    ID ("." ID)*;
+
+enum CACHING_TYPE:
+    ETAG='ETag' | MODIFIED='Last-Modified' | EXPIRES='Expires' | MAXAGE='Max-Age' | DEFAULT='Default' | NONE='None';
+
+enum MIME:
+    JSON='json' | XML='xml';
+
+enum ID_GEN:
+    LONG='long' | UUID='uuid';
+
+enum HTTPMETHOD:
+    GET | PUT | POST | PATCH | DELETE | HEAD | OPTIONS | DEFAULT | NONE;
+
+enum FRAMEWORK:
+    SPRING='Spring' | JERSEY='Jersey';
+
+enum ROLE:
+    ADMIN='admin' | USER='user';
+
+enum ENCODING_TYPE:
+    BASE64='base64' | NONE='none';
+    //https url in as localhost or as IP
+terminal URL:
+    'http' 's'? '://' ((ID '.' ID) ('.' ID)* | "localhost" | (INT '.' INT '.' INT '.' INT)) ':' INT+ ('/' ID+)*;
+
+terminal HEADER_STRING:
+    'x-' ID ('-' ID)*;
+
+terminal VERSION:
+    ('1'..'9');
+
+terminal TIME:
+    ('1'..'9')+;
+    

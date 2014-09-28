@@ -1,0 +1,8 @@
+/Movie-schema.erl
+/MovieTags-schema.erl
+/MoviestaffPersonmovies-schema.erl
+/MoviestudioStudiomovies-schema.erl
+/Person-schema.erl
+/Phone-schema.erl
+/Studio-schema.erl
+/Synopsis-schema.erl

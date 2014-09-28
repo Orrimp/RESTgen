@@ -1,0 +1,6 @@
+_companies_Car.eq("456") && _cars_Company.name.eq("Microsoft")
+
+select distinct `tab0`.`_cars_Company`, `tab0`.`_companies_Car`, `tab0`.`_revision`, `tab0`.`weight` from `CarcompaniesCompanycars` `tab0`
+join Company tab1 on (`tab0`.`_cars_Company` = `tab1`.`_CompanyId`)
+where (((`tab0`.`_companies_Car` = "456") and (`tab1`.`name` = "Microsoft")))
+limit 40, 10

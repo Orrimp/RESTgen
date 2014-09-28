@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+
+
+
+
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated table -->
+      <package
+            uri="http://www.fhws.de/rdsl/model/table"
+            class="de.fhws.rdsl.generator.table.TablePackage"
+            genModel="model/table.genmodel"/>
+   </extension>
+
+</plugin>

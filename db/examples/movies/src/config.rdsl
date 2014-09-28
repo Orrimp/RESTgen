@@ -1,0 +1,24 @@
+Config {
+	
+	Base Package mypckg	
+	
+	REST Configuration {
+		MIME json
+		Framework Jersey
+		ID-Generation uuid
+		API-Version v=1
+		Caching ETag
+		Paging size 10	
+	}
+	
+
+//	Database Configuration Riak {
+//		String Analyzer standard_analyzer_factory
+//		Test Connection File "./connection/riakconn.txt"		
+//	}
+	
+	Database Configuration MySQL {
+		Test Connection File "./connection/mysqlconn.txt"		
+	}
+}
+

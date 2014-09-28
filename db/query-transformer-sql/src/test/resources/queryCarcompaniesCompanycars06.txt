@@ -1,0 +1,5 @@
+_companies_Car.eq("456") && _cars_Company.eq("123")
+
+select distinct `tab0`.`_cars_Company`, `tab0`.`_companies_Car`, `tab0`.`_revision`, `tab0`.`weight` from `CarcompaniesCompanycars` `tab0`
+where (((`tab0`.`_companies_Car` = "456") and (`tab0`.`_cars_Company` = "123")))
+limit 40, 10

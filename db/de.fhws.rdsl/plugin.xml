@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated RestDsl -->
+      <package
+            uri="http://www.fhws.de/rdsl"
+            class="de.fhws.rdsl.rdsl.RdslPackage"
+            genModel="src-gen/de/fhws/rdsl/RDSL.genmodel"/>
+   </extension>
+
+</plugin>

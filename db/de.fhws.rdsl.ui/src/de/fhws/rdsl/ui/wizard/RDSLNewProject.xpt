@@ -1,0 +1,14 @@
+«IMPORT de::fhws::rdsl::ui::wizard»
+
+«DEFINE main FOR RDSLProjectInfo»
+«EXPAND model FOR this»
+«ENDDEFINE»
+
+«DEFINE model FOR RDSLProjectInfo»
+«FILE "src/model/Model.rdsl"-»
+/*
+ * This is an example model
+ */
+Hello Xtext!
+«ENDFILE»
+«ENDDEFINE»
