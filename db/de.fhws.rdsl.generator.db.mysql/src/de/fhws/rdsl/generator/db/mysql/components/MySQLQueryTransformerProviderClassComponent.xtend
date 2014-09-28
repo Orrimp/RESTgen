@@ -1,11 +1,11 @@
-package de.fhws.rdsl.generator.db.mysql.workflow
+package de.fhws.rdsl.generator.db.mysql.components
 
 import de.fhws.rdsl.generator.db.workflow.AbstractComponent
 import de.fhws.rdsl.workflow.JavaClass
 import javax.inject.Inject
 import javax.inject.Named
 
-class MySQLQueryTransformerProviderClassComponent extends AbstractComponent implements MySQLConfigurationKeys {
+class MySQLQueryTransformerProviderClassComponent extends AbstractComponent implements de.fhws.rdsl.generator.db.mysql.workflow.MySQLConfigurationKeys {
 
 	@Inject @Named(DB_MYSQL_PACKAGE) protected String dbMySqlPckg
 

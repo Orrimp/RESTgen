@@ -17,6 +17,7 @@ import de.fhws.rdsl.generator.db.mysql.components.MySQLTestSuiteClassComponent
 import de.fhws.rdsl.generator.db.mysql.components.MySQLTestSuiteRunnerClassComponent
 import de.fhws.rdsl.rdsl.Configuration
 import de.fhws.rdsl.rdsl.MySQLConfiguration
+import de.fhws.rdsl.generator.db.mysql.components.MySQLQueryTransformerProviderClassComponent
 
 class MySQLDBGenerator extends DBGenerator implements MySQLConfigurationKeys {
 	
