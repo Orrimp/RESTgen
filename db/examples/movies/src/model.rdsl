@@ -1,27 +1,27 @@
-Resource Person {
+RootResourceType Person {
 	firstName: String
 	lastName: String
 	movies: references many of Movie -> staff as Occupation
 }
 
-Resource Studio {
+RootResourceType Studio {
 	name: String
 	movies: references many of Movie -> studio
 	contact: contains Contact
 }
 
-SubResource Contact {
+SubResourceType Contact {
 	street: String
 	code: Int
 	phones: contains many of Phone
 }
 
-SubResource Phone {
+SubResourceType Phone {
 	type: String
 	number: String
 }
 
-Resource Movie {
+RootResourceType Movie {
 	title: String
 	releaseDate: Date
 	description: contains many of Synopsis
@@ -30,12 +30,12 @@ Resource Movie {
 	tags: many of String
 }
 
-SubResource Synopsis {
+SubResourceType Synopsis {
 	text: String
 	author: String
 }
 
-Reference Occupation {
+ReferenceSchema Occupation {
 	name: String
 	from: Date
 	to: Date
