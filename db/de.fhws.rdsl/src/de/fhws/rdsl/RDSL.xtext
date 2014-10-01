@@ -18,24 +18,24 @@ Type:
     ResourceType;
 
 ResourceType:
-    RootResourceType | SubResourceType | ReferenceType;
+    RootResourceType | SubResourceType | ReferenceSchema;
 
 
 
 SubResourceType:
-    'SubResource' name=ID
+    'SubResourceType' name=ID
     '{'
     (members+=Member)+
     '}';
 
 RootResourceType:
-    'Resource' name=ID
+    'RootResourceType' name=ID
     '{'
     (members+=Member)+
     '}';
 
-ReferenceType: // Attribute an Referenzen! Wird nicht verwendet!
-    'Reference' name=ID
+ReferenceSchema: // Attribute an Referenzen! Wird nicht verwendet!
+    'ReferenceSchema' name=ID
     '{'
     (attributes+=Attribute)+
     '}'
@@ -45,22 +45,22 @@ Member:
     Attribute | Reference | Containment;
 
 Containment:
-	name=ID ':' 'contains'
+	(method=HTTPMETHOD)? name=ID ':' 'contains'
     (list?='many of')?
     resourceType=[SubResourceType]
     ;
 
 Reference:
-    name=ID ':'    
+    (method=HTTPMETHOD)? name=ID ':'    
     'references'
     (list?='many of')?    
     resourceType=[RootResourceType]
     '->' opposite=ID
-    ('as' referenceType=[ReferenceType])?
+    ('as' referenceSchema=[ReferenceSchema])?
     ;
 
 Attribute:
-    name=ID ':'
+    (method=HTTPMETHOD)? name=ID ':'
     (list?='many of')?
     primitiveType=PrimitiveType
     (queryable?='queryable')?

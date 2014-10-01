@@ -3,26 +3,25 @@
  */
 package de.fhws.rdsl;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import de.fhws.rdsl.generator.IMultipleResourceGenerator;
 
-/**
- * Use this class to register components to be used at runtime / without the
- * Equinox extension registry.
- */
 public class RDSLRuntimeModule extends de.fhws.rdsl.AbstractRDSLRuntimeModule {
-	/**
-	 * Bind the custom Generator to the runtime
-	 *
-	 * @return Resource generator which can handle multiple input files
-	 */
-	public Class<? extends IMultipleResourceGenerator> bindIMultipleResourceGenerator() {
-		Class<?> clazz;
+
+	public IMultipleResourceGenerator bindIMultipleResourceGenerator() {
 		try {
-			clazz = Class.forName("de.fhws.rdsl.generator.db.DBMultipleResourceGenerator");
-			if (clazz != null) {
-				return (Class<? extends IMultipleResourceGenerator>) clazz;
-			}
-		} catch (ClassNotFoundException e) {
+			List<IMultipleResourceGenerator> generators = Lists.newArrayList();
+			Class<?> dbGeneratorClazz = Class.forName("de.fhws.rdsl.generator.db.DBMultipleResourceGenerator");
+			generators.add((IMultipleResourceGenerator) dbGeneratorClazz.newInstance());
+			// Class<?> restGeneratorClazz =
+			// Class.forName("de.fhws.rdsl.generator.rest.RESTMultipleResourceGenerator");
+			// generators.add((IMultipleResourceGenerator)
+			// restGeneratorClazz.newInstance());
+			return new CompositeMultipleResourceGenerator(generators);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;

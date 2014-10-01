@@ -159,8 +159,8 @@ class TablesComponent extends AbstractComponent {
 				worked.add(tableName)
 				val table = TableFactory.eINSTANCE.createReferenceTable => [
 					name = tableName
-					if(reference.referenceType != null)
-						members += reference.referenceType.attributes.map [ attr |
+					if(reference.referenceSchema != null)
+						members += reference.referenceSchema.attributes.map [ attr |
 							TableFactory.eINSTANCE.createTableAttribute => [
 								name = attr.name
 								type = attr.primitiveType.getName
