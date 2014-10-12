@@ -13,6 +13,7 @@ import javax.inject.Named
 
 import static extension de.fhws.rdsl.generator.db.utils.TableUtils.*
 import de.fhws.rdsl.rdsl.PrimitiveType
+import de.fhws.rdsl.generator.table.DateAttribute
 
 class FromJSONObjectConverterClassesComponent extends AbstractComponent implements RiakConfigurationKeys {
 
@@ -55,10 +56,10 @@ class FromJSONObjectConverterClassesComponent extends AbstractComponent implemen
 												if(_obj == JSONObject.NULL) {
 													set«attr.name.toFirstUpper»(null);
 												} else {
-													«IF attr.type == PrimitiveType.DATE.getName»
+													«IF attr instanceof DateAttribute»
 													set«attr.name.toFirstUpper»(«type("org.apache.commons.lang3.time.DateFormatUtils")».ISO_DATETIME_TIME_ZONE_FORMAT.parse((String) _obj));													
 													«ELSE»
-													set«attr.name.toFirstUpper»((«attr.type.javaType») _obj);
+													set«attr.name.toFirstUpper»((«attr.javaType») _obj);
 													«ENDIF»
 												}
 											} catch(Exception e) {

@@ -3,14 +3,13 @@ Bundle-ManifestVersion: 2
 Bundle-Name: com.rest.rdsl.tests
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: com.rest.rdsl.tests; singleton:=true
+Bundle-SymbolicName: de.fhws.rdsl.tests; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: com.rest.rdsl,
+Require-Bundle: de.fhws.rdsl,
  com.rest.rdsl.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtext.junit4,
  org.eclipse.ui.workbench;resolution:=optional,
- de.fhws.rdsl,
  de.fhws.rdsl.ui,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
 Import-Package: org.apache.log4j,
@@ -22,6 +21,4 @@ Import-Package: org.apache.log4j,
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: com.xtext.rest.rdsl,
- de.fhws,
- de.fhws.rdsl
+Export-Package: de.fhws.rdsl

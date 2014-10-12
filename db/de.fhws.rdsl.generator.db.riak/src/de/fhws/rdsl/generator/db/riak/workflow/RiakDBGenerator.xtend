@@ -20,6 +20,7 @@ import de.fhws.rdsl.generator.db.riak.components.RiakTestSuiteClassComponent
 import de.fhws.rdsl.generator.db.riak.components.RiakQueryTransformerProviderClassComponent
 import de.fhws.rdsl.rdsl.Configuration
 import de.fhws.rdsl.rdsl.RiakConfiguration
+import de.fhws.rdsl.generator.db.riak.components.RiakScriptFileComponent
 
 class RiakDBGenerator extends DBGenerator implements RiakConfigurationKeys {
 	
@@ -38,6 +39,7 @@ class RiakDBGenerator extends DBGenerator implements RiakConfigurationKeys {
 		components += ToJSONObjectConverterClassComponent
 		components += ToJSONObjectConverterClassesComponent
 		components += RiakSchemaFilesComponent
+		components += RiakScriptFileComponent
 		components += RiakQueryTransformerProviderClassComponent
 
 		// Test

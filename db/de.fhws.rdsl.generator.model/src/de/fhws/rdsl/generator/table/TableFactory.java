@@ -58,15 +58,6 @@ public interface TableFactory extends EFactory {
     Named createNamed();
 
     /**
-     * Returns a new object of class '<em>Attribute</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Attribute</em>'.
-     * @generated
-     */
-    TableAttribute createTableAttribute();
-
-    /**
      * Returns a new object of class '<em>Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -110,6 +101,51 @@ public interface TableFactory extends EFactory {
      * @generated
      */
     ReferenceTable createReferenceTable();
+
+    /**
+     * Returns a new object of class '<em>Float Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Float Attribute</em>'.
+     * @generated
+     */
+    FloatAttribute createFloatAttribute();
+
+    /**
+     * Returns a new object of class '<em>Boolean Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Boolean Attribute</em>'.
+     * @generated
+     */
+    BooleanAttribute createBooleanAttribute();
+
+    /**
+     * Returns a new object of class '<em>Int Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Int Attribute</em>'.
+     * @generated
+     */
+    IntAttribute createIntAttribute();
+
+    /**
+     * Returns a new object of class '<em>String Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>String Attribute</em>'.
+     * @generated
+     */
+    StringAttribute createStringAttribute();
+
+    /**
+     * Returns a new object of class '<em>Date Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Date Attribute</em>'.
+     * @generated
+     */
+    DateAttribute createDateAttribute();
 
     /**
      * Returns the package supported by this factory.

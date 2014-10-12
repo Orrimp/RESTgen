@@ -3,8 +3,6 @@ grammar de.fhws.rdsl.RDSL with org.eclipse.xtext.common.Terminals
 generate rdsl "http://www.fhws.de/rdsl"
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 
-// internal (GET, ...) beachten
-
 Model:
     configuration=Configuration | package=Package;
 
@@ -66,8 +64,29 @@ Attribute:
     (queryable?='queryable')?
     ;    
 
-enum PrimitiveType:
-    STRING='String' | INT='Int' | DATE='Date' | FLOAT='Float' | BOOLEAN="Boolean";
+PrimitiveType :
+	IntType | StringType | DateType | FloatType | BooleanType
+;
+
+BooleanType:
+	text='Boolean'
+;
+
+FloatType:
+	text='Float' ('(' (start=FLOAT)? '..' (stop=FLOAT)? ')')?
+;
+
+DateType:
+	text='Date'
+;
+
+StringType:
+	text='String'
+;
+
+IntType:
+	text='Int' ('(' (start=INT)? '..' (stop=INT)? ')')?
+;
 
 Configuration:
     'Config'
@@ -114,7 +133,6 @@ Caching:
 Paging:
     'size' elementsCount=INT;
 
-    //Generate corresponding \GET inside the reosource with given Path
 Start:
     startPath=URL resource=[ResourceType];
 
@@ -163,7 +181,7 @@ enum ROLE:
 
 enum ENCODING_TYPE:
     BASE64='base64' | NONE='none';
-    //https url in as localhost or as IP
+
 terminal URL:
     'http' 's'? '://' ((ID '.' ID) ('.' ID)* | "localhost" | (INT '.' INT '.' INT '.' INT)) ':' INT+ ('/' ID+)*;
 
@@ -175,4 +193,6 @@ terminal VERSION:
 
 terminal TIME:
     ('1'..'9')+;
+    
+terminal FLOAT: (INT+'.'INT+);
     

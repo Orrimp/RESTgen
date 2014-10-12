@@ -40,7 +40,7 @@ class ResultSetConverterClassesComponent extends AbstractComponent implements My
 									}																
 									
 									«FOR attr : table.members.filter(TableAttribute).filter[flags.empty]»
-										set«attr.name.toFirstUpper»((«attr.type.javaType») _from.getObject("«attr.actualAttributeName»"));
+										set«attr.name.toFirstUpper»((«attr.javaType») _from.getObject("«attr.actualAttributeName»"));
 										if (_from.wasNull()) {
 											set«attr.name.toFirstUpper»(null);
 										}															

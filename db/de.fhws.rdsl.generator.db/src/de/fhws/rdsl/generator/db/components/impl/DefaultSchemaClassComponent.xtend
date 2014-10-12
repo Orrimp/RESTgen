@@ -58,7 +58,7 @@ class DefaultSchemaClassComponent extends AbstractComponent {
 							
 							«FOR attr : table.members.filter(TableAttribute)»
 								«table.varName».getMembers().add(new «type("de.fhws.rdsl.query.transformer.api.schema.Attribute")»("«attr.name»", Attribute.«attr.
-					type.javaTypeForSchema»)); // Attribute	
+					javaTypeForSchema»)); // Attribute	
 							«ENDFOR»
 							«FOR attr : table.members.filter(TableContainment)»
 								«table.varName».getMembers().add(new «type("de.fhws.rdsl.query.transformer.api.schema.Containment")»("«attr.name»", «if(attr.

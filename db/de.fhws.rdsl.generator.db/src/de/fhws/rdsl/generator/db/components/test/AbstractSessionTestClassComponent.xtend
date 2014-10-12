@@ -12,6 +12,11 @@ import de.fhws.rdsl.generator.table.RootTable
 import de.fhws.rdsl.generator.table.TableAttribute
 import de.fhws.rdsl.generator.table.ReferenceTable
 import de.fhws.rdsl.generator.table.SubTable
+import de.fhws.rdsl.generator.table.BooleanAttribute
+import de.fhws.rdsl.generator.table.IntAttribute
+import de.fhws.rdsl.generator.table.FloatAttribute
+import de.fhws.rdsl.generator.table.DateAttribute
+import de.fhws.rdsl.generator.table.StringAttribute
 
 class AbstractSessionTestClassComponent extends AbstractComponent {
 
@@ -92,7 +97,7 @@ class AbstractSessionTestClassComponent extends AbstractComponent {
 										setIdentifier(getReferenceIdentifier(left, right));
 										setRevision(getRandomRevision());
 										«FOR attr : table.members.filter(TableAttribute).filter[flags.empty]»
-											set«attr.name.toFirstUpper»(«attr.type.methodByName»());
+											set«attr.name.toFirstUpper»(«attr.methodByName»());
 										«ENDFOR»
 									}
 								};
@@ -110,7 +115,7 @@ class AbstractSessionTestClassComponent extends AbstractComponent {
 										«ENDIF»
 										setRevision(getRandomRevision());							
 										«FOR attr : table.members.filter(TableAttribute).filter[flags.empty]»
-											set«attr.name.toFirstUpper»(«attr.type.methodByName»());
+											set«attr.name.toFirstUpper»(«attr.methodByName»());
 										«ENDFOR»
 									}
 								};
@@ -133,13 +138,13 @@ class AbstractSessionTestClassComponent extends AbstractComponent {
 		]
 	}
 
-	def getMethodByName(String typeName) {
-		switch typeName {
-			case PrimitiveType.BOOLEAN.getName: "getRandomBoolean"
-			case PrimitiveType.INT.getName: "getRandomInteger"
-			case PrimitiveType.FLOAT.getName: "getRandomDouble"
-			case PrimitiveType.DATE.getName: "getRandomDate"
-			case PrimitiveType.STRING.getName: "getRandomString"
+	def getMethodByName(TableAttribute attr) {
+		switch attr {
+			BooleanAttribute: "getRandomBoolean"
+			IntAttribute: "getRandomInteger"
+			FloatAttribute: "getRandomDouble"
+			DateAttribute: "getRandomDate"
+			StringAttribute: "getRandomString"
 		}
 	}
 

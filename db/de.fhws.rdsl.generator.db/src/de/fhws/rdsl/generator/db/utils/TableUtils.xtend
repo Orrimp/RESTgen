@@ -13,6 +13,16 @@ import de.fhws.rdsl.generator.table.ReferenceTable
 import de.fhws.rdsl.generator.table.TableAttribute
 import java.util.List
 import de.fhws.rdsl.generator.table.TableReference
+import de.fhws.rdsl.rdsl.StringType
+import de.fhws.rdsl.rdsl.BooleanType
+import de.fhws.rdsl.rdsl.IntType
+import de.fhws.rdsl.rdsl.DateType
+import de.fhws.rdsl.rdsl.FloatType
+import de.fhws.rdsl.generator.table.BooleanAttribute
+import de.fhws.rdsl.generator.table.IntAttribute
+import de.fhws.rdsl.generator.table.DateAttribute
+import de.fhws.rdsl.generator.table.FloatAttribute
+import de.fhws.rdsl.generator.table.StringAttribute
 
 class TableUtils {
 
@@ -29,23 +39,23 @@ class TableUtils {
 	}
 	
 
-	static def getJavaType(String name) {
-		switch name {
-			case PrimitiveType.BOOLEAN.getName: "Boolean"
-			case PrimitiveType.INT.getName: "Integer"
-			case PrimitiveType.DATE.getName: "java.util.Date"
-			case PrimitiveType.FLOAT.getName: "Double"
-			case PrimitiveType.STRING.getName: "String"
+	static def getJavaType(TableAttribute attr) {
+		switch attr {
+			BooleanAttribute: "Boolean"
+			IntAttribute: "Integer"
+			DateAttribute: "java.util.Date"
+			FloatAttribute: "Double"
+			StringAttribute: "String"
 		}
 	}
 	
-	static def getJavaTypeForSchema(String name) {
-		switch name {
-			case PrimitiveType.BOOLEAN.getName: "BOOLEAN"
-			case PrimitiveType.INT.getName: "INTEGER"
-			case PrimitiveType.DATE.getName: "DATE"
-			case PrimitiveType.FLOAT.getName: "FLOAT"
-			case PrimitiveType.STRING.getName: "STRING"
+	static def getJavaTypeForSchema(TableAttribute attr) {
+		switch attr {
+			BooleanAttribute: "BOOLEAN"
+			IntAttribute: "INTEGER"
+			DateAttribute: "DATE"
+			FloatAttribute: "FLOAT"
+			StringAttribute: "STRING"
 		}
 	}
 

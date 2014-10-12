@@ -12,6 +12,10 @@ import javax.inject.Named
 import static extension de.fhws.rdsl.generator.db.utils.TableUtils.*
 import de.fhws.rdsl.generator.table.Table
 import de.fhws.rdsl.workflow.TextFile
+import de.fhws.rdsl.generator.table.DateAttribute
+import de.fhws.rdsl.generator.table.StringAttribute
+import de.fhws.rdsl.generator.table.IntAttribute
+import de.fhws.rdsl.generator.table.BooleanAttribute
 
 class RiakSchemaFilesComponent extends AbstractComponent implements RiakConfigurationKeys {
 
@@ -92,16 +96,16 @@ class RiakSchemaFilesComponent extends AbstractComponent implements RiakConfigur
 			{ field, [
 				{name, "«attribute.actualAttributeName»"},
 				«IF attribute.queryable»
-					«IF attribute.type == PrimitiveType.BOOLEAN.getName»
+					«IF attribute instanceof BooleanAttribute»
 						{type, string},
 						{analyzer_factory, {erlang, text_analyzers, noop_analyzer_factory}}
-					«ELSEIF attribute.type == PrimitiveType.INT.getName»
+					«ELSEIF attribute instanceof IntAttribute»
 						{type, integer},
 						{padding_size, 16}
-					«ELSEIF attribute.type == PrimitiveType.STRING.getName»
+					«ELSEIF attribute instanceof StringAttribute»
 						{type, string},
 						{analyzer_factory, {erlang, text_analyzers, «IF useWhitespaceAnalyzer»whitespace_analyzer_factory«ELSE»standard_analyzer_factory«ENDIF»}}
-					«ELSEIF attribute.type == PrimitiveType.DATE.getName»
+					«ELSEIF attribute instanceof DateAttribute»
 						{type, date}
 					«ELSE»
 						{analyzer_factory, {erlang, text_analyzers, noop_analyzer_factory}}

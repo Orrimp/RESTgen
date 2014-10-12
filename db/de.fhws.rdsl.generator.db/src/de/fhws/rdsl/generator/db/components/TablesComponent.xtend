@@ -20,6 +20,11 @@ import org.eclipse.xtext.util.Pair
 import org.eclipse.xtext.util.Tuples
 
 import static extension de.fhws.rdsl.generator.db.utils.TableUtils.*
+import de.fhws.rdsl.rdsl.StringType
+import de.fhws.rdsl.rdsl.IntType
+import de.fhws.rdsl.rdsl.FloatType
+import de.fhws.rdsl.rdsl.BooleanType
+import de.fhws.rdsl.rdsl.DateType
 
 class TablesComponent extends AbstractComponent {
 
@@ -52,25 +57,22 @@ class TablesComponent extends AbstractComponent {
 
 	def updateTables(List<Table> tables) {
 		tables.forEach [ table |
-			table.members += TableFactory.eINSTANCE.createTableAttribute => [
+			table.members += TableFactory.eINSTANCE.createStringAttribute => [
 				name = "_revision"
 				flags += "revision"
-				type = PrimitiveType.STRING.getName
 			]
-			table.members += TableFactory.eINSTANCE.createTableAttribute => [
+			table.members += TableFactory.eINSTANCE.createStringAttribute => [
 				name = "_revisiontemp"
 				flags += "revisiontemp"
-				type = PrimitiveType.STRING.getName
 			]
 		]
 		tables.forEach [ table |
 			switch table.eContainer {
 				TableContainment:
 					if(!(table.eContainer as TableContainment).list)
-						table.members += TableFactory.eINSTANCE.createTableAttribute => [
+						table.members += TableFactory.eINSTANCE.createStringAttribute => [
 							name = "_"
 							flags += "basefield"
-							type = PrimitiveType.STRING.getName
 						]
 			}
 		]
@@ -105,14 +107,39 @@ class TablesComponent extends AbstractComponent {
 			TableFactory.eINSTANCE.createRootTable => [
 				name = resourceType.name
 				members += resourceType.members.filter(Attribute).filter[!list].map [ attr |
-					TableFactory.eINSTANCE.createTableAttribute => [
-						name = attr.name
-						type = attr.primitiveType.getName
-						queryable = attr.queryable
-					]
+					val tableAttr = attr.createTableAttribute
+					if(tableAttr == null)
+						println(tableAttr)
+					return tableAttr
 				]
 			]
 		]
+	}
+	
+	def createTableAttribute(Attribute attr) {
+		val t = attr.primitiveType
+		switch(t) {
+			StringType: TableFactory.eINSTANCE.createStringAttribute => [
+				name = attr.name
+				queryable = attr.queryable
+			]
+			IntType: TableFactory.eINSTANCE.createIntAttribute => [
+				name = attr.name
+				queryable = attr.queryable
+			]
+			FloatType: TableFactory.eINSTANCE.createFloatAttribute => [
+				name = attr.name
+				queryable = attr.queryable
+			]
+			BooleanType: TableFactory.eINSTANCE.createBooleanAttribute => [
+				name = attr.name
+				queryable = attr.queryable
+			]
+			DateType: TableFactory.eINSTANCE.createDateAttribute => [
+				name = attr.name
+				queryable = attr.queryable
+			]
+		}
 	}
 
 	// Creates sub tables from containments
@@ -121,11 +148,7 @@ class TablesComponent extends AbstractComponent {
 			TableFactory.eINSTANCE.createSubTable => [
 				name = resourceType.name
 				members += resourceType.members.filter(Attribute).filter[!list].map [ attr |
-					TableFactory.eINSTANCE.createTableAttribute => [
-						name = attr.name
-						type = attr.primitiveType.getName
-						queryable = attr.queryable
-					]
+					attr.createTableAttribute
 				]
 			]
 		]
@@ -136,11 +159,9 @@ class TablesComponent extends AbstractComponent {
 		pckg.eAllContents.filter(Attribute).filter[list].map [ attr |
 			TableFactory.eINSTANCE.createSubTable => [
 				name = attr.tableName
-				members += TableFactory.eINSTANCE.createTableAttribute => [
-					name = "value"
-					type = attr.primitiveType.getName
-					queryable = attr.queryable
-				]
+				val tableAttr = attr.createTableAttribute
+				tableAttr.name = "value"
+				members += tableAttr			
 			]
 		]
 	}
@@ -161,10 +182,7 @@ class TablesComponent extends AbstractComponent {
 					name = tableName
 					if(reference.referenceSchema != null)
 						members += reference.referenceSchema.attributes.map [ attr |
-							TableFactory.eINSTANCE.createTableAttribute => [
-								name = attr.name
-								type = attr.primitiveType.getName
-							]
+							attr.createTableAttribute
 						]
 				]
 				table.left = TableFactory.eINSTANCE.createTableReference => [

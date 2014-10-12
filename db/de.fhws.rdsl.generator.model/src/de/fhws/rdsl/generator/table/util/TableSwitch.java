@@ -148,6 +148,56 @@ public class TableSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case TablePackage.FLOAT_ATTRIBUTE: {
+                FloatAttribute floatAttribute = (FloatAttribute)theEObject;
+                T result = caseFloatAttribute(floatAttribute);
+                if (result == null) result = caseTableAttribute(floatAttribute);
+                if (result == null) result = caseTableMember(floatAttribute);
+                if (result == null) result = caseTableElement(floatAttribute);
+                if (result == null) result = caseNamed(floatAttribute);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case TablePackage.BOOLEAN_ATTRIBUTE: {
+                BooleanAttribute booleanAttribute = (BooleanAttribute)theEObject;
+                T result = caseBooleanAttribute(booleanAttribute);
+                if (result == null) result = caseTableAttribute(booleanAttribute);
+                if (result == null) result = caseTableMember(booleanAttribute);
+                if (result == null) result = caseTableElement(booleanAttribute);
+                if (result == null) result = caseNamed(booleanAttribute);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case TablePackage.INT_ATTRIBUTE: {
+                IntAttribute intAttribute = (IntAttribute)theEObject;
+                T result = caseIntAttribute(intAttribute);
+                if (result == null) result = caseTableAttribute(intAttribute);
+                if (result == null) result = caseTableMember(intAttribute);
+                if (result == null) result = caseTableElement(intAttribute);
+                if (result == null) result = caseNamed(intAttribute);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case TablePackage.STRING_ATTRIBUTE: {
+                StringAttribute stringAttribute = (StringAttribute)theEObject;
+                T result = caseStringAttribute(stringAttribute);
+                if (result == null) result = caseTableAttribute(stringAttribute);
+                if (result == null) result = caseTableMember(stringAttribute);
+                if (result == null) result = caseTableElement(stringAttribute);
+                if (result == null) result = caseNamed(stringAttribute);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case TablePackage.DATE_ATTRIBUTE: {
+                DateAttribute dateAttribute = (DateAttribute)theEObject;
+                T result = caseDateAttribute(dateAttribute);
+                if (result == null) result = caseTableAttribute(dateAttribute);
+                if (result == null) result = caseTableMember(dateAttribute);
+                if (result == null) result = caseTableElement(dateAttribute);
+                if (result == null) result = caseNamed(dateAttribute);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -299,6 +349,81 @@ public class TableSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseReferenceTable(ReferenceTable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Float Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Float Attribute</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFloatAttribute(FloatAttribute object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Boolean Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Boolean Attribute</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseBooleanAttribute(BooleanAttribute object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Int Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Int Attribute</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntAttribute(IntAttribute object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>String Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>String Attribute</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseStringAttribute(StringAttribute object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Date Attribute</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Date Attribute</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDateAttribute(DateAttribute object) {
         return null;
     }
 

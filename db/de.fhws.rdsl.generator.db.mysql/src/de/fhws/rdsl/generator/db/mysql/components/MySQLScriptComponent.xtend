@@ -31,6 +31,12 @@ import javax.inject.Named
 
 import static extension de.fhws.rdsl.generator.db.utils.TableUtils.*
 import de.fhws.rdsl.generator.db.mysql.workflow.MySQLConfigurationKeys
+import de.fhws.rdsl.rdsl.DateType
+import de.fhws.rdsl.generator.table.BooleanAttribute
+import de.fhws.rdsl.generator.table.IntAttribute
+import de.fhws.rdsl.generator.table.FloatAttribute
+import de.fhws.rdsl.generator.table.StringAttribute
+import de.fhws.rdsl.generator.table.DateAttribute
 
 class MySQLScriptComponent extends AbstractComponent implements MySQLConfigurationKeys {
 	
@@ -311,12 +317,12 @@ class MySQLScriptComponent extends AbstractComponent implements MySQLConfigurati
 	def getSQLType(TableAttribute attr) {
 		if(attr.flags.contains("revision") || attr.flags.contains("revisiontemp")) return "CHAR(32)"
 		if(attr.flags.contains("basefield")) return "BIT(1)"
-		switch attr.type {
-			case PrimitiveType.DATE.getName: "DATETIME"
-			case PrimitiveType.STRING.getName: "TEXT"
-			case PrimitiveType.FLOAT.getName: "FLOAT"
-			case PrimitiveType.INT.getName: "INT(10)"
-			case PrimitiveType.BOOLEAN.getName: "BIT(1)"
+		switch attr {
+			DateAttribute: "DATETIME"
+			StringAttribute: "TEXT"
+			FloatAttribute: "FLOAT"
+			IntAttribute: "INT(10)"
+			BooleanAttribute: "BIT(1)"
 			default: "***********************************"
 		}
 	}

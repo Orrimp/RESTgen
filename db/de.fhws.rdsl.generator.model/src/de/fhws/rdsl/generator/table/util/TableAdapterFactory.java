@@ -108,6 +108,26 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
                 return createReferenceTableAdapter();
             }
             @Override
+            public Adapter caseFloatAttribute(FloatAttribute object) {
+                return createFloatAttributeAdapter();
+            }
+            @Override
+            public Adapter caseBooleanAttribute(BooleanAttribute object) {
+                return createBooleanAttributeAdapter();
+            }
+            @Override
+            public Adapter caseIntAttribute(IntAttribute object) {
+                return createIntAttributeAdapter();
+            }
+            @Override
+            public Adapter caseStringAttribute(StringAttribute object) {
+                return createStringAttributeAdapter();
+            }
+            @Override
+            public Adapter caseDateAttribute(DateAttribute object) {
+                return createDateAttributeAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -264,6 +284,76 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createReferenceTableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhws.rdsl.generator.table.FloatAttribute <em>Float Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhws.rdsl.generator.table.FloatAttribute
+     * @generated
+     */
+    public Adapter createFloatAttributeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhws.rdsl.generator.table.BooleanAttribute <em>Boolean Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhws.rdsl.generator.table.BooleanAttribute
+     * @generated
+     */
+    public Adapter createBooleanAttributeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhws.rdsl.generator.table.IntAttribute <em>Int Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhws.rdsl.generator.table.IntAttribute
+     * @generated
+     */
+    public Adapter createIntAttributeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhws.rdsl.generator.table.StringAttribute <em>String Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhws.rdsl.generator.table.StringAttribute
+     * @generated
+     */
+    public Adapter createStringAttributeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhws.rdsl.generator.table.DateAttribute <em>Date Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhws.rdsl.generator.table.DateAttribute
+     * @generated
+     */
+    public Adapter createDateAttributeAdapter() {
         return null;
     }
 

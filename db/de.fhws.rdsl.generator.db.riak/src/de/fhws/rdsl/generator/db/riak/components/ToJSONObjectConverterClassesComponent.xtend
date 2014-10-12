@@ -12,6 +12,7 @@ import javax.inject.Named
 
 import static extension de.fhws.rdsl.generator.db.utils.TableUtils.*
 import de.fhws.rdsl.rdsl.PrimitiveType
+import de.fhws.rdsl.generator.table.DateAttribute
 
 class ToJSONObjectConverterClassesComponent extends AbstractComponent implements RiakConfigurationKeys {
 
@@ -53,7 +54,7 @@ class ToJSONObjectConverterClassesComponent extends AbstractComponent implements
 								«ENDIF»
 								
 								«FOR attr : table.members.filter(TableAttribute).filter[flags.empty]»
-								«IF attr.type == PrimitiveType.DATE.getName»
+								«IF attr instanceof DateAttribute»
 									data.put("«attr.actualAttributeName»", «type("org.apache.commons.lang3.time.DateFormatUtils")».ISO_DATETIME_TIME_ZONE_FORMAT.format(_from.get«attr.name.toFirstUpper»()));
 								«ELSE»
 									data.put("«attr.actualAttributeName»", _from.get«attr.name.toFirstUpper»());

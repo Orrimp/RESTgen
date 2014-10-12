@@ -60,12 +60,16 @@ public class TableFactoryImpl extends EFactoryImpl implements TableFactory {
             case TablePackage.TABLE: return createTable();
             case TablePackage.TABLE_MEMBER: return createTableMember();
             case TablePackage.NAMED: return createNamed();
-            case TablePackage.TABLE_ATTRIBUTE: return createTableAttribute();
             case TablePackage.TABLE_REFERENCE: return createTableReference();
             case TablePackage.TABLE_CONTAINMENT: return createTableContainment();
             case TablePackage.SUB_TABLE: return createSubTable();
             case TablePackage.ROOT_TABLE: return createRootTable();
             case TablePackage.REFERENCE_TABLE: return createReferenceTable();
+            case TablePackage.FLOAT_ATTRIBUTE: return createFloatAttribute();
+            case TablePackage.BOOLEAN_ATTRIBUTE: return createBooleanAttribute();
+            case TablePackage.INT_ATTRIBUTE: return createIntAttribute();
+            case TablePackage.STRING_ATTRIBUTE: return createStringAttribute();
+            case TablePackage.DATE_ATTRIBUTE: return createDateAttribute();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -116,16 +120,6 @@ public class TableFactoryImpl extends EFactoryImpl implements TableFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TableAttribute createTableAttribute() {
-        TableAttributeImpl tableAttribute = new TableAttributeImpl();
-        return tableAttribute;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public TableReference createTableReference() {
         TableReferenceImpl tableReference = new TableReferenceImpl();
         return tableReference;
@@ -169,6 +163,56 @@ public class TableFactoryImpl extends EFactoryImpl implements TableFactory {
     public ReferenceTable createReferenceTable() {
         ReferenceTableImpl referenceTable = new ReferenceTableImpl();
         return referenceTable;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FloatAttribute createFloatAttribute() {
+        FloatAttributeImpl floatAttribute = new FloatAttributeImpl();
+        return floatAttribute;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public BooleanAttribute createBooleanAttribute() {
+        BooleanAttributeImpl booleanAttribute = new BooleanAttributeImpl();
+        return booleanAttribute;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntAttribute createIntAttribute() {
+        IntAttributeImpl intAttribute = new IntAttributeImpl();
+        return intAttribute;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public StringAttribute createStringAttribute() {
+        StringAttributeImpl stringAttribute = new StringAttributeImpl();
+        return stringAttribute;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DateAttribute createDateAttribute() {
+        DateAttributeImpl dateAttribute = new DateAttributeImpl();
+        return dateAttribute;
     }
 
     /**

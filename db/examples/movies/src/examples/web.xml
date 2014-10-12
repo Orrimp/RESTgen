@@ -3,7 +3,7 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-    <display-name>basepackage REST API</display-name>
+    <display-name>REST API</display-name>
     <servlet>
         <servlet-name>Jersey-Servlet</servlet-name>
         <servlet-class>
@@ -29,7 +29,7 @@
             bean/RiakSourceFactory
         </resource-env-ref-name>
         <resource-env-ref-type>
-            de.fhws.rdsl.riak.RiakSource
+            de.fhws.rdsl.riak.DefaultRiakSource
         </resource-env-ref-type>
     </resource-env-ref>
 

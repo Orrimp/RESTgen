@@ -2,69 +2,76 @@
  */
 package de.fhws.rdsl.generator.table.impl;
 
-import de.fhws.rdsl.generator.table.TableAttribute;
+import de.fhws.rdsl.generator.table.IntAttribute;
 import de.fhws.rdsl.generator.table.TablePackage;
 
-import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Attribute</b></em>'.
+ * An implementation of the model object '<em><b>Int Attribute</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.fhws.rdsl.generator.table.impl.TableAttributeImpl#getFlags <em>Flags</em>}</li>
- *   <li>{@link de.fhws.rdsl.generator.table.impl.TableAttributeImpl#isQueryable <em>Queryable</em>}</li>
+ *   <li>{@link de.fhws.rdsl.generator.table.impl.IntAttributeImpl#getStart <em>Start</em>}</li>
+ *   <li>{@link de.fhws.rdsl.generator.table.impl.IntAttributeImpl#getStop <em>Stop</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class TableAttributeImpl extends TableMemberImpl implements TableAttribute {
+public class IntAttributeImpl extends TableAttributeImpl implements IntAttribute {
     /**
-     * The cached value of the '{@link #getFlags() <em>Flags</em>}' attribute list.
+     * The default value of the '{@link #getStart() <em>Start</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getFlags()
+     * @see #getStart()
      * @generated
      * @ordered
      */
-    protected EList<String> flags;
+    protected static final int START_EDEFAULT = 0;
 
     /**
-     * The default value of the '{@link #isQueryable() <em>Queryable</em>}' attribute.
+     * The cached value of the '{@link #getStart() <em>Start</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isQueryable()
+     * @see #getStart()
      * @generated
      * @ordered
      */
-    protected static final boolean QUERYABLE_EDEFAULT = false;
+    protected int start = START_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #isQueryable() <em>Queryable</em>}' attribute.
+     * The default value of the '{@link #getStop() <em>Stop</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isQueryable()
+     * @see #getStop()
      * @generated
      * @ordered
      */
-    protected boolean queryable = QUERYABLE_EDEFAULT;
+    protected static final int STOP_EDEFAULT = 0;
+
+    /**
+     * The cached value of the '{@link #getStop() <em>Stop</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStop()
+     * @generated
+     * @ordered
+     */
+    protected int stop = STOP_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TableAttributeImpl() {
+    protected IntAttributeImpl() {
         super();
     }
 
@@ -75,7 +82,7 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
      */
     @Override
     protected EClass eStaticClass() {
-        return TablePackage.Literals.TABLE_ATTRIBUTE;
+        return TablePackage.Literals.INT_ATTRIBUTE;
     }
 
     /**
@@ -83,11 +90,8 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<String> getFlags() {
-        if (flags == null) {
-            flags = new EDataTypeUniqueEList<String>(String.class, this, TablePackage.TABLE_ATTRIBUTE__FLAGS);
-        }
-        return flags;
+    public int getStart() {
+        return start;
     }
 
     /**
@@ -95,20 +99,32 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isQueryable() {
-        return queryable;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setQueryable(boolean newQueryable) {
-        boolean oldQueryable = queryable;
-        queryable = newQueryable;
+    public void setStart(int newStart) {
+        int oldStart = start;
+        start = newStart;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TablePackage.TABLE_ATTRIBUTE__QUERYABLE, oldQueryable, queryable));
+            eNotify(new ENotificationImpl(this, Notification.SET, TablePackage.INT_ATTRIBUTE__START, oldStart, start));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public int getStop() {
+        return stop;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setStop(int newStop) {
+        int oldStop = stop;
+        stop = newStop;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TablePackage.INT_ATTRIBUTE__STOP, oldStop, stop));
     }
 
     /**
@@ -119,10 +135,10 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case TablePackage.TABLE_ATTRIBUTE__FLAGS:
-                return getFlags();
-            case TablePackage.TABLE_ATTRIBUTE__QUERYABLE:
-                return isQueryable();
+            case TablePackage.INT_ATTRIBUTE__START:
+                return getStart();
+            case TablePackage.INT_ATTRIBUTE__STOP:
+                return getStop();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -132,16 +148,14 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
      * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case TablePackage.TABLE_ATTRIBUTE__FLAGS:
-                getFlags().clear();
-                getFlags().addAll((Collection<? extends String>)newValue);
+            case TablePackage.INT_ATTRIBUTE__START:
+                setStart((Integer)newValue);
                 return;
-            case TablePackage.TABLE_ATTRIBUTE__QUERYABLE:
-                setQueryable((Boolean)newValue);
+            case TablePackage.INT_ATTRIBUTE__STOP:
+                setStop((Integer)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -155,11 +169,11 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case TablePackage.TABLE_ATTRIBUTE__FLAGS:
-                getFlags().clear();
+            case TablePackage.INT_ATTRIBUTE__START:
+                setStart(START_EDEFAULT);
                 return;
-            case TablePackage.TABLE_ATTRIBUTE__QUERYABLE:
-                setQueryable(QUERYABLE_EDEFAULT);
+            case TablePackage.INT_ATTRIBUTE__STOP:
+                setStop(STOP_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -173,10 +187,10 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case TablePackage.TABLE_ATTRIBUTE__FLAGS:
-                return flags != null && !flags.isEmpty();
-            case TablePackage.TABLE_ATTRIBUTE__QUERYABLE:
-                return queryable != QUERYABLE_EDEFAULT;
+            case TablePackage.INT_ATTRIBUTE__START:
+                return start != START_EDEFAULT;
+            case TablePackage.INT_ATTRIBUTE__STOP:
+                return stop != STOP_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -191,12 +205,12 @@ public abstract class TableAttributeImpl extends TableMemberImpl implements Tabl
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (flags: ");
-        result.append(flags);
-        result.append(", queryable: ");
-        result.append(queryable);
+        result.append(" (start: ");
+        result.append(start);
+        result.append(", stop: ");
+        result.append(stop);
         result.append(')');
         return result.toString();
     }
 
-} //TableAttributeImpl
+} //IntAttributeImpl

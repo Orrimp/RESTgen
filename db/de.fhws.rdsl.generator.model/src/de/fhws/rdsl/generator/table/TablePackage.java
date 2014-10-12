@@ -233,22 +233,13 @@ public interface TablePackage extends EPackage {
     int TABLE_ATTRIBUTE__NAME = TABLE_MEMBER__NAME;
 
     /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TABLE_ATTRIBUTE__TYPE = TABLE_MEMBER_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Flags</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TABLE_ATTRIBUTE__FLAGS = TABLE_MEMBER_FEATURE_COUNT + 1;
+    int TABLE_ATTRIBUTE__FLAGS = TABLE_MEMBER_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Queryable</b></em>' attribute.
@@ -257,7 +248,7 @@ public interface TablePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TABLE_ATTRIBUTE__QUERYABLE = TABLE_MEMBER_FEATURE_COUNT + 2;
+    int TABLE_ATTRIBUTE__QUERYABLE = TABLE_MEMBER_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Attribute</em>' class.
@@ -266,7 +257,7 @@ public interface TablePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TABLE_ATTRIBUTE_FEATURE_COUNT = TABLE_MEMBER_FEATURE_COUNT + 3;
+    int TABLE_ATTRIBUTE_FEATURE_COUNT = TABLE_MEMBER_FEATURE_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Attribute</em>' class.
@@ -572,6 +563,318 @@ public interface TablePackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.fhws.rdsl.generator.table.impl.FloatAttributeImpl <em>Float Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhws.rdsl.generator.table.impl.FloatAttributeImpl
+     * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getFloatAttribute()
+     * @generated
+     */
+    int FLOAT_ATTRIBUTE = 10;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_ATTRIBUTE__NAME = TABLE_ATTRIBUTE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Flags</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_ATTRIBUTE__FLAGS = TABLE_ATTRIBUTE__FLAGS;
+
+    /**
+     * The feature id for the '<em><b>Queryable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_ATTRIBUTE__QUERYABLE = TABLE_ATTRIBUTE__QUERYABLE;
+
+    /**
+     * The feature id for the '<em><b>Start</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_ATTRIBUTE__START = TABLE_ATTRIBUTE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Stop</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_ATTRIBUTE__STOP = TABLE_ATTRIBUTE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Float Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_ATTRIBUTE_FEATURE_COUNT = TABLE_ATTRIBUTE_FEATURE_COUNT + 2;
+
+    /**
+     * The number of operations of the '<em>Float Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_ATTRIBUTE_OPERATION_COUNT = TABLE_ATTRIBUTE_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.fhws.rdsl.generator.table.impl.BooleanAttributeImpl <em>Boolean Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhws.rdsl.generator.table.impl.BooleanAttributeImpl
+     * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getBooleanAttribute()
+     * @generated
+     */
+    int BOOLEAN_ATTRIBUTE = 11;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_ATTRIBUTE__NAME = TABLE_ATTRIBUTE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Flags</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_ATTRIBUTE__FLAGS = TABLE_ATTRIBUTE__FLAGS;
+
+    /**
+     * The feature id for the '<em><b>Queryable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_ATTRIBUTE__QUERYABLE = TABLE_ATTRIBUTE__QUERYABLE;
+
+    /**
+     * The number of structural features of the '<em>Boolean Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_ATTRIBUTE_FEATURE_COUNT = TABLE_ATTRIBUTE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Boolean Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_ATTRIBUTE_OPERATION_COUNT = TABLE_ATTRIBUTE_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.fhws.rdsl.generator.table.impl.IntAttributeImpl <em>Int Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhws.rdsl.generator.table.impl.IntAttributeImpl
+     * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getIntAttribute()
+     * @generated
+     */
+    int INT_ATTRIBUTE = 12;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_ATTRIBUTE__NAME = TABLE_ATTRIBUTE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Flags</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_ATTRIBUTE__FLAGS = TABLE_ATTRIBUTE__FLAGS;
+
+    /**
+     * The feature id for the '<em><b>Queryable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_ATTRIBUTE__QUERYABLE = TABLE_ATTRIBUTE__QUERYABLE;
+
+    /**
+     * The feature id for the '<em><b>Start</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_ATTRIBUTE__START = TABLE_ATTRIBUTE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Stop</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_ATTRIBUTE__STOP = TABLE_ATTRIBUTE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Int Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_ATTRIBUTE_FEATURE_COUNT = TABLE_ATTRIBUTE_FEATURE_COUNT + 2;
+
+    /**
+     * The number of operations of the '<em>Int Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_ATTRIBUTE_OPERATION_COUNT = TABLE_ATTRIBUTE_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.fhws.rdsl.generator.table.impl.StringAttributeImpl <em>String Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhws.rdsl.generator.table.impl.StringAttributeImpl
+     * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getStringAttribute()
+     * @generated
+     */
+    int STRING_ATTRIBUTE = 13;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRING_ATTRIBUTE__NAME = TABLE_ATTRIBUTE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Flags</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRING_ATTRIBUTE__FLAGS = TABLE_ATTRIBUTE__FLAGS;
+
+    /**
+     * The feature id for the '<em><b>Queryable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRING_ATTRIBUTE__QUERYABLE = TABLE_ATTRIBUTE__QUERYABLE;
+
+    /**
+     * The number of structural features of the '<em>String Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRING_ATTRIBUTE_FEATURE_COUNT = TABLE_ATTRIBUTE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>String Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRING_ATTRIBUTE_OPERATION_COUNT = TABLE_ATTRIBUTE_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.fhws.rdsl.generator.table.impl.DateAttributeImpl <em>Date Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhws.rdsl.generator.table.impl.DateAttributeImpl
+     * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getDateAttribute()
+     * @generated
+     */
+    int DATE_ATTRIBUTE = 14;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATE_ATTRIBUTE__NAME = TABLE_ATTRIBUTE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Flags</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATE_ATTRIBUTE__FLAGS = TABLE_ATTRIBUTE__FLAGS;
+
+    /**
+     * The feature id for the '<em><b>Queryable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATE_ATTRIBUTE__QUERYABLE = TABLE_ATTRIBUTE__QUERYABLE;
+
+    /**
+     * The number of structural features of the '<em>Date Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATE_ATTRIBUTE_FEATURE_COUNT = TABLE_ATTRIBUTE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Date Attribute</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATE_ATTRIBUTE_OPERATION_COUNT = TABLE_ATTRIBUTE_OPERATION_COUNT + 0;
+
+
+    /**
      * Returns the meta object for class '{@link de.fhws.rdsl.generator.table.TableElement <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -653,17 +956,6 @@ public interface TablePackage extends EPackage {
      * @generated
      */
     EClass getTableAttribute();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhws.rdsl.generator.table.TableAttribute#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.fhws.rdsl.generator.table.TableAttribute#getType()
-     * @see #getTableAttribute()
-     * @generated
-     */
-    EAttribute getTableAttribute_Type();
 
     /**
      * Returns the meta object for the attribute list '{@link de.fhws.rdsl.generator.table.TableAttribute#getFlags <em>Flags</em>}'.
@@ -804,6 +1096,100 @@ public interface TablePackage extends EPackage {
     EReference getReferenceTable_Right();
 
     /**
+     * Returns the meta object for class '{@link de.fhws.rdsl.generator.table.FloatAttribute <em>Float Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Float Attribute</em>'.
+     * @see de.fhws.rdsl.generator.table.FloatAttribute
+     * @generated
+     */
+    EClass getFloatAttribute();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhws.rdsl.generator.table.FloatAttribute#getStart <em>Start</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Start</em>'.
+     * @see de.fhws.rdsl.generator.table.FloatAttribute#getStart()
+     * @see #getFloatAttribute()
+     * @generated
+     */
+    EAttribute getFloatAttribute_Start();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhws.rdsl.generator.table.FloatAttribute#getStop <em>Stop</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Stop</em>'.
+     * @see de.fhws.rdsl.generator.table.FloatAttribute#getStop()
+     * @see #getFloatAttribute()
+     * @generated
+     */
+    EAttribute getFloatAttribute_Stop();
+
+    /**
+     * Returns the meta object for class '{@link de.fhws.rdsl.generator.table.BooleanAttribute <em>Boolean Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Boolean Attribute</em>'.
+     * @see de.fhws.rdsl.generator.table.BooleanAttribute
+     * @generated
+     */
+    EClass getBooleanAttribute();
+
+    /**
+     * Returns the meta object for class '{@link de.fhws.rdsl.generator.table.IntAttribute <em>Int Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Int Attribute</em>'.
+     * @see de.fhws.rdsl.generator.table.IntAttribute
+     * @generated
+     */
+    EClass getIntAttribute();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhws.rdsl.generator.table.IntAttribute#getStart <em>Start</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Start</em>'.
+     * @see de.fhws.rdsl.generator.table.IntAttribute#getStart()
+     * @see #getIntAttribute()
+     * @generated
+     */
+    EAttribute getIntAttribute_Start();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhws.rdsl.generator.table.IntAttribute#getStop <em>Stop</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Stop</em>'.
+     * @see de.fhws.rdsl.generator.table.IntAttribute#getStop()
+     * @see #getIntAttribute()
+     * @generated
+     */
+    EAttribute getIntAttribute_Stop();
+
+    /**
+     * Returns the meta object for class '{@link de.fhws.rdsl.generator.table.StringAttribute <em>String Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>String Attribute</em>'.
+     * @see de.fhws.rdsl.generator.table.StringAttribute
+     * @generated
+     */
+    EClass getStringAttribute();
+
+    /**
+     * Returns the meta object for class '{@link de.fhws.rdsl.generator.table.DateAttribute <em>Date Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Date Attribute</em>'.
+     * @see de.fhws.rdsl.generator.table.DateAttribute
+     * @generated
+     */
+    EClass getDateAttribute();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -899,14 +1285,6 @@ public interface TablePackage extends EPackage {
          * @generated
          */
         EClass TABLE_ATTRIBUTE = eINSTANCE.getTableAttribute();
-
-        /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TABLE_ATTRIBUTE__TYPE = eINSTANCE.getTableAttribute_Type();
 
         /**
          * The meta object literal for the '<em><b>Flags</b></em>' attribute list feature.
@@ -1021,6 +1399,88 @@ public interface TablePackage extends EPackage {
          * @generated
          */
         EReference REFERENCE_TABLE__RIGHT = eINSTANCE.getReferenceTable_Right();
+
+        /**
+         * The meta object literal for the '{@link de.fhws.rdsl.generator.table.impl.FloatAttributeImpl <em>Float Attribute</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhws.rdsl.generator.table.impl.FloatAttributeImpl
+         * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getFloatAttribute()
+         * @generated
+         */
+        EClass FLOAT_ATTRIBUTE = eINSTANCE.getFloatAttribute();
+
+        /**
+         * The meta object literal for the '<em><b>Start</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FLOAT_ATTRIBUTE__START = eINSTANCE.getFloatAttribute_Start();
+
+        /**
+         * The meta object literal for the '<em><b>Stop</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FLOAT_ATTRIBUTE__STOP = eINSTANCE.getFloatAttribute_Stop();
+
+        /**
+         * The meta object literal for the '{@link de.fhws.rdsl.generator.table.impl.BooleanAttributeImpl <em>Boolean Attribute</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhws.rdsl.generator.table.impl.BooleanAttributeImpl
+         * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getBooleanAttribute()
+         * @generated
+         */
+        EClass BOOLEAN_ATTRIBUTE = eINSTANCE.getBooleanAttribute();
+
+        /**
+         * The meta object literal for the '{@link de.fhws.rdsl.generator.table.impl.IntAttributeImpl <em>Int Attribute</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhws.rdsl.generator.table.impl.IntAttributeImpl
+         * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getIntAttribute()
+         * @generated
+         */
+        EClass INT_ATTRIBUTE = eINSTANCE.getIntAttribute();
+
+        /**
+         * The meta object literal for the '<em><b>Start</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INT_ATTRIBUTE__START = eINSTANCE.getIntAttribute_Start();
+
+        /**
+         * The meta object literal for the '<em><b>Stop</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INT_ATTRIBUTE__STOP = eINSTANCE.getIntAttribute_Stop();
+
+        /**
+         * The meta object literal for the '{@link de.fhws.rdsl.generator.table.impl.StringAttributeImpl <em>String Attribute</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhws.rdsl.generator.table.impl.StringAttributeImpl
+         * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getStringAttribute()
+         * @generated
+         */
+        EClass STRING_ATTRIBUTE = eINSTANCE.getStringAttribute();
+
+        /**
+         * The meta object literal for the '{@link de.fhws.rdsl.generator.table.impl.DateAttributeImpl <em>Date Attribute</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhws.rdsl.generator.table.impl.DateAttributeImpl
+         * @see de.fhws.rdsl.generator.table.impl.TablePackageImpl#getDateAttribute()
+         * @generated
+         */
+        EClass DATE_ATTRIBUTE = eINSTANCE.getDateAttribute();
 
     }
 

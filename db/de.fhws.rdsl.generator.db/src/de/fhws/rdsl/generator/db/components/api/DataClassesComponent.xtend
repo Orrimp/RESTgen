@@ -27,13 +27,13 @@ class DataClassesComponent extends AbstractComponent {
 					
 					«FOR attr : table.members.filter(TableAttribute).filter[flags.empty]»
 					
-					protected «attr.type.javaType» «attr.name.toFirstLower»;
+					protected «attr.javaType» «attr.name.toFirstLower»;
 					
-					public «attr.type.javaType» get«attr.name.toFirstUpper»() {
+					public «attr.javaType» get«attr.name.toFirstUpper»() {
 						return this.«attr.name.toFirstLower»;
 					}
 					
-					public void set«attr.name.toFirstUpper»(«attr.type.javaType» value) {
+					public void set«attr.name.toFirstUpper»(«attr.javaType» value) {
 						this.«attr.name.toFirstLower» = value;
 					}
 					

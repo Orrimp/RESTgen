@@ -2,9 +2,14 @@
  */
 package de.fhws.rdsl.generator.table.impl;
 
+import de.fhws.rdsl.generator.table.BooleanAttribute;
+import de.fhws.rdsl.generator.table.DateAttribute;
+import de.fhws.rdsl.generator.table.FloatAttribute;
+import de.fhws.rdsl.generator.table.IntAttribute;
 import de.fhws.rdsl.generator.table.Named;
 import de.fhws.rdsl.generator.table.ReferenceTable;
 import de.fhws.rdsl.generator.table.RootTable;
+import de.fhws.rdsl.generator.table.StringAttribute;
 import de.fhws.rdsl.generator.table.SubTable;
 import de.fhws.rdsl.generator.table.Table;
 import de.fhws.rdsl.generator.table.TableAttribute;
@@ -98,6 +103,41 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
      * @generated
      */
     private EClass referenceTableEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass floatAttributeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass booleanAttributeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass intAttributeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass stringAttributeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dateAttributeEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -237,7 +277,7 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTableAttribute_Type() {
+    public EAttribute getTableAttribute_Flags() {
         return (EAttribute)tableAttributeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -246,17 +286,8 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTableAttribute_Flags() {
-        return (EAttribute)tableAttributeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getTableAttribute_Queryable() {
-        return (EAttribute)tableAttributeEClass.getEStructuralFeatures().get(2);
+        return (EAttribute)tableAttributeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -363,6 +394,87 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getFloatAttribute() {
+        return floatAttributeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFloatAttribute_Start() {
+        return (EAttribute)floatAttributeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFloatAttribute_Stop() {
+        return (EAttribute)floatAttributeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getBooleanAttribute() {
+        return booleanAttributeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIntAttribute() {
+        return intAttributeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIntAttribute_Start() {
+        return (EAttribute)intAttributeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIntAttribute_Stop() {
+        return (EAttribute)intAttributeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getStringAttribute() {
+        return stringAttributeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDateAttribute() {
+        return dateAttributeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public TableFactory getTableFactory() {
         return (TableFactory)getEFactoryInstance();
     }
@@ -398,7 +510,6 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
         createEAttribute(namedEClass, NAMED__NAME);
 
         tableAttributeEClass = createEClass(TABLE_ATTRIBUTE);
-        createEAttribute(tableAttributeEClass, TABLE_ATTRIBUTE__TYPE);
         createEAttribute(tableAttributeEClass, TABLE_ATTRIBUTE__FLAGS);
         createEAttribute(tableAttributeEClass, TABLE_ATTRIBUTE__QUERYABLE);
 
@@ -417,6 +528,20 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
         referenceTableEClass = createEClass(REFERENCE_TABLE);
         createEReference(referenceTableEClass, REFERENCE_TABLE__LEFT);
         createEReference(referenceTableEClass, REFERENCE_TABLE__RIGHT);
+
+        floatAttributeEClass = createEClass(FLOAT_ATTRIBUTE);
+        createEAttribute(floatAttributeEClass, FLOAT_ATTRIBUTE__START);
+        createEAttribute(floatAttributeEClass, FLOAT_ATTRIBUTE__STOP);
+
+        booleanAttributeEClass = createEClass(BOOLEAN_ATTRIBUTE);
+
+        intAttributeEClass = createEClass(INT_ATTRIBUTE);
+        createEAttribute(intAttributeEClass, INT_ATTRIBUTE__START);
+        createEAttribute(intAttributeEClass, INT_ATTRIBUTE__STOP);
+
+        stringAttributeEClass = createEClass(STRING_ATTRIBUTE);
+
+        dateAttributeEClass = createEClass(DATE_ATTRIBUTE);
     }
 
     /**
@@ -457,6 +582,11 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
         subTableEClass.getESuperTypes().add(this.getTable());
         rootTableEClass.getESuperTypes().add(this.getTable());
         referenceTableEClass.getESuperTypes().add(this.getTable());
+        floatAttributeEClass.getESuperTypes().add(this.getTableAttribute());
+        booleanAttributeEClass.getESuperTypes().add(this.getTableAttribute());
+        intAttributeEClass.getESuperTypes().add(this.getTableAttribute());
+        stringAttributeEClass.getESuperTypes().add(this.getTableAttribute());
+        dateAttributeEClass.getESuperTypes().add(this.getTableAttribute());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(tableElementEClass, TableElement.class, "TableElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -470,8 +600,7 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
         initEClass(namedEClass, Named.class, "Named", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNamed_Name(), ecorePackage.getEString(), "name", null, 0, 1, Named.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(tableAttributeEClass, TableAttribute.class, "TableAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getTableAttribute_Type(), ecorePackage.getEString(), "type", null, 0, 1, TableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(tableAttributeEClass, TableAttribute.class, "TableAttribute", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTableAttribute_Flags(), ecorePackage.getEString(), "flags", null, 0, -1, TableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTableAttribute_Queryable(), ecorePackage.getEBoolean(), "queryable", null, 0, 1, TableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -490,6 +619,20 @@ public class TablePackageImpl extends EPackageImpl implements TablePackage {
         initEClass(referenceTableEClass, ReferenceTable.class, "ReferenceTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferenceTable_Left(), this.getTableReference(), null, "left", null, 0, 1, ReferenceTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceTable_Right(), this.getTableReference(), null, "right", null, 0, 1, ReferenceTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(floatAttributeEClass, FloatAttribute.class, "FloatAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getFloatAttribute_Start(), ecorePackage.getEFloat(), "start", null, 0, 1, FloatAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFloatAttribute_Stop(), ecorePackage.getEFloat(), "stop", null, 0, 1, FloatAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(booleanAttributeEClass, BooleanAttribute.class, "BooleanAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(intAttributeEClass, IntAttribute.class, "IntAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntAttribute_Start(), ecorePackage.getEInt(), "start", null, 0, 1, IntAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntAttribute_Stop(), ecorePackage.getEInt(), "stop", null, 0, 1, IntAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(stringAttributeEClass, StringAttribute.class, "StringAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(dateAttributeEClass, DateAttribute.class, "DateAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);
