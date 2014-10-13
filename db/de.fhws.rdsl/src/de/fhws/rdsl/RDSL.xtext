@@ -60,8 +60,8 @@ Reference:
 Attribute:
     (method=HTTPMETHOD)? name=ID ':'
     (list?='many of')?
-    primitiveType=PrimitiveType
     (queryable?='queryable')?
+    primitiveType=PrimitiveType    
     ;    
 
 PrimitiveType :
