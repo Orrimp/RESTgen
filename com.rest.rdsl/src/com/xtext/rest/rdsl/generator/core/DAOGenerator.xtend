@@ -187,38 +187,41 @@ class DAOGenerator {
 					}
 				}
 				
+				«IF resourceCol.userResource != null && res.name == resourceCol.userResource.name»
 				
-			public Users load(String username) throws Exception{
-			    
-				Connection con = null;
-				try{
-				Users users = null; 
-				con = sqlite.getConnection();
-				Statement stmt = con.createStatement();
+				public Users load(String username) throws Exception{
 				    
-				String sqlQuery = "SELECT * FROM users WHERE username = '" +  username + "'";
-				    
-				ResultSet rs = stmt.executeQuery(sqlQuery);
-				    
-					if(rs.next()){
-						users = getObject(rs);
-					}
-					
-				return users;
-							
-				}catch(SQLException ex){
-				LOGGER.error("SQLException: " + ex.getMessage()); 
-				throw ex;
-				}finally{
-					if (con != null){
-						try { con.close( );  }
-						catch ( Exception ex ) {
-							LOGGER.error("SQLException: " + ex.getMessage()); 
-							throw ex;
+					Connection con = null;
+					try{
+					Users users = null; 
+					con = sqlite.getConnection();
+					Statement stmt = con.createStatement();
+					    
+					String sqlQuery = "SELECT * FROM users WHERE username = '" +  username + "'";
+					    
+					ResultSet rs = stmt.executeQuery(sqlQuery);
+					    
+						if(rs.next()){
+							users = getObject(rs);
+						}
+						
+					return users;
+								
+					}catch(SQLException ex){
+					LOGGER.error("SQLException: " + ex.getMessage()); 
+					throw ex;
+					}finally{
+						if (con != null){
+							try { con.close( );  }
+							catch ( Exception ex ) {
+								LOGGER.error("SQLException: " + ex.getMessage()); 
+								throw ex;
+							}
 						}
 					}
 				}
-			}
+			
+			«ENDIF»
 				
 				public boolean delete(«config.getIDDataTyp» id) throws Exception{
 					
@@ -326,10 +329,10 @@ class DAOGenerator {
 					return «objectName»;
 				}
 					
-			«IF resourceCol.userResource != null»
+			«IF resourceCol.userResource != null »
 			
 				public boolean authenticate(«Naming.CLASS_USER_AUTH_DATA» authClass) throws «mapper.get(401).name», «mapper.get(403).name»{
-					«res.name» user	this.load(authClass.getName());
+					«res.name» user =	this.load(authClass.getName());
 					
 					if(user != null){
 						if(user.getPassword().equals(autClass.getPasswd()){
