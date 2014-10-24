@@ -3,130 +3,189 @@ grammar com.xtext.rest.rdsl.RestDsl with org.eclipse.xtext.common.Terminals
 generate restDsl "http://www.xtext.com/rest/rdsl/RestDsl"
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 
-RESTModel: con = RESTConfiguration | res = RESTResources;
-
-RESTResources:
-	userRes = RESTUserResource
-	resources += RESTResource+
+RESTModel: 
+	globalTratis = GlobalTratis
+	security = RESTSecurity  
+	dispatcher = DispatcherResource 
+	states += RESTState+  
+	(globalTransition += RESTTransistions+)?
 ;
 
-RESTConfiguration:
-	'Config'
+RESTState:
+	SingleResource | CollectionResource
+;
+
+DispatcherResource:
+	'Dispatcher with base URI' basePath = URL
 	'{'
-		'Base URI' basePath = URL
-		'Base Package' package = FQN
-		'MIME' (mimeType += MIME)+  
-		('Framework' framework = FRAMEWORK)?
-		'ID-Generation' idtype = ID_GEN?
-		('Authentication' auth = Auth)?
-		('API-Version' 'v=' apiVersion = VERSION)?		
-		('Headers' headers+=Header+)?
-		'Caching' caching = Caching
-		'Paging' paging = Paging
-		'JDBC-Driver' jdbcCon = (STRING | "org.sqlite.JDBC")
-		'JDBC-File' jdbcFile = (STRING  | "jdbc:sqlite:mydatabase.db")
+		'link to' '{' targetResources += [RESTState] (',' targetResources += [RESTState])* '}'
 	'}'
 ;
 
-
-Caching:
-	type = CACHING_TYPE ('seconds' time = TIME)?
+SingleResource:
+	'Resource' name = ID ('bound to' boundedTo = [SingleResource])? (traits = SingleResourceTraits)?
+	'{'
+		(permission = Permission)?
+		resources += ResourceView+
+		transactions = RESTTransistions
+	'}'
 ;
 
-Paging:
-    'size' elementsCount = INT
+CollectionResource:	
+	'Resource' name = ID  traits=CollectionResourceTraits
+	'{'
+		(permission = Permission)?
+		transactions = RESTTransistions
+	'}'
+;
+
+ResourceView:
+	'View' type = [UserProfile]
+	'{'
+		attributes += Attribute+  //For every other attribute then id the method musst look like Path("{id}/attributename)
+	'}'
+;
+
+SingleResourceTraits:
+	hasExtra?='with extra' caching = Caching
+;
+
+CollectionResourceTraits:
+	isCollection?='as collection of ' collectionOf = [SingleResource] 
+	(extra = Extra)?
+;
+
+GlobalTratis:
+	'Global Tratis'
+	'{'
+		'API-Version v=' apiVersion = VERSION
+		(isMIME?='representation of type' mimeType = MIME)?
+		(isIdType?='with id type' idtype = ID_GEN)?
+		(isCustomHeader?='Custom Headers' headers+=Header+)?
+		(dabaseConig = DatabaseConfiguration)?
+	'}'
+;
+
+AttributeTrait:
+	querable?='querable'
 ;
 
 Header:
 	name = HEADER_STRING ('Description' description = STRING)? 'default value=' value = STRING
 ;
 
-Auth:
-	HTTPBasic | OAuth2
+Extra:
+	Pagination | Caching
 ;
 
-OAuth2:
-	'OAuth2'
-	'{'
-		'URI' authPath = STRING
-		'Encoding' encodign = ENCODING_TYPE
-		'Scope' scoep = STRING
-	'}'
-	
+
+Pagination:
+	isPagination?='with paging type ' paging = OffsetPagination | CursorPagination
 ;
 
-HTTPBasic:
-	'HTTPBasic'
-	'{'
-		'Username' user = STRING 
-		'Password' password = STRING
-		'Role' role = ROLE
-	'}'
+CursorPagination:
+	isCursor?='with cursor with default size ' elementsCount = INT
 ;
 
-RESTResource:
-	'Resource' name = ID 
+OffsetPagination:
+	isOffset?='with offset with default size' elementsCount = INT
+;
+
+Caching:
+	isCaching?='with caching type' type = CACHING_TYPE ('seconds' time = TIME)?
+;
+
+Permission:
+	'Permission'
 	'{'
-		'Attributes'
-		(id = STRING)?
-		attributes += Attribute+  //For every other attribute then id the method musst look like Path("{id}/attributename)
+		permissionProfile += PermissionProfile+
 	'}'
 ;
 
-RESTUserResource returns RESTResource:
-	'Resource' name = ID
+PermissionProfile:
+		name = [UserProfile]  ('override with methods' allowedMethods += HTTPMETHOD+ (',' allowedMethods += HTTPMETHOD+)* )?
+;
+
+RESTSecurity:
+	'Security'
 	'{'
-		'Attributes'
-		(id = STRING)?
-		attributes += UserNameAttribute
-		attributes += (UserPWAttribute | UserTokenAttribute)
-		attributes += Attribute+
-		
-	'}'	
+		settings = SecuritySettings
+		users += UserProfile+
+	'}'
 ;
 
-UserPWAttribute returns Attribute:
-	method = HTTPMETHOD value = JavaReference name = 'password'
+SecuritySettings:
+	'Secure through' securityTpe =  Auth
 ;
 
-UserNameAttribute returns Attribute:
-	method = HTTPMETHOD value = JavaReference name = 'username'
+UserProfile: 
+	'Profile name' name = ID
+	'apply to methods' allowedMethods += HTTPMETHOD+
 ;
 
-UserTokenAttribute returns Attribute: 
-	method = HTTPMETHOD value = JavaReference name = 'token'
+RESTTransistions:
+	'Transitions' 
+	'{'
+		transitions += Transition+
+	'}'
 ;
 
-ResourceReference :	'Resource' resourceRef = [RESTResource]; 
+Transition:
+	startTransition = SingleStartTransition 'link to' targetTransition = TargetTransition
+ ;
+
+TargetTransition:
+	SingleTargetTransition | CollectionTargetTransistion
+;
+
+SingleStartTransition:
+	startMethod = HTTPMETHOD ':' startResource = [RESTState] ('.' startAttribute = [Attribute])?
+;
+
+SingleTargetTransition:
+	endMethod = HTTPMETHOD ':' endResource = [RESTState] ('.' startAttribute = [Attribute])?
+;
+
+CollectionTargetTransistion:
+	'{' collectionTransitions += SingleTargetTransition (',' collectionTransitions += SingleTargetTransition)* '}'
+;
+
+DatabaseConfiguration:
+	'Database Configuration'
+	'{'
+		SQLDB | NOSQLDB
+	'}'
+;
+
+NOSQLDB:
+	'TODO' todo= INT
+;
+
+SQLDB returns DatabaseConfiguration:
+	'JDBC-Driver' jdbcCon = (STRING | "org.sqlite.JDBC")
+	'JDBC-File' jdbcFile = (STRING  | "jdbc:sqlite:mydatabase.db")
+;
+
+Attribute: value = Reference name = ID (trait = AttributeTrait)?;
+
+Reference: JavaReference | ResourceReference;
+ResourceReference :	'Resource' resourceRef = [SingleResource]; 
 JavaReference: 'Java' javaDataType = PrimitiveType;
-ListReference: 'List of' innerType  =  InnerType;
-InnerType : ('Resources ' resource = [RESTResource]) | ('Type' primitiveType = PrimitiveType);
-Reference: ResourceReference | JavaReference | ListReference;
-
-Attribute: method = HTTPMETHOD value = Reference name = ID;
 
 PrimitiveType:
 	dataType = Datatype ('(' start =  ( FLOAT | STRING) '...' stop = ( FLOAT | STRING) ')')? (context = Context)?
 ;
 
-enum Context:
-	EMAIL="email" | URL='url' | INTERNAL='internal'  
-;
-
-enum Datatype:
-    STRING='String' | INT='Int' | LONG='Long' | FLOAT='Float';
-
-
 FQN:ID ("." ID)*; 
+
+enum Auth: HTTPBasic | OAuth2 ;
+enum Context: EMAIL="email" | URL='url' | INTERNAL='internal' ;
+enum Datatype: STRING='String' | INT='Int' | LONG='Long' | FLOAT='Float';
 enum CACHING_TYPE: ETAG = 'ETag' | MODIFIED = 'Last-Modified' | EXPIRES = 'Expires' | MAXAGE='Max-Age' | DEFAULT = 'Default' | NONE = 'None';
 enum MIME : JSON = 'json' | XML = 'xml';
 enum ID_GEN: LONG = 'long' |  UUID = 'uuid';
-enum HTTPMETHOD : GET | PUT | POST | PATCH | DELETE  | HEAD  | OPTIONS | DEFAULT | NONE;
-enum FRAMEWORK: SPRING = 'Spring' | JERSEY = 'Jersey';
-enum ROLE: ADMIN = 'admin' | USER = 'user';
-enum ENCODING_TYPE: BASE64 = 'base64' | NONE = 'none';
-//https url in as localhost or as IP
-terminal URL: 'http' 's'?  '://' ((ID '.' ID) ('.' ID)* | "localhost" | (INT'.'INT'.'INT'.'INT)) ':' INT+ ('/'ID+)*;
+enum HTTPMETHOD : GET | PUT | POST | PATCH | DELETE  | HEAD  | OPTIONS;
+terminal URL: 'http' 's'?  '://' ID+ ('.' ID+)*;
 terminal HEADER_STRING: 'x-'ID('-'ID)*;
 terminal VERSION: ('1'..'9');
 terminal TIME: ('1'..'9')+;

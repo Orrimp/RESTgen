@@ -2,7 +2,6 @@ package com.xtext.rest.rdsl.generator.core
 
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.ExtensionMethods
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
 
@@ -12,12 +11,10 @@ import com.xtext.rest.rdsl.management.Constants
 class ObjectParentGenerator {
 	
 	val IFileSystemAccess fsa;
-	val RESTConfiguration config;
 	extension ExtensionMethods e = new ExtensionMethods();
 	
-	new (IFileSystemAccess fsa, RESTConfiguration config){
+	new (IFileSystemAccess fsa){
 		this.fsa = fsa;
-		this.config = config;
 	}
 	
 	/**
@@ -39,7 +36,7 @@ class ObjectParentGenerator {
 		
 		public interface «Naming.CLASS_OBJPARENT» {
 		
-			public «config.IDDataTyp» getID();
+			public String getID();
 			public String getSelfURI();
 			public List<«Naming.CLASS_LINK.className»> getLinks();
 		}

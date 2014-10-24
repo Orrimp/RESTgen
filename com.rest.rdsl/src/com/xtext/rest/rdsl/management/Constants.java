@@ -5,7 +5,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class Constants {
 	
 	/** Packagename for generating class. It will be overridden with the configuration value for package */
-	private static String MAINPACKAGE = "com.rest";
+	private static String MAINPACKAGE = "com.rest.generat.";
 	
 	public static void setMainPackage(String mainPackage){
 		if(!StringExtensions.isNullOrEmpty(mainPackage))

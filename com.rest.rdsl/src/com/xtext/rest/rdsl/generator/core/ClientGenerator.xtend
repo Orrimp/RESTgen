@@ -1,11 +1,10 @@
 package com.xtext.rest.rdsl.generator.core
 
-import com.xtext.rest.rdsl.restDsl.RESTResource
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
+import com.xtext.rest.rdsl.generator.RESTResourceObjects
 
 class ClientGenerator {
 	
-	def generate(RESTResource resource, RESTConfiguration config) {
+	def generate(RESTResourceObjects resources) {
 	}
 	
 }

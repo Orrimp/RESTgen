@@ -1,16 +1,16 @@
 package com.xtext.rest.rdsl.generator.framework.jersey
 
 import org.eclipse.xtext.generator.IFileSystemAccess
-import com.xtext.rest.rdsl.restDsl.RESTResource
 import java.util.List
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.PackageManager
+import com.xtext.rest.rdsl.restDsl.SingleResource
 
 class JAXBResolverContent implements IResolverContent{
 	
-	val List<RESTResource> resources;
+	val List<SingleResource> resources;
 	
-	new(IFileSystemAccess fsa, List<RESTResource> resources) {
+	new(IFileSystemAccess fsa, List<SingleResource> resources) {
 		this.resources = resources;
 	}
 	

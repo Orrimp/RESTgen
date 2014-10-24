@@ -1,30 +1,25 @@
 package com.xtext.rest.rdsl.generator.framework.spring
 
-import com.xtext.rest.rdsl.generator.RESTResourceCollection
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import org.eclipse.xtext.generator.IFileSystemAccess
-import com.xtext.rest.rdsl.management.Constants
+import com.xtext.rest.rdsl.generator.RESTResourceObjects
 import com.xtext.rest.rdsl.generator.framework.IRESTFramework
-import com.xtext.rest.rdsl.generator.framework.IResourceGenerator
+import org.eclipse.xtext.generator.IFileSystemAccess
 
 class SpringFramework implements IRESTFramework {
 	
 	val IFileSystemAccess fsa;
-	val RESTConfiguration config
 	
-	new(IFileSystemAccess fsa, RESTConfiguration config) {
+	new(IFileSystemAccess fsa) {
 		this.fsa = fsa;
-		this.config = config;
 	}
 	
-	override generateResources(RESTResourceCollection resourceCol) {
-		val IResourceGenerator generator = new SpringResourceGenerator()	
-		for(r: resourceCol.getResources){
-			fsa.generateFile(Constants.mainPackage + Constants.RESOURCEPACKAGE + "/" + r.name + "Resource" + Constants.JAVA, generator.generate(r, config))
-		}	
+	override generateResources(RESTResourceObjects resourceCol) {
+//		val IResourceGenerator generator = new SpringResourceGenerator()	
+//		for(r: resourceCol.getSingleResources){
+//			fsa.generateFile(Constants.mainPackage + Constants.RESOURCEPACKAGE + "/" + r.name + "Resource" + Constants.JAVA, generator.generate(r))
+//		}	
 	}
 	
-	override generateMisc(RESTResourceCollection resourceCol) {
+	override generateMisc(RESTResourceObjects resourceCol) {
 		
 	}
 	

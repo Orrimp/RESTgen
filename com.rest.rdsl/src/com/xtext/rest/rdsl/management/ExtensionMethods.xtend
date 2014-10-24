@@ -1,12 +1,8 @@
 package com.xtext.rest.rdsl.management
 
-import com.xtext.rest.rdsl.restDsl.ID_GEN
 import com.xtext.rest.rdsl.restDsl.JavaReference
-import com.xtext.rest.rdsl.restDsl.ListReference
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.Reference
-import com.xtext.rest.rdsl.restDsl.ResourceReference
 import com.xtext.rest.rdsl.restDsl.PrimitiveType
+import com.xtext.rest.rdsl.restDsl.ResourceReference
 
 /**
  * @author Vitaliy
@@ -33,19 +29,6 @@ class ExtensionMethods {
 	def dispatch String fullNameOfType(JavaReference reference){
 		return fullJavaNameOfType(reference?.javaDataType)
 	}
-	
-	def String nameOfInnerType(ListReference ref){
-		if(ref.innerType.primitiveType != null){
-			return ref.innerType.primitiveType.dataType.literal
-		}else{
-			return ref.innerType.resource.name
-		}
-		
-	}
-	
-	def String fullNameOfInnerType(ListReference ref){
-		fullJavaNameOfType(ref?.innerType?.primitiveType)
-	}
 
 	
 	private def fullJavaNameOfType(PrimitiveType pType) {
@@ -55,16 +38,5 @@ class ExtensionMethods {
 			case INT: return "java.lang.Integer"
 			case FLOAT: return "java.lang.Float"
 		}
-	}
-
-	/**
-	 * Extends the class RESTConfiguration with additional method to convert the ID Data Type to the one handle-able in Java. 
-	 */
-	def String getIDDataTyp(RESTConfiguration config){
-		switch(config.getIdtype()){
-			case ID_GEN.LONG: return "Long"
-			case ID_GEN.UUID: return "String" 			
-		}
-		return "String";
 	}
 }

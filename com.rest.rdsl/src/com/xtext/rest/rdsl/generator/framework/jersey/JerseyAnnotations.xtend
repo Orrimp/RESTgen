@@ -1,19 +1,16 @@
 package com.xtext.rest.rdsl.generator.framework.jersey
 
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
+import com.xtext.rest.rdsl.restDsl.SingleResource
 
 class CustomAnnotations {
-	val RESTResource resource;
-	val RESTConfiguration config;
+	val SingleResource resource;
 	val IFileSystemAccess fsa;
 	
-	new(RESTConfiguration config, IFileSystemAccess fsa, RESTResource resource) {
-		this.config = config;
+	new(IFileSystemAccess fsa, SingleResource resource) {
 		this.fsa = fsa;
 		this.resource = resource;
 	
@@ -57,7 +54,7 @@ class CustomAnnotations {
 		
 		'''
 		);
-		val CustomJerseyFilter filter = new CustomJerseyFilter(config, fsa, resource);
+		val CustomJerseyFilter filter = new CustomJerseyFilter(fsa, resource);
 		filter.generateFilter();
 		}	
 }

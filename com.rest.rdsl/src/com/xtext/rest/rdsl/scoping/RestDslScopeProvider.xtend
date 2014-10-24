@@ -3,6 +3,8 @@
  */
 package com.xtext.rest.rdsl.scoping
 
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,6 +12,6 @@ package com.xtext.rest.rdsl.scoping
  * on how and when to use it 
  *
  */
-class RestDslScopeProvider extends org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider {
+class RestDslScopeProvider extends AbstractDeclarativeScopeProvider {
 
 }

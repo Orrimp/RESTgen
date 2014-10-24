@@ -1,9 +1,6 @@
 package com.xtext.rest.rdsl.generator.core;
 
-import com.xtext.rest.rdsl.generator.RESTResourceCollection
 import com.xtext.rest.rdsl.generator.internals.ExceptionGenerator
-import com.xtext.rest.rdsl.restDsl.FRAMEWORK
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.generator.resouces.interal.ExceptionMapper
 import com.xtext.rest.rdsl.generator.internals.IExceptionGenerator
@@ -13,29 +10,23 @@ import com.xtext.rest.rdsl.generator.framework.jersey.JerseyFramework
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyExceptionMapperGenerator
 import com.xtext.rest.rdsl.generator.framework.IBaseResourceGenerator
 import com.xtext.rest.rdsl.generator.framework.IRESTFramework
+import com.xtext.rest.rdsl.generator.RESTResourceObjects
 
 class FrameworkManager {
 	
-	val RESTConfiguration config;
 	val IFileSystemAccess fsa
-	val RESTResourceCollection resourceCol;
+	val RESTResourceObjects resourceCol;
 	var IBaseResourceGenerator abstractGenerator;
 	var IExceptionGenerator exceptionGenerator
 	var IRESTFramework restFramework;
 	
-	new(IFileSystemAccess fsa, RESTConfiguration config, RESTResourceCollection resourceCol) {
-		this.config = config;
+	new(IFileSystemAccess fsa, RESTResourceObjects resourceCol) {
 		this.fsa = fsa;
 		this.resourceCol = resourceCol;
 	}
 	
 	def generate() {
-		//Initialize generators for the specified framework.
-		//Difference is in resource genrators, exception generators
-		switch(config.framework){
-			case FRAMEWORK.JERSEY: setJerseyEnviroment() 
-			case FRAMEWORK.SPRING: setSpringEnviroment()
-		}	
+		this.setJerseyEnviroment() 
 		
 		this.restFramework.generateResources(resourceCol);
 		this.restFramework.generateMisc(resourceCol);
@@ -46,7 +37,7 @@ class FrameworkManager {
 	
 	def setJerseyEnviroment(){
 		this.abstractGenerator = new JerseyAbstractResourceGenerator()
-		this.restFramework = new JerseyFramework(fsa, config);
+		this.restFramework = new JerseyFramework(fsa);
 	}
 	
 	def setSpringEnviroment(){
@@ -55,7 +46,7 @@ class FrameworkManager {
 	
 	def generateExceptions(IFileSystemAccess fsa) {
 		exceptionGenerator = new ExceptionGenerator(fsa);
-		val ExceptionMapper exMapper = new ExceptionMapper(config);
+		val ExceptionMapper exMapper = new ExceptionMapper();
 		val JerseyExceptionMapperGenerator eMapperGen =  new JerseyExceptionMapperGenerator(fsa, exMapper);
 	
 		for(exception: exMapper.values)

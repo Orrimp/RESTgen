@@ -1,7 +1,5 @@
 package com.xtext.rest.rdsl.generator.framework.jersey
 
-import com.xtext.rest.rdsl.generator.RESTResourceCollection
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.generator.framework.jersey.JAXBResolverContent
@@ -9,38 +7,36 @@ import com.xtext.rest.rdsl.generator.framework.jersey.IResolverContent
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyBaseContextResolver
 import com.xtext.rest.rdsl.generator.framework.IRESTFramework
 import com.xtext.rest.rdsl.generator.framework.IResourceGenerator
+import com.xtext.rest.rdsl.generator.RESTResourceObjects
 
 class JerseyFramework implements IRESTFramework {
 	
 	val IFileSystemAccess fsa;
-	val RESTConfiguration config
 	
-	new(IFileSystemAccess fsa, RESTConfiguration config) {
+	new(IFileSystemAccess fsa) {
 		this.fsa = fsa;
-		this.config = config;
 	}
 	
-	override generateResources(RESTResourceCollection resourceCol) {
+	override generateResources(RESTResourceObjects resourceCol) {
 		val IResourceGenerator generator = new JerseyResourceGenerator();
 		
-		for(r: resourceCol.getResources){
-			fsa.generateFile(Constants.mainPackage + Constants.RESOURCEPACKAGE + "/" + r.name + "Resource" + Constants.JAVA, generator.generate(r, config))
+		for(r: resourceCol.getSingleResources){
+			fsa.generateFile(Constants.mainPackage + Constants.RESOURCEPACKAGE + "/" + r.name + "Resource" + Constants.JAVA, generator.generate(resourceCol, r))
 		}
 	}
 	
-	override generateMisc(RESTResourceCollection resourceCol) {
-		val IResolverContent jaxb = new JAXBResolverContent(fsa, resourceCol.getResources);
-		val IResolverContent genson = new GensonResolverContent(fsa, resourceCol.getResources);
+	override generateMisc(RESTResourceObjects resourceCol) {
+		val IResolverContent jaxb = new JAXBResolverContent(fsa, resourceCol.getSingleResources);
+		val IResolverContent genson = new GensonResolverContent(fsa, resourceCol.getSingleResources);
 		
 		val JerseyBaseContextResolver gensonResolver = new JerseyBaseContextResolver(fsa, genson);
 		gensonResolver.generateResolver();  //Mapper to customize JSON or XML output
 		val JerseyBaseContextResolver jaxbResolver = new JerseyBaseContextResolver(fsa, jaxb);
 		//jaxbResolver.generateResolver();
 		
-		val CustomAnnotations annons = new CustomAnnotations(config, fsa, resourceCol.getUserResource);
+		val CustomAnnotations annons = new CustomAnnotations(fsa, resourceCol.getUserResource);
 		annons.generateAuth();
 		annons.generatePATCH();
-	
 	}
 	
 }

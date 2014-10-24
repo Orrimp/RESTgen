@@ -4,9 +4,9 @@
 package com.xtext.rest.rdsl.validation
 
 import com.xtext.rest.rdsl.restDsl.Attribute
-import com.xtext.rest.rdsl.restDsl.RESTResource
 import com.xtext.rest.rdsl.restDsl.RestDslPackage
 import org.eclipse.xtext.validation.Check
+import com.xtext.rest.rdsl.restDsl.SingleResource
 
 /**
  * Custom validation rules. 
@@ -29,10 +29,10 @@ class RestDslValidator extends AbstractRestDslValidator {
 	}
 	
 	@Check 
-	def checkResourceStartsWithKapital(RESTResource resource){
+	def checkSingleResourceStartsWithKapital(SingleResource resource){
 		if(!Character.isUpperCase(resource.name.charAt(0))){
 			warning ('Resource names should start with capital', 
-					RestDslPackage.Literals.REST_RESOURCE__NAME, 
+					RestDslPackage.Literals.REST_STATE__NAME, 
 					INVALID_RES_NAME)
 		}
 	}

@@ -1,29 +1,25 @@
 package com.xtext.rest.rdsl.generator.framework.jersey
 
-
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.generator.resouces.interal.ExceptionMapper
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.management.PackageManager
+import com.xtext.rest.rdsl.restDsl.SingleResource
 
 class CustomJerseyFilter {
 
-	val RESTConfiguration config;
 	val IFileSystemAccess fsa;
-	var RESTResource userResource = null;
+	var SingleResource userResource = null;
 	
-	new(RESTConfiguration config, IFileSystemAccess fsa, RESTResource userResource) {
-		this.config = config;
+	new(IFileSystemAccess fsa, SingleResource userResource) {
 		this.fsa = fsa;
 		this.userResource = userResource;
 		
 	}
 		
 	def generateFilter() {
-		val ExceptionMapper mapper = new ExceptionMapper(config);
+		val ExceptionMapper mapper = new ExceptionMapper();
 		var ex401 = mapper.get(401);
 		var ex403 = mapper.get(403);
 		

@@ -5,45 +5,37 @@ import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.restDsl.Attribute
 import com.xtext.rest.rdsl.restDsl.JavaReference
-import com.xtext.rest.rdsl.restDsl.ListReference
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
-import com.xtext.rest.rdsl.restDsl.RESTResource
 import com.xtext.rest.rdsl.restDsl.ResourceReference
 import java.util.ArrayList
+import com.xtext.rest.rdsl.generator.RESTResourceObjects
+import com.xtext.rest.rdsl.restDsl.ResourceView
+import com.xtext.rest.rdsl.restDsl.SingleResource
 
 ///Erweitern indem ein VaterObjekt extrahiert wird mit Hyperlinks und ID
 class ObjectGenerator {
 	
 	extension ExtensionMethods e = new ExtensionMethods();
-	val RESTResource resource;
-	val RESTConfiguration config;
 	val ObjectParentGenerator parent;
 	val AnnotationUtils anno;
 	val ArrayList<String> imports = new ArrayList<String>();
+	val RESTResourceObjects resources
 	
 	
-	new(RESTResource resource, RESTConfiguration config, AnnotationUtils anno, ObjectParentGenerator parent) {
-		this.resource = resource;
-		this.config = config;
+	new(RESTResourceObjects resources, AnnotationUtils anno, ObjectParentGenerator parent) {
 		this.anno = anno;	
 		this.parent	= parent;
+		this.resources = resources;
 	}
 	
-	def generate(String packageName){	
-		
+	def generate(String packageName, SingleResource resource){	
 		imports.add("java.util.ArrayList");
 		imports.add("java.util.List");
+		imports.add("java.lang.String");
 		imports.add(Naming.CLASS_LINK.classImport);
 		imports.addAll(anno.annoImports);
 		imports.add(Naming.CLASS_OBJPARENT.classImport);
-		for(attrib: resource.attributes)
-		{
-			if((attrib.value instanceof JavaReference) && !imports.contains((attrib.value as JavaReference).fullNameOfType))
-				imports.add((attrib.value as JavaReference).fullNameOfType);
-		}
-	
-	var String idDataType = config.IDDataTyp;
-	
+
+	var String idDataType = resources.globalTraits.idtype.literal;
 	'''
 	package «packageName»;
 	
@@ -83,36 +75,24 @@ class ObjectGenerator {
 		}
 		
 
-		«FOR attribute: resource.attributes»	
+		«FOR attribute: resource.resources.get(0).attributes»	
 				
 		«anno.fieldAnno»
-		private «attribute.value.nameOfType»«putExtra(attribute)» «attribute.name.toFirstLower»;
+		private «attribute.value.nameOfType» «attribute.name.toFirstLower»;
 		
 		«anno.getGetMethodAnno»
-		public «attribute.value.nameOfType»«putExtra(attribute)» get«attribute.name.toFirstUpper»(){
+		public «attribute.value.nameOfType» get«attribute.name.toFirstUpper»(){
 			return this.«attribute.name.toFirstLower»;
 		}
 		
 		«anno.getSetMethodAnno»
-		public void set«attribute.name.toFirstUpper»(«attribute.value.nameOfType»«putExtra(attribute)» «attribute.name.toFirstLower»){
+		public void set«attribute.name.toFirstUpper»(«attribute.value.nameOfType» «attribute.name.toFirstLower»){
 			this.«attribute.name.toFirstLower» = «attribute.name.toFirstLower»;
 			«IF attribute.value instanceof ResourceReference»
 			resetLinks();
 			«ENDIF» 
 		}
 		«ENDFOR»
-		
-		public void resetLinks(){
-			this.hyperlinks.clear();
-			selfLink = "«config.basePath»/«resource.name.toLowerCase»/" + this.id;
-			this.hyperlinks.add(new «Naming.CLASS_LINK»("self", selfLink));
-		«FOR attribute: resource.attributes»
-			«IF attribute.value instanceof ResourceReference && resource.name != (attribute.value as ResourceReference).resourceRef.name»
-				if(«attribute.name»  != null)
-				this.hyperlinks.add(new «Naming.CLASS_LINK»("rel", "«config.basePath»/«(attribute.value as ResourceReference).resourceRef.name.toLowerCase»" + "/" + «attribute.name».getID()));
-			«ENDIF»
-		«ENDFOR»
-		}
 		
 		public String getSelfURI(){
 			return selfLink;
@@ -133,13 +113,5 @@ class ObjectGenerator {
 		}
 	}
 	'''
-	}
-
-	
-	private def String putExtra(Attribute attribute){
-		if( attribute.value instanceof ListReference)
-			return  "<" + (attribute.value as ListReference).innerType + ">"
-		else
-			return ""
 	}
 }

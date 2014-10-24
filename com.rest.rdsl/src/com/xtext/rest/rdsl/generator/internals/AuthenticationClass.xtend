@@ -1,24 +1,23 @@
 package com.xtext.rest.rdsl.generator.internals
 
-import com.xtext.rest.rdsl.restDsl.RESTConfiguration
 import org.eclipse.xtext.generator.IFileSystemAccess
-import com.xtext.rest.rdsl.restDsl.HTTPBasic
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.management.Naming
+import com.xtext.rest.rdsl.generator.RESTResourceObjects
+import com.xtext.rest.rdsl.restDsl.Auth
 
 /**
  * Thsi class is for storing all the authorization and authentication information given by the client. 
  */
 class AuthenticationClass {
 	
-	var RESTConfiguration config = null;
-	var IFileSystemAccess fsa  = null;
-		
-	new(RESTConfiguration config, IFileSystemAccess fsa) {
-		this.config = config;
-		this.fsa = fsa;
+	private val IFileSystemAccess fsa;
+	private val RESTResourceObjects resources;
 	
+	public new(IFileSystemAccess fsa, RESTResourceObjects resources) {
+			this.fsa = fsa;
+			this.resources = resources;
 	}
 	
 	/**
@@ -35,7 +34,7 @@ class AuthenticationClass {
 	 
 	/**
 	* This class stores the authentication information extracted from the header.
-	«IF config.auth instanceof HTTPBasic»
+	«IF resources.security.settings.securityTpe == Auth.HTTP_BASIC»
 	* The header, the username and the password are extracted by default using BASE 64 decoder
 	«ELSE»
 	* The token, the scope, the user... are extracted by default using BASE 64 decoder
@@ -45,7 +44,7 @@ class AuthenticationClass {
 	public class «className»{
 	 
 		private String header = "";
-	«IF config.auth instanceof HTTPBasic»		
+	«IF resources.security.settings.securityTpe == Auth.HTTP_BASIC»		
 		private String name = "";
 		private String passwd = "";
 		
@@ -82,7 +81,7 @@ class AuthenticationClass {
 		}
 			
 		private void decodeHeaderB64(String header){
-		«IF config.auth instanceof HTTPBasic»
+		«IF resources.security.settings.securityTpe == Auth.HTTP_BASIC»
 		 	final String withoutBasic = header.replaceFirst("[Bb]asic ", "");
 			final String userColonPass = Base64.decodeAsString(withoutBasic);
 		 	final String [] asArray = userColonPass.split(":");
@@ -104,7 +103,7 @@ class AuthenticationClass {
 		private void decodeHeader(String header, «Naming.INTERFACE_AUTH_DECODER» decoder){
 		
 			String[] asArray = decoder.decode(header);
-			«IF config.auth instanceof HTTPBasic»
+			«IF resources.security.settings.securityTpe == Auth.HTTP_BASIC»
 			if(asArray.length == 2){
 				this.name = asArray[0];
 				this.passwd = asArray[1];
