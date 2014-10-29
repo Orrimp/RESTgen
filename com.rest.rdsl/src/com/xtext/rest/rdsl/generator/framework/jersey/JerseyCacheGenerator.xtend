@@ -16,7 +16,7 @@ class JerseyCacheGenerator {
 	}
 	
 	def initialize() {
-		switch(resource.traits.caching.type){
+		switch(resource?.traits?.caching?.type){
 			case CACHING_TYPE.ETAG:  generateETAG()
 			case CACHING_TYPE.EXPIRES: generateEXPIRES()
 			case CACHING_TYPE.MAXAGE:  generateMAXAGE()

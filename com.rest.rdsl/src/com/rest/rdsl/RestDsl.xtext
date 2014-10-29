@@ -23,7 +23,7 @@ DispatcherResource:
 ;
 
 SingleResource:
-	'Resource' name = ID ('bound to' boundedTo = [SingleResource])? (traits = SingleResourceTraits)?
+	'State' name = ID ('bound to' boundedTo = [SingleResource])? (traits = SingleResourceTraits)?
 	'{'
 		(permission = Permission)?
 		resources += ResourceView+
@@ -32,7 +32,7 @@ SingleResource:
 ;
 
 CollectionResource:	
-	'Resource' name = ID  traits=CollectionResourceTraits
+	'State' name = ID  traits=CollectionResourceTraits
 	'{'
 		(permission = Permission)?
 		transactions = RESTTransistions
@@ -84,11 +84,11 @@ Pagination:
 ;
 
 CursorPagination:
-	isCursor?='with cursor with default size ' elementsCount = INT
+	isCursor?='cursor with default size ' elementsCount = INT
 ;
 
 OffsetPagination:
-	isOffset?='with offset with default size' elementsCount = INT
+	isOffset?='offset with default size' elementsCount = INT
 ;
 
 Caching:
@@ -124,7 +124,7 @@ UserProfile:
 ;
 
 RESTTransistions:
-	'Transitions' 
+	'Transitions' name = ID
 	'{'
 		transitions += Transition+
 	'}'
@@ -183,7 +183,7 @@ enum Context: EMAIL="email" | URL='url' | INTERNAL='internal' ;
 enum Datatype: STRING='String' | INT='Int' | LONG='Long' | FLOAT='Float';
 enum CACHING_TYPE: ETAG = 'ETag' | MODIFIED = 'Last-Modified' | EXPIRES = 'Expires' | MAXAGE='Max-Age' | DEFAULT = 'Default' | NONE = 'None';
 enum MIME : JSON = 'json' | XML = 'xml';
-enum ID_GEN: LONG = 'long' |  UUID = 'uuid';
+enum ID_GEN: LONG = 'long' |  UUID = 'uuid' | STRING = 'string';
 enum HTTPMETHOD : GET | PUT | POST | PATCH | DELETE  | HEAD  | OPTIONS;
 terminal URL: 'http' 's'?  '://' ID+ ('.' ID+)*;
 terminal HEADER_STRING: 'x-'ID('-'ID)*;

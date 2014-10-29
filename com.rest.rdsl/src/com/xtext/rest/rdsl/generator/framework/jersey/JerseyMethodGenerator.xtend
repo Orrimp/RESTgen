@@ -35,7 +35,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 
 		mime = createMime();
 		idRegex = createRegex();
-		idDataType = "String";
+		idDataType = allResources.globalTraits.idtype.literal.toFirstUpper;
 		caching = new JerseyCacheGenerator(resource);
 	}
 
@@ -52,7 +52,12 @@ class JerseyMethodGenerator extends MethodGenerator {
 	//		}
 	}
 
-	public override generateGETAttribute(Attribute attribute) '''
+	public override generateGETAttribute(Attribute attribute){
+		
+		if("id".compareTo(attribute.name) == 0){
+			return "";
+		}
+	'''
 			
 		@GET
 		@Path("/{id «idRegex»}/«attribute.name»")
@@ -79,10 +84,12 @@ class JerseyMethodGenerator extends MethodGenerator {
 			«attribute.value.nameOfType» «attribute.name.toFirstLower» = «resourceName.toFirstLower».get«attribute.name.
 			toFirstUpper»();
 			
-			return Response.ok(«attribute.name.toFirstLower»).links(getLinks(«resourceName.toFirstLower»))«header».build();
+			return Response.ok(«attribute.name.toFirstLower»).links(null)«header».build();
 		}
 	'''
-
+	}
+	
+	
 	private def generateHEAD(Attribute attribute) '''
 	««««« JAX-RS generates HEAD from GET autmoatically and resonpose wihtout a body.
 	'''
@@ -125,7 +132,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 						throw new «this.mapper.get(404).name»();
 					«caching.getImplementation»
 					
-					return Response.ok(«resourceName.toLowerCase»).links(getLinks(«resourceName.toFirstLower»))«caching.getResponse»«header».build();
+					return Response.ok(«resourceName.toFirstLower»).links(null)«caching.getResponse»«header».build();
 					
 				}catch(«this.mapper.get(404).name» ext){
 					throw ext;
@@ -163,7 +170,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 			 	}else{
 			 		«Naming.ABSTRACT_CLASS_DAO».getInstance().create«resourceName.toFirstUpper»DAO().update(«resourceName.
 			toFirstLower», id);
-			 		return Response.ok().links(getLinks(«resourceName.toFirstLower»))«header».build();
+			 		return Response.ok().links(null)«header».build();
 			 	}
 		 	}catch(Exception ex){
 		 	«mapper.get(400).name» customEx = new  «mapper.get(400).name»();
@@ -195,7 +202,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 						URI newUri = new URI("«uriPart»" + newID);
 						«resourceName.toFirstLower».setID(newID);
 						«Naming.ABSTRACT_CLASS_DAO».getInstance().create«resourceName.toFirstUpper»DAO().save(«resourceName.toFirstLower»);  
-						return Response.created(newUri).links(getLinks(«resourceName.toFirstLower»))«header».build(); 
+						return Response.created(newUri).links(null)«header».build(); 
 					}else{
 						throw new «mapper.get(400).name»();
 					}	
@@ -232,7 +239,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 			 			«ENDFOR»
 			 			«Naming.ABSTRACT_CLASS_DAO».getInstance().create«resourceName.toFirstUpper»DAO().update(«resourceName.toLowerCase»,  «resourceName.
 				toFirstLower».«Naming.METHOD_NAME_ID_GET»());
-			 			return Response.noContent().links(getLinks(«resourceName.toFirstLower»))«caching.getResponse»«header».build();
+			 			return Response.noContent().links(null)«caching.getResponse»«header».build();
 			 		}
 			 	}catch(Exception ex){
 			 	«mapper.get(400).name» customEx = new  «mapper.get(400).name»();
@@ -256,7 +263,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 		//		config.mimeType.forEach[s|mime = mime + "\"" + Constants.APPLICATION + s.literal +  "; version=" + config.apiVersion +"\"" + ","]
 		//		mime = mime.substring(0, mime.length() - 1) 
 		//		mime = mime + "}"
-		return "{" + mimeType + "}";
+		return "\"{" + mimeType + "}\"";
 	}
 
 	private def createRegex() {
@@ -268,7 +275,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 			case "string":
 				return ": ([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+"
 			case "long":
-				return ": \\d+"
+				return ": \\\\d+"
 			default:
 				return ""
 		}
@@ -278,7 +285,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 		if (!attribute.name.nullOrEmpty) {
 			return attribute.name;
 		} else {
-			return "method" + attribute.name.toString.toUpperCase + (counter + 1);
+			return "method" + attribute?.name?.toString?.toUpperCase + (counter + 1);
 		}
 	}
 

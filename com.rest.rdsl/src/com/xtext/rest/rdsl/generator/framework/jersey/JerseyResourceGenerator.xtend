@@ -87,7 +87,7 @@ class JerseyResourceGenerator implements IResourceGenerator {
 		// by extracting the full qaualifed name and addting import later.
 		for(Attribute attrib: this.singleResource.resources.get(0).attributes){
 			if(attrib.value instanceof JavaReference){
-				attributeImports.add(attrib.value.nameOfType);
+				attributeImports.add("java.lang." + attrib.value.nameOfType);
 			}
 		}
 	}

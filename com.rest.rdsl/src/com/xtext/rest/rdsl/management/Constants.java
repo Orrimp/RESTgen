@@ -5,7 +5,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class Constants {
 	
 	/** Packagename for generating class. It will be overridden with the configuration value for package */
-	private static String MAINPACKAGE = "com.rest.generat.";
+	private static String MAINPACKAGE = "com/rest/generat/";
 	
 	public static void setMainPackage(String mainPackage){
 		if(!StringExtensions.isNullOrEmpty(mainPackage))
@@ -28,4 +28,6 @@ public class Constants {
 	public static final String LONG_COUTNER_VALUE = "1";
 	public static final String WEBPACKAGE = "web";
 	public static final String FRAMEWORKPACKAGE = "framework";
+	public static final String RESPONSE = "responses";
+
 }

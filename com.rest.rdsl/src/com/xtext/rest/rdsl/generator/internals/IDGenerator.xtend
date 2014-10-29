@@ -17,13 +17,13 @@ public class IDGenerator {
 	extension ExtensionMethods e = new ExtensionMethods();
 	
 	
-	public new(IFileSystemAccess access, RESTResourceObjects resources){
+	public new(IFileSystemAccess fsa, RESTResourceObjects resources){
 		this.fsa = fsa;
 		this.resources = resources;
 	}
 	
 	public def generateID(){
-		fsa.generateFile(Naming.CLASS_ID.generationLocation + Constants.JAVA, compile())
+		this.fsa.generateFile(Naming.CLASS_ID.generationLocation + Constants.JAVA, compile())
 	}
 	
 	def compile() {

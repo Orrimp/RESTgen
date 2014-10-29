@@ -16,6 +16,7 @@ public class PackageManager {
 	private static String databasePackage = "";
 	private static String frameworkPackage = "";
 	private static String webPackage = "";
+	private static String responsePackage;
 	
 	/**
 	 * @return the objectPackage
@@ -136,5 +137,12 @@ public class PackageManager {
 	 */
 	public static void setWebPackage(String webPackage) {
 		PackageManager.webPackage = webPackage;
+	}
+	public static void setResponsePackage(String response) {
+		PackageManager.responsePackage = response;
+	}
+	
+	public static String getResponsePackage(){
+		return responsePackage;
 	}
 }

@@ -71,7 +71,7 @@ public final class Naming {
 	public static final ClassPackageInfo FRAMEWORK_SPRING			= new ClassPackageInfo("SPRING", "", CLASSTYPE.OTHER, springImports);
 	
 	public static final String COLLECTION_JSON_MIME 	= "application/vnd.collection+json";
-	public static final String METHOD_NAME_ID_GET		= "getID";
-	public static final String METHOD_NAME_ID_SET		= "setID";
+	public static final String METHOD_NAME_ID_GET		= "getId";
+	public static final String METHOD_NAME_ID_SET		= "setId";
 	
 }

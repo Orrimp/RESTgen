@@ -34,19 +34,6 @@ class JerseyAbstractResourceGenerator implements IBaseResourceGenerator{
 	 	
 	 	@Context 
 	 	protected HttpHeaders headers;
-	 	
-	 	protected Link[] getLinks(«Naming.CLASS_OBJPARENT» resourceObject){
-	 		
-	 		List<«Naming.CLASS_LINK»> links = resourceObject.getLinks();
-	 		Link[] reLinks = new Link[links.size()];
-	 		
-	 		for(int i  = 0; i < links.size(); ++i){
-	 			reLinks[i] = Link.fromUri(links.get(i).getURI()).rel(links.get(i).getType()).build();
-	 		}
-	 		
-	 		return reLinks;
-	 		
-	 	}
 	 }
 	 ''')
 	}

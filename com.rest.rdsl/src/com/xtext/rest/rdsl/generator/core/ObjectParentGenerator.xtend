@@ -36,9 +36,9 @@ class ObjectParentGenerator {
 		
 		public interface «Naming.CLASS_OBJPARENT» {
 		
-			public String getID();
-			public String getSelfURI();
-			public List<«Naming.CLASS_LINK.className»> getLinks();
+«««			public String getID();
+«««			public String getSelfURI();
+«««			public List<«Naming.CLASS_LINK.className»> getLinks();
 		}
 		'''
 		)

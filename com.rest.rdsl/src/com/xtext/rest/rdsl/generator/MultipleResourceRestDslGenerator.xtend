@@ -23,6 +23,11 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.restDsl.RESTSecurity
+import com.xtext.rest.rdsl.restDsl.RESTState
+import java.util.Collection
+import com.xtext.rest.rdsl.generator.rdsl.utils.ResourceResponseGenerator
+import com.xtext.rest.rdsl.generator.rdsl.utils.ResponseGenerator
+import com.xtext.rest.rdsl.generator.core.DAOGenerator
 
 class MultipleResourceRestDslGenerator implements IMultipleResourceGenerator {
 
@@ -43,7 +48,7 @@ var FrameworkManager frameWorkManager;
 		this.frameWorkManager.generate();
 		doGenerateMain(fsa);
 		doGenerateOnes(fsa);
-		//generateDAO(fsa);
+		generateDAO(fsa);
 	}
 	
 	/**
@@ -56,6 +61,12 @@ var FrameworkManager frameWorkManager;
 		generateCollectionJSON(fsa);
 		generateOtherFiles(fsa);		
 		generateMisc(fsa);
+		generateResponses(fsa);
+	}
+	
+	def generateResponses(IFileSystemAccess fsa) {
+		val ResponseGenerator responseAbstractGen = new ResponseGenerator(fsa);
+		val ResourceResponseGenerator responseGenerator = new ResourceResponseGenerator(fsa, resources);
 	}
 	
 	/**
@@ -75,13 +86,13 @@ var FrameworkManager frameWorkManager;
 
 
 	def generateDAO(IFileSystemAccess fsa) {
-//		val DAOGenerator daoGen = new DAOGenerator(fsa, resources)
-//		daoGen.generateDAOs()
-//		daoGen.generateInterface();
-//		daoGen.generateDAOAbstract();
-//		daoGen.generateSQLite();
-//		daoGen.generateSQLiteDAO();		
-//		daoGen.generateDBQuery();
+		val DAOGenerator daoGen = new DAOGenerator(fsa, resources)
+		daoGen.generateDAOs()
+		daoGen.generateInterface();
+		daoGen.generateDAOAbstract();
+		daoGen.generateSQLite();
+		daoGen.generateSQLiteDAO();		
+		daoGen.generateDBQuery();
 	}	
 	 
 	def generateInterfaces(IFileSystemAccess fsa) {
@@ -110,10 +121,13 @@ var FrameworkManager frameWorkManager;
 		obpgen = new ObjectParentGenerator(fsa);
 		obpgen.generate(PackageManager.clientPackage);
 		obpgen.generate(PackageManager.objectPackage);
-		
+		val String path = Constants.mainPackage + Constants.OBJECTPACKAGE;
 		for(r: resources.singleResources){
-			fsa.generateFile(Constants.mainPackage + Constants.OBJECTPACKAGE+ "/" + r.name + Constants.JAVA, compileObjects(obpgen, r))
-			fsa.generateFile(Constants.mainPackage + Constants.CLIENTPACKAGE + "/" + r.name + Constants.JAVA, generateClient(obpgen, r))
+			fsa.generateFile(path + "/" + r.name + Constants.JAVA, compileObjects(obpgen, r))
+		}
+		
+		for(r: resources.collectionResources){
+			fsa.generateFile(path + "/" + r.name + Constants.JAVA, compileCollectionObjects(obpgen, r))
 		}
 	}
 	
@@ -123,12 +137,10 @@ var FrameworkManager frameWorkManager;
 		objGen.generate(PackageManager.objectPackage, resource);
 	}
 	
-	
-	
-	def generateClient(ObjectParentGenerator obgen, SingleResource resource){
-		return "";
+	def compileCollectionObjects(ObjectParentGenerator obgen, CollectionResource colRes){
+		val ObjectGenerator objGen = new ObjectGenerator(resources, null, obgen);
+		objGen.generateCollectionsObjects(colRes);
 	}
-	
 		
 	def generateMisc(IFileSystemAccess fsa) {	
 		val AuthenticationClass authClass = new AuthenticationClass(fsa, this.resources);
@@ -146,15 +158,19 @@ var FrameworkManager frameWorkManager;
 	}
 	
 	private def setPackages() {
-		PackageManager.setExceptionPackage(Constants.getMainPackage + Constants.EXCEPTIONPACKAGE);
-		PackageManager.setResourcePackage(Constants.getMainPackage  + Constants.RESOURCEPACKAGE);
-		PackageManager.setClientPackage(Constants.getMainPackage  + Constants.CLIENTPACKAGE);
-		PackageManager.setObjectPackage(Constants.getMainPackage  + Constants.OBJECTPACKAGE);
-		PackageManager.setInterfacePackage(Constants.getMainPackage  + Constants.INTERFACEPACKAGE);
-		PackageManager.setAuthPackage(Constants.getMainPackage  + Constants.AUTHPACKAGE);
-		PackageManager.setDatabasePackage(Constants.getMainPackage  + Constants.DAOPACKAGE);
-		PackageManager.setFrameworkPackage(Constants.getMainPackage  + Constants.FRAMEWORKPACKAGE);
-		PackageManager.setWebPackage(Constants.getMainPackage  + Constants.WEBPACKAGE)
+		
+		var String mainPackage = Constants.getMainPackage.replaceAll("/", "\\.");
+		
+		PackageManager.setExceptionPackage(mainPackage + Constants.EXCEPTIONPACKAGE);
+		PackageManager.setResourcePackage(mainPackage  + Constants.RESOURCEPACKAGE);
+		PackageManager.setClientPackage(mainPackage  + Constants.CLIENTPACKAGE);
+		PackageManager.setObjectPackage(mainPackage  + Constants.OBJECTPACKAGE);
+		PackageManager.setInterfacePackage(mainPackage  + Constants.INTERFACEPACKAGE);
+		PackageManager.setAuthPackage(mainPackage  + Constants.AUTHPACKAGE);
+		PackageManager.setDatabasePackage(mainPackage  + Constants.DAOPACKAGE);
+		PackageManager.setFrameworkPackage(mainPackage  + Constants.FRAMEWORKPACKAGE);
+		PackageManager.setWebPackage(mainPackage  + Constants.WEBPACKAGE)
+		PackageManager.setResponsePackage(mainPackage + Constants.RESPONSE);
 	}
 	
 	/**
@@ -167,6 +183,14 @@ var FrameworkManager frameWorkManager;
 		val DispatcherResource dispatcher = model.get(0).dispatcher;
 		val GlobalTratis gloablTraits = model.get(0).globalTratis;
 		val RESTSecurity security = model.get(0).security;
+		
+		for(RESTState state: model.get(0).states){
+			if(state instanceof SingleResource){
+				resources.add(state as SingleResource);
+			}else if(state instanceof CollectionResource){
+				colresources.add(state as CollectionResource);
+			}
+		}
 		
 		this.resources = new RESTResourceObjects(resources, colresources, dispatcher, gloablTraits,security);
 	}

@@ -14,7 +14,7 @@ public class InterfaceGenerator {
 	//Use extension methods from the given class
 	extension ExtensionMethods e = new ExtensionMethods();
 	
-	new(IFileSystemAccess access, RESTResourceObjects resources) {
+	new(IFileSystemAccess fsa, RESTResourceObjects resources) {
 		this.fsa = fsa;
 		this.resources = resources;
 	}
