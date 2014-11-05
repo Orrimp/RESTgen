@@ -31,12 +31,12 @@ class ExtensionMethods {
 	}
 
 	
-	private def fullJavaNameOfType(PrimitiveType pType) {
-		switch(pType.dataType){
-			case STRING: return "java.lang.String"
-			case LONG: return "java.lang.Long"
-			case INT: return "java.lang.Integer"
-			case FLOAT: return "java.lang.Float"
+	def fullJavaNameOfType(PrimitiveType pType) {
+		switch(pType.dataType.literal){
+			case "String": return "java.lang.String"
+			case "Long": return "java.lang.Long"
+			case "Int": return "java.lang.Integer"
+			case "Float": return "java.lang.Float"
 		}
 	}
 }

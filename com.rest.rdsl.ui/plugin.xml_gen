@@ -250,9 +250,7 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="com.xtext.rest.rdsl.ui.RestDslExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
-            fileExtensions="rdsl"
-            >
+            class="com.xtext.rest.rdsl.ui.RestDslExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
       </participant>
    </extension>
    <extension

@@ -3,6 +3,11 @@
  */
 package com.xtext.rest.rdsl;
  
+import org.eclipse.xtext.generator.IOutputConfigurationProvider;
+
+import com.google.inject.Binder;
+import com.google.inject.Singleton;
+import com.rest.rdsl.unittests.UnitTestOutputConfigurationProvider;
 import com.xtext.rest.rdsl.generator.MultipleResourceRestDslGenerator;
 
 /**
@@ -17,4 +22,12 @@ public class RestDslRuntimeModule extends com.xtext.rest.rdsl.AbstractRestDslRun
 		return MultipleResourceRestDslGenerator.class;
 	}
 
+	@Override
+	public void configure(Binder binder)
+	{
+		super.configure(binder);
+		binder.bind(IOutputConfigurationProvider.class)
+			  .to(UnitTestOutputConfigurationProvider.class)
+			  .in(Singleton.class);
+	}
 }
