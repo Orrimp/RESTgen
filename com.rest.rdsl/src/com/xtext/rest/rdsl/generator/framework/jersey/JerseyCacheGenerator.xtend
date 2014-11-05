@@ -2,21 +2,22 @@ package com.xtext.rest.rdsl.generator.framework.jersey
 
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.restDsl.CACHING_TYPE
-import com.xtext.rest.rdsl.restDsl.SingleResource
+import com.xtext.rest.rdsl.restDsl.RESTState
+import com.xtext.rest.rdsl.restDsl.Caching
 
 class JerseyCacheGenerator {
 	
-	private val SingleResource resource
+	private val RESTState resource
 	private var String response;
 	private var String implementatation;
 	
-	new (SingleResource resource){
+	new (RESTState resource){
 		this.resource = resource;
 		initialize();
 	}
 	
 	def initialize() {
-		switch(resource?.traits?.caching?.type){
+		switch((resource?.traits?.extra as Caching)?.type){
 			case CACHING_TYPE.ETAG:  generateETAG()
 			case CACHING_TYPE.EXPIRES: generateEXPIRES()
 			case CACHING_TYPE.MAXAGE:  generateMAXAGE()
@@ -63,7 +64,7 @@ class JerseyCacheGenerator {
 		this.implementatation = 
 		'''
 		CacheControl cacheControl = new CacheControl();
-		cacheControl.setMaxAge(«resource.traits.caching.time»);
+		cacheControl.setMaxAge(«(resource?.traits?.extra as Caching).time»);
 		 
 		''';
 		this.response = generatesMAXAGEResponse();

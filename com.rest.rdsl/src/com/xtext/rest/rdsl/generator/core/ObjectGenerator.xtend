@@ -4,11 +4,10 @@ import com.xtext.rest.rdsl.generator.RESTResourceObjects
 import com.xtext.rest.rdsl.generator.internals.AnnotationUtils
 import com.xtext.rest.rdsl.management.ExtensionMethods
 import com.xtext.rest.rdsl.management.Naming
-import com.xtext.rest.rdsl.restDsl.CollectionResource
 import com.xtext.rest.rdsl.restDsl.ResourceReference
-import com.xtext.rest.rdsl.restDsl.SingleResource
 import java.util.ArrayList
 import com.xtext.rest.rdsl.management.PackageManager
+import com.xtext.rest.rdsl.restDsl.RESTState
 
 ///Erweitern indem ein VaterObjekt extrahiert wird mit Hyperlinks und ID
 class ObjectGenerator {
@@ -26,7 +25,7 @@ class ObjectGenerator {
 		this.resources = resources;
 	}
 	
-	def generate(String packageName, SingleResource resource){	
+	def generate(String packageName, RESTState resource){	
 		imports.add("java.util.ArrayList");
 		imports.add("java.util.List");
 		imports.add("java.lang.String");
@@ -81,7 +80,7 @@ class ObjectGenerator {
 	'''
 	}
 	
-	def generateCollectionsObjects(CollectionResource resource){
+	def generateCollectionsObjects(RESTState resource){
 		
 		'''
 		package «PackageManager.getObjectPackage»;
@@ -92,22 +91,22 @@ class ObjectGenerator {
 		 
 		public class «resource.name.toFirstUpper»
 		{
-			private List<«resource.traits.collectionOf.name.toFirstUpper»> «resource.name.toLowerCase»;
+			private List<«resource.traits.name.toFirstUpper»> «resource.name.toLowerCase»;
 		 
 			public «resource.name.toFirstUpper»( )
 			{
-				this.«resource.name.toLowerCase» = new ArrayList<«resource.traits.collectionOf.name.toFirstUpper»>( );
+				this.«resource.name.toLowerCase» = new ArrayList<«resource.traits.name.toFirstUpper»>( );
 			}
 		 
 		 	@JsonIgnore
-			public List<«resource.traits.collectionOf.name.toFirstUpper»> get«resource.name.toFirstUpper»( )
+			public List<«resource.traits.name.toFirstUpper»> get«resource.name.toFirstUpper»( )
 			{
 				return «resource.name.toLowerCase»;
 			}
 		 
-			public void add«resource.name.toFirstUpper»( «resource.traits.collectionOf.name.toFirstUpper» «resource.traits.collectionOf.name.toLowerCase» )
+			public void add«resource.name.toFirstUpper»( «resource.traits.name.toFirstUpper» «resource.traits.name.toLowerCase» )
 			{
-				this.«resource.name.toLowerCase».add( «resource.traits.collectionOf.name.toLowerCase» );
+				this.«resource.name.toLowerCase».add( «resource.traits.name.toLowerCase» );
 			}
 		
 		}

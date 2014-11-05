@@ -8,7 +8,7 @@ import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.generator.framework.jersey.JerseyCacheGenerator
 import com.xtext.rest.rdsl.generator.framework.MethodGenerator
-import com.xtext.rest.rdsl.restDsl.SingleResource
+import com.xtext.rest.rdsl.restDsl.RESTState
 import com.xtext.rest.rdsl.generator.RESTResourceObjects
 
 class JerseyMethodGenerator extends MethodGenerator {
@@ -19,7 +19,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 	val String idDataType;
 	val ExceptionMapper mapper;
 	val String resourceName;
-	val SingleResource resource;
+	val RESTState resource;
 	val JerseyCacheGenerator caching;
 
 	//Use extension methods from the given class
@@ -27,7 +27,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 
 	val RESTResourceObjects allResources
 
-	new(RESTResourceObjects allResources, SingleResource resource) {
+	new(RESTResourceObjects allResources, RESTState resource) {
 		this.mapper = new ExceptionMapper();
 		this.resource = resource;
 		this.allResources = allResources;
@@ -81,10 +81,10 @@ class JerseyMethodGenerator extends MethodGenerator {
 			}
 			
 			//Generate ETag
-			«attribute.value.nameOfType» «attribute.name.toFirstLower» = «resourceName.toFirstLower».get«attribute.name.
+			«attribute.value.nameOfType» returnValue = «resourceName.toFirstLower».get«attribute.name.
 			toFirstUpper»();
 			
-			return Response.ok(«attribute.name.toFirstLower»).links(null)«header».build();
+			return Response.ok(returnValue).links(null)«header».build();
 		}
 	'''
 	}
@@ -200,7 +200,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 						«Naming.INTERFACE_ID» idGen = «Naming.CLASS_ID».getInstance();
 						«idDataType» newID  = idGen.generateID();
 						URI newUri = new URI("«uriPart»" + newID);
-						«resourceName.toFirstLower».setID(newID);
+						«resourceName.toFirstLower».«Naming.METHOD_NAME_ID_SET»(newID);
 						«Naming.ABSTRACT_CLASS_DAO».getInstance().create«resourceName.toFirstUpper»DAO().save(«resourceName.toFirstLower»);  
 						return Response.created(newUri).links(null)«header».build(); 
 					}else{
@@ -237,7 +237,7 @@ class JerseyMethodGenerator extends MethodGenerator {
 				toFirstUpper»()); 
 			 				
 			 			«ENDFOR»
-			 			«Naming.ABSTRACT_CLASS_DAO».getInstance().create«resourceName.toFirstUpper»DAO().update(«resourceName.toLowerCase»,  «resourceName.
+			 			«Naming.ABSTRACT_CLASS_DAO».getInstance().create«resourceName.toFirstUpper»DAO().update(«resourceName.toFirstLower»,  «resourceName.
 				toFirstLower».«Naming.METHOD_NAME_ID_GET»());
 			 			return Response.noContent().links(null)«caching.getResponse»«header».build();
 			 		}

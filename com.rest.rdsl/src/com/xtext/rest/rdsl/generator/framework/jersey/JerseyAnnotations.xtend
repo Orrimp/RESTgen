@@ -4,13 +4,13 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import com.xtext.rest.rdsl.management.PackageManager
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
-import com.xtext.rest.rdsl.restDsl.SingleResource
+import com.xtext.rest.rdsl.restDsl.RESTState
 
 class CustomAnnotations {
-	val SingleResource resource;
+	val RESTState resource;
 	val IFileSystemAccess fsa;
 	
-	new(IFileSystemAccess fsa, SingleResource resource) {
+	new(IFileSystemAccess fsa, RESTState resource) {
 		this.fsa = fsa;
 		this.resource = resource;
 	

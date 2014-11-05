@@ -7,7 +7,7 @@
     <package 
        uri = "http://www.xtext.com/rest/rdsl/RestDsl" 
        class = "com.xtext.rest.rdsl.restDsl.RestDslPackage"
-       genModel = "com/xtext/rest/rdsl/RestDsl.genmodel" /> 
+       genModel = "model/generated/RestDsl.genmodel" /> 
 	
   </extension>
 

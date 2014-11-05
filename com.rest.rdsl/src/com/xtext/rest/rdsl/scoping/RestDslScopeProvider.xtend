@@ -3,7 +3,15 @@
  */
 package com.xtext.rest.rdsl.scoping
 
+import com.xtext.rest.rdsl.restDsl.SingleTransition
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
+import org.eclipse.xtext.scoping.Scopes
+import com.xtext.rest.rdsl.restDsl.ResourceReference
+import com.xtext.rest.rdsl.restDsl.impl.ResourceReferenceImpl
+import com.xtext.rest.rdsl.restDsl.JavaReference
+import com.xtext.rest.rdsl.restDsl.Attribute
 
 /**
  * This class contains custom scoping description.
@@ -14,4 +22,11 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
  */
 class RestDslScopeProvider extends AbstractDeclarativeScopeProvider {
 
+  	def IScope scope_SingleTransition_view(SingleTransition transition, EReference eReference) {	 
+   	 	return Scopes::scopeFor(transition?.state?.resources)
+  	}
+  	
+  	def IScope scope_SingleTransition_attribute(SingleTransition transition, EReference eReference) {
+		return Scopes::scopeFor(transition?.view?.attributes.filter[value instanceof ResourceReference])
+  	}
 }

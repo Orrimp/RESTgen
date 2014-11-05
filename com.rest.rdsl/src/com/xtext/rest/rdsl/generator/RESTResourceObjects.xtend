@@ -1,29 +1,25 @@
 package com.xtext.rest.rdsl.generator
 
-import com.xtext.rest.rdsl.restDsl.CollectionResource
 import com.xtext.rest.rdsl.restDsl.Datatype
 import com.xtext.rest.rdsl.restDsl.DispatcherResource
 import com.xtext.rest.rdsl.restDsl.GlobalTratis
 import com.xtext.rest.rdsl.restDsl.RESTSecurity
-import com.xtext.rest.rdsl.restDsl.SingleResource
 import com.xtext.rest.rdsl.restDsl.impl.RestDslFactoryImpl
 import java.util.ArrayList
 import java.util.List
 import com.xtext.rest.rdsl.restDsl.ResourceView
+import com.xtext.rest.rdsl.restDsl.RESTState
 
 class RESTResourceObjects {
 
 	val RESTSecurity security;
-	val List<SingleResource> singleResources;
-	val List<CollectionResource> collResources;
+	val List<RESTState> singleResources;
 	val DispatcherResource dispatchResource;
 	val GlobalTratis gloablTraits;
-	val SingleResource userResource
+	val RESTState userResource
 
-	public new(List<SingleResource> singleResources, List<CollectionResource> collResources,
-		DispatcherResource dispatchResource, GlobalTratis gloablTraits, RESTSecurity security) {
+	public new(List<RESTState> singleResources,	DispatcherResource dispatchResource, GlobalTratis gloablTraits, RESTSecurity security) {
 		this.singleResources = singleResources;
-		this.collResources = collResources;
 		this.dispatchResource = dispatchResource;
 		this.gloablTraits = gloablTraits;
 		this.userResource = createUserResource();
@@ -31,8 +27,8 @@ class RESTResourceObjects {
 		createIdAttriutes();
 	}
 
-	def SingleResource createUserResource() {
-		var res = RestDslFactoryImpl.eINSTANCE.createSingleResource;
+	def RESTState createUserResource() {
+		var res = RestDslFactoryImpl.eINSTANCE.createRESTState;
 		var resView = RestDslFactoryImpl.eINSTANCE.createResourceView;
 		var userName = RestDslFactoryImpl.eINSTANCE.createAttribute;
 		var password = RestDslFactoryImpl.eINSTANCE.createAttribute;
@@ -53,7 +49,7 @@ class RESTResourceObjects {
 	}
 
 	def createIdAttriutes() {
-		for (SingleResource sing : singleResources) {
+		for (RESTState sing : singleResources) {
 			for (ResourceView view : sing.resources) {
 				creatIdAttribute(view);
 			}
@@ -78,20 +74,12 @@ class RESTResourceObjects {
 	}
 
 
-	public def List<SingleResource> getSingleResources() {
+	public def List<RESTState> getSingleResources() {
 
 		if (singleResources != null) {
 			return this.singleResources;
 		} else {
-			return new ArrayList<SingleResource>();
-		}
-	}
-
-	public def List<CollectionResource> getCollectionResources() {
-		if (this.collResources != null) {
-			return this.collResources;
-		} else {
-			return new ArrayList<CollectionResource>();
+			return new ArrayList<RESTState>();
 		}
 	}
 
@@ -103,12 +91,11 @@ class RESTResourceObjects {
 		return this.gloablTraits;
 	}
 
-	public def SingleResource getUserResource() {
+	public def RESTState getUserResource() {
 		return this.userResource;
 	}
 
 	public def RESTSecurity getSecurity() {
 		return this.security;
 	}
-
 }

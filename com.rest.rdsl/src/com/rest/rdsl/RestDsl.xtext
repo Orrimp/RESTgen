@@ -1,18 +1,22 @@
 grammar com.xtext.rest.rdsl.RestDsl with org.eclipse.xtext.common.Terminals
 
 generate restDsl "http://www.xtext.com/rest/rdsl/RestDsl"
-import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 
 RESTModel: 
 	globalTratis = GlobalTratis
 	security = RESTSecurity  
 	dispatcher = DispatcherResource 
 	states += RESTState+  
-	(globalTransition += RESTTransistions+)?
+	transitions += RESTTransistions+
 ;
 
 RESTState:
-	SingleResource | CollectionResource
+	'State' name = ID
+	'{'
+		(permission = Permission)?
+		(traits = StateTraits)?
+		resources += ResourceView+
+	'}'
 ;
 
 DispatcherResource:
@@ -22,37 +26,17 @@ DispatcherResource:
 	'}'
 ;
 
-SingleResource:
-	'State' name = ID ('bound to' boundedTo = [SingleResource])? (traits = SingleResourceTraits)?
-	'{'
-		(permission = Permission)?
-		resources += ResourceView+
-		transactions = RESTTransistions
-	'}'
-;
-
-CollectionResource:	
-	'State' name = ID  traits=CollectionResourceTraits
-	'{'
-		(permission = Permission)?
-		transactions = RESTTransistions
-	'}'
-;
-
 ResourceView:
-	'View' type = [UserProfile]
+	'View' name = ID 'of type' type = [UserProfile]
 	'{'
 		attributes += Attribute+  //For every other attribute then id the method musst look like Path("{id}/attributename)
 	'}'
 ;
 
-SingleResourceTraits:
-	hasExtra?='with extra' caching = Caching
-;
-
-CollectionResourceTraits:
-	isCollection?='as collection of ' collectionOf = [SingleResource] 
-	(extra = Extra)?
+StateTraits:
+	('bound to' boundedTo = [RESTState])? 
+	isCollection?='as collection of ' name = ID 
+	hasExtra?='with extra' extra = Extra
 ;
 
 GlobalTratis:
@@ -131,23 +115,19 @@ RESTTransistions:
 ;
 
 Transition:
-	startTransition = SingleStartTransition 'link to' targetTransition = TargetTransition
+	startTransition = SingleTransition 'link to' targetTransition = TargetTransition
  ;
 
 TargetTransition:
-	SingleTargetTransition | CollectionTargetTransistion
+	SingleTransition | CollectioTransistion
 ;
 
-SingleStartTransition:
-	startMethod = HTTPMETHOD ':' startResource = [RESTState] ('.' startAttribute = [Attribute])?
+SingleTransition:
+	endMethod = HTTPMETHOD ':' state = [RESTState] ('.' view = [ResourceView] '.' attribute = [Attribute])?
 ;
 
-SingleTargetTransition:
-	endMethod = HTTPMETHOD ':' endResource = [RESTState] ('.' startAttribute = [Attribute])?
-;
-
-CollectionTargetTransistion:
-	'{' collectionTransitions += SingleTargetTransition (',' collectionTransitions += SingleTargetTransition)* '}'
+CollectioTransistion:
+	'{' collectionTransitions += SingleTransition (',' collectionTransitions += SingleTransition)* '}'
 ;
 
 DatabaseConfiguration:
@@ -169,8 +149,8 @@ SQLDB returns DatabaseConfiguration:
 Attribute: value = Reference name = ID (trait = AttributeTrait)?;
 
 Reference: JavaReference | ResourceReference;
-ResourceReference :	'Resource' resourceRef = [SingleResource]; 
-JavaReference: 'Java' javaDataType = PrimitiveType;
+ResourceReference :	resource?='Resource' resourceRef = [RESTState]; 
+JavaReference: java?='Java' javaDataType = PrimitiveType;
 
 PrimitiveType:
 	dataType = Datatype ('(' start =  ( FLOAT | STRING) '...' stop = ( FLOAT | STRING) ')')? (context = Context)?
@@ -184,7 +164,7 @@ enum Datatype: STRING='String' | INT='Int' | LONG='Long' | FLOAT='Float';
 enum CACHING_TYPE: ETAG = 'ETag' | MODIFIED = 'Last-Modified' | EXPIRES = 'Expires' | MAXAGE='Max-Age' | DEFAULT = 'Default' | NONE = 'None';
 enum MIME : JSON = 'json' | XML = 'xml';
 enum ID_GEN: LONG = 'long' |  UUID = 'uuid' | STRING = 'string';
-enum HTTPMETHOD : GET | PUT | POST | PATCH | DELETE  | HEAD  | OPTIONS;
+enum HTTPMETHOD : GET | PUT | POST | PATCH | DELETE  | HEAD  | OPTIONS | LINK | UNLINK;
 terminal URL: 'http' 's'?  '://' ID+ ('.' ID+)*;
 terminal HEADER_STRING: 'x-'ID('-'ID)*;
 terminal VERSION: ('1'..'9');

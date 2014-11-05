@@ -1,37 +1,30 @@
 package com.xtext.rest.rdsl.generator.framework.jersey
 
+import com.xtext.rest.rdsl.generator.RESTResourceObjects
+import com.xtext.rest.rdsl.generator.framework.IResourceGenerator
 import com.xtext.rest.rdsl.management.ExtensionMethods
-import com.xtext.rest.rdsl.management.Naming
-import com.xtext.rest.rdsl.management.PackageManager
-import com.xtext.rest.rdsl.restDsl.Attribute
-import com.xtext.rest.rdsl.restDsl.JavaReference
+import com.xtext.rest.rdsl.restDsl.RESTState
 import java.util.HashSet
 import java.util.Set
-import com.xtext.rest.rdsl.generator.framework.IResourceGenerator
-import com.xtext.rest.rdsl.restDsl.RESTState
-import com.xtext.rest.rdsl.restDsl.SingleResource
-import com.xtext.rest.rdsl.restDsl.CollectionResource
-import com.xtext.rest.rdsl.generator.RESTResourceObjects
+import com.xtext.rest.rdsl.management.PackageManager
+import com.xtext.rest.rdsl.management.Naming
+import com.xtext.rest.rdsl.restDsl.Attribute
+import com.xtext.rest.rdsl.restDsl.JavaReference
 
 class JerseyResourceGenerator implements IResourceGenerator {
 			
 	//Use extension methods from the given class
 	extension ExtensionMethods e = new ExtensionMethods();
 	
-	var SingleResource singleResource
-	var CollectionResource colResource;
+	var RESTState singleResource
 	val Set<String> attributeImports = new HashSet<String>()
 	
 	/*
 	 * Generate the class which represents a REST resource. 
 	 */
 	override generate(RESTResourceObjects allResources, RESTState res) {
-	if(res instanceof SingleResource){
-		this.singleResource = res as SingleResource;
+		this.singleResource = res ;
 		addImportsForSingleResourc();
-	}else if(res instanceof CollectionResource){
-		this.colResource = res as CollectionResource;
-	}
 		
 	'''
 	package «PackageManager.resourcePackage»;
@@ -82,7 +75,7 @@ class JerseyResourceGenerator implements IResourceGenerator {
 	'''
 	}
 	
-	private def addImportsForSingleResourc(){
+	 private def addImportsForSingleResourc(){
 		// Analyse the use attributes to import them if necessary 
 		// by extracting the full qaualifed name and addting import later.
 		for(Attribute attrib: this.singleResource.resources.get(0).attributes){

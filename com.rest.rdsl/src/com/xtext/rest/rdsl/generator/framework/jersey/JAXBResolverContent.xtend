@@ -4,13 +4,13 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import java.util.List
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.PackageManager
-import com.xtext.rest.rdsl.restDsl.SingleResource
+import com.xtext.rest.rdsl.restDsl.RESTState
 
 class JAXBResolverContent implements IResolverContent{
 	
-	val List<SingleResource> resources;
+	val List<RESTState> resources;
 	
-	new(IFileSystemAccess fsa, List<SingleResource> resources) {
+	new(IFileSystemAccess fsa, List<RESTState> resources) {
 		this.resources = resources;
 	}
 	

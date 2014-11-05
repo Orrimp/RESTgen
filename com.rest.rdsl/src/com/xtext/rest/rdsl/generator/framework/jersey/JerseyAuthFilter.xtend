@@ -5,14 +5,14 @@ import com.xtext.rest.rdsl.generator.resouces.interal.ExceptionMapper
 import com.xtext.rest.rdsl.management.Naming
 import com.xtext.rest.rdsl.management.Constants
 import com.xtext.rest.rdsl.management.PackageManager
-import com.xtext.rest.rdsl.restDsl.SingleResource
+import com.xtext.rest.rdsl.restDsl.RESTState
 
 class CustomJerseyFilter {
 
 	val IFileSystemAccess fsa;
-	var SingleResource userResource = null;
+	var RESTState userResource = null;
 	
-	new(IFileSystemAccess fsa, SingleResource userResource) {
+	new(IFileSystemAccess fsa, RESTState userResource) {
 		this.fsa = fsa;
 		this.userResource = userResource;
 		
